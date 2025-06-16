@@ -1,4 +1,4 @@
-![ElektroCraft Logo](https://github.com/RGerva/ElektroCraft/blob/main/resources/icon.png)
+![ElektroCraft Logo](https://github.com/RGerva/ElektroCraft/blob/master/src/main/resources/icon.png)
 
 # ElektroCraft ⚡  
 
