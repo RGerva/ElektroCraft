@@ -1,6 +1,4 @@
 # User-specific stuff
-!.idea/fileTemplates
-.idea/**
 
 *.iml
 *.ipr
