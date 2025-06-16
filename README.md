@@ -19,7 +19,7 @@
 4. Launch Minecraft and start experimenting with **realistic electronics**!  
 
 ## 📜 License  
-This project is licensed under the **Apache License 2.0** – see the [`LICENSE`](https://github.com/RGerva/ElektroCraft/blob/main/LICENSE) file for details.  
+This project is licensed under the **Apache License 2.0** – see the [`LICENSE`](https://github.com/RGerva/ElektroCraft/blob/master/LICENSE) file for details.  
 
 ## 🛠 Requirements  
 - **Minecraft Version**: 1.21.5+  
