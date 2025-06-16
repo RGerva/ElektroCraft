@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.rgerva.elektrocraft.mixin",
+  "compatibilityLevel": "JAVA_22",
+  "refmap": "elektrocraft.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
