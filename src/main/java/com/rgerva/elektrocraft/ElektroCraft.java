@@ -42,8 +42,6 @@ import com.rgerva.elektrocraft.potion.ModPotions;
 import com.rgerva.elektrocraft.recipe.ModRecipes;
 import com.rgerva.elektrocraft.sound.ModSounds;
 import com.rgerva.elektrocraft.villager.ModVillagers;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;

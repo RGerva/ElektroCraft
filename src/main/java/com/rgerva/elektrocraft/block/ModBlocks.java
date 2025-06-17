@@ -19,12 +19,8 @@ import com.rgerva.elektrocraft.item.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DropExperienceBlock;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -41,7 +37,7 @@ public class ModBlocks {
                     .strength(2F)
                     .setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, "dummy_block"))))));
 
-    protected static ResourceLocation id(String path){
+    protected static ResourceLocation id(String path) {
         return ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, path);
     }
 
