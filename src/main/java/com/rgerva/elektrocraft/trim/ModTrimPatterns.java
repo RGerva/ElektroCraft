@@ -1,5 +1,5 @@
 /**
- * Generic Class: ModCapabilities <T>
+ * Generic Class: ModTrimPatterns <T>
  * A generic structure that works with type parameters.
  * <p>
  * Created by: D56V1OK
@@ -12,12 +12,8 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
 
-package com.rgerva.elektrocraft.capabilities;
+package com.rgerva.elektrocraft.trim;
 
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+public class ModTrimPatterns {
 
-public class ModCapabilities {
-    public static void registerCapabilities(final RegisterCapabilitiesEvent event) {
-
-    }
 }

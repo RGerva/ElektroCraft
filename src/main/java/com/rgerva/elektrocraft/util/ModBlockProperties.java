@@ -1,5 +1,5 @@
 /**
- * Generic Class: ModCapabilities <T>
+ * Generic Class: ModBlockProperties <T>
  * A generic structure that works with type parameters.
  * <p>
  * Created by: D56V1OK
@@ -12,12 +12,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
 
-package com.rgerva.elektrocraft.capabilities;
+package com.rgerva.elektrocraft.util;
 
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-
-public class ModCapabilities {
-    public static void registerCapabilities(final RegisterCapabilitiesEvent event) {
-
-    }
+public class ModBlockProperties {
 }

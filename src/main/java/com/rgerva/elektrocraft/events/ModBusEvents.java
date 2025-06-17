@@ -21,7 +21,8 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.server.command.ConfigCommand;
 
 @EventBusSubscriber(modid = ElektroCraft.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModBusEvents {
