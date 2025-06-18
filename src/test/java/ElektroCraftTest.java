@@ -1,7 +1,3 @@
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 /**
  * Generic Class: ElektroCraftTest <T>
  * A generic structure that works with type parameters.
@@ -15,6 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ElektroCraftTest {
     @Test

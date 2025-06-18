@@ -33,12 +33,34 @@ public class ModCreativeTab {
 
     public static final Supplier<CreativeModeTab> CREATIVE_TAB = CREATIVE_MODE_TAB.register("tab_elektrocraft",
             () -> CreativeModeTab.builder()
-                    .icon(() -> new ItemStack(ModBlocks.DUMMY_BLOCK.get()))
+                    .icon(() -> new ItemStack(ModItems.HAMMER.get()))
                     .title(Component.translatable("itemGroup.elektrocraft"))
                     .displayItems(((itemDisplayParameters, output) -> {
-                        output.accept(ModBlocks.DUMMY_BLOCK.get());
+                        output.accept(ModBlocks.LEAD_ORE.get());
+                        output.accept(ModBlocks.LEAD_DEEPSLATE_ORE.get());
+                        output.accept(ModBlocks.LEAD_NETHER_ORE.get());
+                        output.accept(ModBlocks.LEAD_END_ORE.get());
+                        output.accept(ModItems.LEAD_RAW.get());
+                        output.accept(ModBlocks.LEAD_RAW_BLOCK.get());
+                        output.accept(ModBlocks.LEAD_BLOCK.get());
+                        output.accept(ModItems.LEAD_INGOT.get());
+                        output.accept(ModItems.LEAD_NUGGET.get());
+                        output.accept(ModItems.LEAD_DUST.get());
 
-                        output.accept(ModItems.DUMMY_ITEM.get());
+                        output.accept(ModBlocks.TIN_ORE.get());
+                        output.accept(ModBlocks.TIN_DEEPSLATE_ORE.get());
+                        output.accept(ModBlocks.TIN_NETHER_ORE.get());
+                        output.accept(ModBlocks.TIN_END_ORE.get());
+                        output.accept(ModItems.TIN_RAW.get());
+                        output.accept(ModBlocks.TIN_RAW_BLOCK.get());
+                        output.accept(ModBlocks.TIN_BLOCK.get());
+                        output.accept(ModItems.TIN_INGOT.get());
+                        output.accept(ModItems.TIN_NUGGET.get());
+                        output.accept(ModItems.TIN_DUST.get());
+
+                        output.accept(ModItems.TIN_SOLDER.get());
+                        output.accept(ModItems.TIN_SOLDER_WIRE.get());
+                        output.accept(ModItems.HAMMER.get());
 
                     }))
                     .build());

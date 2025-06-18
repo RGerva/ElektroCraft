@@ -22,13 +22,51 @@ import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.NotNull;
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ElektroCraft.MOD_ID);
 
-    public static final DeferredItem<Item> DUMMY_ITEM = ITEMS.register("dummy_item",
-            () -> new Item(new Item.Properties()
-                    .setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, "dummy_item")))));
+    //region ORES
+
+    public static final DeferredItem<Item> LEAD_INGOT = ITEMS.register("lead_ingot",
+            () -> new Item(new Item.Properties().setId(id("lead_ingot"))));
+
+    public static final DeferredItem<Item> LEAD_NUGGET = ITEMS.register("lead_nugget",
+            () -> new Item(new Item.Properties().setId(id("lead_nugget"))));
+
+    public static final DeferredItem<Item> LEAD_RAW = ITEMS.register("lead_raw",
+            () -> new Item(new Item.Properties().setId(id("lead_raw"))));
+
+    public static final DeferredItem<Item> LEAD_DUST = ITEMS.register("lead_dust",
+            () -> new Item(new Item.Properties().setId(id("lead_dust"))));
+
+    public static final DeferredItem<Item> TIN_INGOT = ITEMS.register("tin_ingot",
+            () -> new Item(new Item.Properties().setId(id("tin_ingot"))));
+
+    public static final DeferredItem<Item> TIN_NUGGET = ITEMS.register("tin_nugget",
+            () -> new Item(new Item.Properties().setId(id("tin_nugget"))));
+
+    public static final DeferredItem<Item> TIN_RAW = ITEMS.register("tin_raw",
+            () -> new Item(new Item.Properties().setId(id("tin_raw"))));
+
+    public static final DeferredItem<Item> TIN_DUST = ITEMS.register("tin_dust",
+            () -> new Item(new Item.Properties().setId(id("tin_dust"))));
+
+    public static final DeferredItem<Item> TIN_SOLDER = ITEMS.register("tin_solder",
+            () -> new Item(new Item.Properties().setId(id("tin_solder"))));
+
+    //endregion
+
+    public static final DeferredItem<Item> HAMMER = ITEMS.register("hammer",
+            () -> new Item(new Item.Properties().setId(id("hammer")).durability(10).stacksTo(1)));
+
+    public static final DeferredItem<Item> TIN_SOLDER_WIRE = ITEMS.register("tin_solder_wire",
+            () -> new Item(new Item.Properties().setId(id("tin_solder_wire"))));
+
+    protected static ResourceKey<Item> id(@NotNull String path) {
+        return ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, path));
+    }
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

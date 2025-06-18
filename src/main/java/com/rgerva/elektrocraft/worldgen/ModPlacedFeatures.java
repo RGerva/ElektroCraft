@@ -1,12 +1,16 @@
 package com.rgerva.elektrocraft.worldgen;
 
 import com.rgerva.elektrocraft.ElektroCraft;
+import com.rgerva.elektrocraft.util.ModOresUtils;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 
@@ -19,8 +23,22 @@ public class ModPlacedFeatures {
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
 
+        registerAllKey();
+
         var configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
+        for (int x = 0; x < ModOresUtils.getOres().size(); x++) {
+            register(context, ORE_PLACED_KEY.get(x), configuredFeatures.getOrThrow(ModConfiguredFeatures.ORE_KEY.get(x)),
+                    ModOrePlacement.commonOrePlacement(ModOresUtils.getProperties(ModOresUtils.getOres().get(x)).count(),
+                            HeightRangePlacement.triangle(VerticalAnchor.absolute(ModOresUtils.getProperties(ModOresUtils.getOres().get(x)).minY()),
+                                    VerticalAnchor.absolute(ModOresUtils.getProperties(ModOresUtils.getOres().get(x)).maxY()))));
+        }
+    }
+
+    private static void registerAllKey() {
+        for (int x = 0; x < ModOresUtils.getOres().size(); x++) {
+            ORE_PLACED_KEY.add(registerKey(BuiltInRegistries.ITEM.getKey(ModOresUtils.getOres().get(x).asItem()).getPath().concat("_placed")));
+        }
     }
 
     public static ResourceKey<PlacedFeature> registerKey(String name) {

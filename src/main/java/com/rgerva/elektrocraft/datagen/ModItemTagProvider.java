@@ -15,6 +15,8 @@
 package com.rgerva.elektrocraft.datagen;
 
 import com.rgerva.elektrocraft.ElektroCraft;
+import com.rgerva.elektrocraft.item.ModItems;
+import com.rgerva.elektrocraft.util.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.ItemTagsProvider;
@@ -29,6 +31,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-
+        this.tag(ModTags.Items.WIRE_ITEMS)
+                .add(ModItems.TIN_SOLDER_WIRE.get());
     }
 }

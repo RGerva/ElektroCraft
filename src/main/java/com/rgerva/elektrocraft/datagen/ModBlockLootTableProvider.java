@@ -15,6 +15,7 @@
 package com.rgerva.elektrocraft.datagen;
 
 import com.rgerva.elektrocraft.block.ModBlocks;
+import com.rgerva.elektrocraft.item.ModItems;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -39,7 +40,32 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        dropSelf(ModBlocks.DUMMY_BLOCK.get());
+        LootTableOre(ModBlocks.LEAD_ORE.get(), ModItems.LEAD_RAW.get(), 0, 0);
+        LootTableOre(ModBlocks.LEAD_DEEPSLATE_ORE.get(), ModItems.LEAD_RAW.get(), 0, 0);
+        LootTableOre(ModBlocks.LEAD_NETHER_ORE.get(), ModItems.LEAD_RAW.get(), 2.0F, 3.0F);
+        LootTableOre(ModBlocks.LEAD_END_ORE.get(), ModItems.LEAD_RAW.get(), 2.0F, 3.0F);
+
+        dropSelf(ModBlocks.LEAD_BLOCK.get());
+        dropSelf(ModBlocks.LEAD_RAW_BLOCK.get());
+
+        LootTableOre(ModBlocks.TIN_ORE.get(), ModItems.TIN_RAW.get(), 0, 0);
+        LootTableOre(ModBlocks.TIN_DEEPSLATE_ORE.get(), ModItems.TIN_RAW.get(), 0, 0);
+        LootTableOre(ModBlocks.TIN_NETHER_ORE.get(), ModItems.TIN_RAW.get(), 2.0F, 3.0F);
+        LootTableOre(ModBlocks.TIN_END_ORE.get(), ModItems.TIN_RAW.get(), 2.0F, 3.0F);
+
+        dropSelf(ModBlocks.TIN_BLOCK.get());
+        dropSelf(ModBlocks.TIN_RAW_BLOCK.get());
+    }
+
+    protected void LootTableOre(Block pInput, Item pOutput, float minDrops, float maxDrops) {
+        if (minDrops == 0 && maxDrops == 0) {
+            add(pInput,
+                    block -> createOreDrop(pInput, pOutput));
+        } else {
+            add(pInput,
+                    block -> createMultipleOreDrops(pInput, pOutput, minDrops, maxDrops));
+
+        }
     }
 
     protected LootTable.Builder createMultipleOreDrops(Block pBlock, Item item, float minDrops, float maxDrops) {

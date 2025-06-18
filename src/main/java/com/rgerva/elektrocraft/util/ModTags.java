@@ -33,6 +33,8 @@ public class ModTags {
 
     public static class Items {
 
+        public static final TagKey<Item> WIRE_ITEMS = createTag("wire_items");
+
         private static TagKey<Item> createTag(String name) {
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, name));
         }
