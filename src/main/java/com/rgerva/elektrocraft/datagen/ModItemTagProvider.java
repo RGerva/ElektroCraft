@@ -33,5 +33,8 @@ public class ModItemTagProvider extends ItemTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(ModTags.Items.WIRE_ITEMS)
                 .add(ModItems.TIN_SOLDER_WIRE.get());
+
+        this.tag(ModTags.Items.RESISTORS)
+                .add(ModItems.BLANK_RESISTOR.get());
     }
 }

@@ -15,4 +15,11 @@
 package com.rgerva.elektrocraft.util;
 
 public class ModUtils {
+    public static class ModResistorUtil {
+        public static int calculateResistance(ModItemProperties.ResistorColorCode first, ModItemProperties.ResistorColorCode second, ModItemProperties.ResistorColorCode multiplier) {
+            int significantFigures = first.getDigit() * 10 + second.getDigit();
+            int multiplierValue = (int) Math.pow(10, multiplier.getDigit());
+            return significantFigures * multiplierValue;
+        }
+    }
 }

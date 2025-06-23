@@ -15,6 +15,7 @@
 package com.rgerva.elektrocraft.gui;
 
 import com.rgerva.elektrocraft.ElektroCraft;
+import com.rgerva.elektrocraft.gui.menu.ResistorAssembleMenu;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -24,10 +25,16 @@ import net.neoforged.neoforge.network.IContainerFactory;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.function.Supplier;
+
 public class ModGUI {
 
     public static final DeferredRegister<MenuType<?>> MENUS =
             DeferredRegister.create(BuiltInRegistries.MENU, ElektroCraft.MOD_ID);
+
+
+    public static final Supplier<MenuType<ResistorAssembleMenu>> RESISTOR_ASSEMBLE_MENU =
+            registerMenuType("resistor_assemble", ResistorAssembleMenu::new);
 
 
     private static <T extends AbstractContainerMenu> DeferredHolder<MenuType<?>, MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {

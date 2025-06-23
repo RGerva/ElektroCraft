@@ -20,12 +20,11 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.server.command.ConfigCommand;
 
-@EventBusSubscriber(modid = ElektroCraft.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = ElektroCraft.MOD_ID)
 public class ModGameEvents {
 
     @SubscribeEvent
     public static void onCommandsRegister(RegisterCommandsEvent event) {
-
         ConfigCommand.register(event.getDispatcher());
     }
 }

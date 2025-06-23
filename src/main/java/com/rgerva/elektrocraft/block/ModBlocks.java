@@ -15,6 +15,7 @@
 package com.rgerva.elektrocraft.block;
 
 import com.rgerva.elektrocraft.ElektroCraft;
+import com.rgerva.elektrocraft.block.resitor.ResistorAssembleBlock;
 import com.rgerva.elektrocraft.item.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -132,6 +134,16 @@ public class ModBlocks {
 
     //endregion
 
+    //region RESISTOR
+
+    public static final DeferredBlock<Block> RESISTOR_ASSEMBLE = registerBlock("resistor_assemble",
+            (properties) -> new ResistorAssembleBlock(BlockBehaviour.Properties.of()
+                    .setId(id("resistor_assemble"))
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(2.5F).sound(SoundType.WOOD)
+                    .ignitedByLava()));
+
+    //endregion
     protected static ResourceKey<Block> id(@NotNull String path) {
         return ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, path));
     }

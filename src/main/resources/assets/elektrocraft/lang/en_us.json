@@ -15,6 +15,8 @@
   "block.elektrocraft.tin_nether_ore": "Nether Tin Ore",
   "block.elektrocraft.tin_ore": "Tin Ore",
 
+  "block.elektrocraft.resistor_assemble": "Resistor Assemble",
+
   "item.elektrocraft.lead_ingot": "Lead Ingot",
   "item.elektrocraft.lead_nugget": "Lead Nugget",
   "item.elektrocraft.lead_raw": "Lead Raw",
@@ -27,5 +29,9 @@
 
   "item.elektrocraft.tin_solder": "Tin Solder",
   "item.elektrocraft.tin_solder_wire": "Tin Solder Wire",
-  "item.elektrocraft.hammer": "Hammer"
+  "item.elektrocraft.hammer": "Hammer",
+  "item.elektrocraft.blank_resistor": "Blank Resistor",
+
+  "tooltip.elektrocraft.shift_details": "Press [SHIFT] for details",
+  "tooltip.elektrocraft.resistance" : "Resistance Value: "
 }

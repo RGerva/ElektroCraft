@@ -97,6 +97,18 @@ public class ModRecipeProvider extends RecipeProvider {
         customSolderRecipe(ModItems.TIN_DUST, ModItems.LEAD_DUST, ModItems.TIN_SOLDER, "solder");
 
         oreCook(this.output, List.of(ModItems.TIN_SOLDER.get()), RecipeCategory.MISC, ModItems.TIN_SOLDER_WIRE.get(), "solder");
+
+        this.shaped(RecipeCategory.MISC, ModItems.BLANK_RESISTOR.get(), 2)
+                .define('T', Items.TERRACOTTA)
+                .define('R', Items.REDSTONE)
+                .define('L', ModItems.LEAD_INGOT.get())
+                .pattern(" T ")
+                .pattern("LRL")
+                .pattern(" T ")
+                .group(getItemName(ModItems.BLANK_RESISTOR.get()))
+                .unlockedBy(getHasName(ModItems.LEAD_INGOT.get()), has(ModItems.LEAD_INGOT.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID,
+                        getSimpleRecipeName(ModItems.BLANK_RESISTOR.get()))));
     }
 
     protected void customHammerRecipe(ItemLike pInput, ItemLike pOutput) {

@@ -15,6 +15,7 @@
 package com.rgerva.elektrocraft.item;
 
 import com.rgerva.elektrocraft.ElektroCraft;
+import com.rgerva.elektrocraft.item.resistor.ResistorItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -74,6 +75,9 @@ public class ModItems {
 
     public static final DeferredItem<Item> TIN_SOLDER_WIRE = ITEMS.register("tin_solder_wire",
             () -> new Item(new Item.Properties().setId(id("tin_solder_wire"))));
+
+    public static final DeferredItem<Item> BLANK_RESISTOR = ITEMS.register("blank_resistor",
+            () -> new ResistorItem(new Item.Properties().setId(id("blank_resistor")), 0));
 
     protected static ResourceKey<Item> id(@NotNull String path) {
         return ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, path));

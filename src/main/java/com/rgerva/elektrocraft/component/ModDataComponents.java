@@ -14,6 +14,7 @@
 
 package com.rgerva.elektrocraft.component;
 
+import com.mojang.serialization.Codec;
 import com.rgerva.elektrocraft.ElektroCraft;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
@@ -27,6 +28,8 @@ public class ModDataComponents {
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES =
             DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, ElektroCraft.MOD_ID);
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> RESISTANCE =
+            register("resistance", builder -> builder.persistent(Codec.INT));
 
     private static <T> DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name,
                                                                                            UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
