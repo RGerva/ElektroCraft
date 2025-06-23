@@ -17,11 +17,6 @@ package com.rgerva.elektrocraft.datagen;
 import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.block.ModBlocks;
 import com.rgerva.elektrocraft.item.ModItems;
-import com.rgerva.elektrocraft.recipe.HammerRecipe;
-import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.advancements.AdvancementRequirements;
-import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -31,7 +26,6 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
@@ -97,27 +91,21 @@ public class ModRecipeProvider extends RecipeProvider {
                         .save(this.output, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID,
                                 getSimpleRecipeName(ModItems.HAMMER.get()).concat("_from_").concat(getSimpleRecipeName(Items.IRON_INGOT)))));
 
-        hammeringRecipe(output, Ingredient.of(ModItems.LEAD_INGOT), ModItems.LEAD_DUST.get(), 2, "lead_to_dust");
+        customHammerRecipe(ModItems.LEAD_INGOT, ModItems.LEAD_DUST);
+        customHammerRecipe(ModItems.TIN_INGOT, ModItems.TIN_DUST);
 
         customSolderRecipe(ModItems.TIN_DUST, ModItems.LEAD_DUST, ModItems.TIN_SOLDER, "solder");
 
         oreCook(this.output, List.of(ModItems.TIN_SOLDER.get()), RecipeCategory.MISC, ModItems.TIN_SOLDER_WIRE.get(), "solder");
     }
 
-    private void hammeringRecipe(RecipeOutput output, Ingredient input, ItemLike result, int count, String name) {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, name);
-        ItemStack stack = new ItemStack(result, count);
-        HammerRecipe recipe = new HammerRecipe(input, stack);
-
-        ItemLike item = input.getValues().get(0).value();
-
-        AdvancementHolder advancement = output.advancement()
-                .addCriterion("has_" + name, InventoryChangeTrigger.TriggerInstance.hasItems(item))
-                .rewards(AdvancementRewards.Builder.recipe(ResourceKey.create(Registries.RECIPE, id)))
-                .requirements(AdvancementRequirements.Strategy.OR)
-                .build(id.withPrefix("recipes/"));
-
-        output.accept(ResourceKey.create(Registries.RECIPE, id), recipe, advancement);
+    protected void customHammerRecipe(ItemLike pInput, ItemLike pOutput) {
+        this.shapeless(RecipeCategory.MISC, pOutput, 2)
+                .requires(pInput)
+                .requires(ModItems.HAMMER.get())
+                .group(getItemName(pOutput))
+                .unlockedBy(getHasName(pOutput), has(pOutput))
+                .save(this.output, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, getSimpleRecipeName(pOutput))));
     }
 
     protected void customSolderRecipe(ItemLike pInput1, ItemLike pInput2, ItemLike pOutput, String pGroup) {

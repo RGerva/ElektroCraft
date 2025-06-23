@@ -19,6 +19,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -59,7 +60,17 @@ public class ModItems {
     //endregion
 
     public static final DeferredItem<Item> HAMMER = ITEMS.register("hammer",
-            () -> new Item(new Item.Properties().setId(id("hammer")).durability(10).stacksTo(1)));
+            () -> new Item(new Item.Properties().setId(id("hammer")).durability(10).stacksTo(1)){
+                @Override
+                public @NotNull ItemStack getCraftingRemainder(ItemStack itemStack) {
+                    ItemStack result = itemStack.copy();
+                    result.setDamageValue(result.getDamageValue() + 1);
+                    if (result.getDamageValue() >= result.getMaxDamage()) {
+                        return ItemStack.EMPTY;
+                    }
+                    return result;
+                }
+            });
 
     public static final DeferredItem<Item> TIN_SOLDER_WIRE = ITEMS.register("tin_solder_wire",
             () -> new Item(new Item.Properties().setId(id("tin_solder_wire"))));
