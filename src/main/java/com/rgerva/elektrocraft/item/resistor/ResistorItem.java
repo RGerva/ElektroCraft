@@ -15,6 +15,7 @@
 package com.rgerva.elektrocraft.item.resistor;
 
 import com.rgerva.elektrocraft.component.ModDataComponents;
+import com.rgerva.elektrocraft.util.ModUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -49,7 +50,7 @@ public class ResistorItem extends Item {
             }
 
             tooltipAdder.accept(Component.translatable("tooltip.elektrocraft.resistance")
-                    .append(resistance + " Ω")
+                    .append(ModUtils.ModResistorUtil.getResistanceWithPrefix(resistance))
                     .withStyle(ChatFormatting.GRAY));
         } else {
             tooltipAdder.accept(Component.translatable("tooltip.elektrocraft.shift_details")

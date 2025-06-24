@@ -14,6 +14,8 @@
 
 package com.rgerva.elektrocraft.util;
 
+import java.util.Locale;
+
 public class ModUtils {
     public static class ModResistorUtil {
         public static int calculateResistance(ModItemProperties.ResistorColorCode first, ModItemProperties.ResistorColorCode second, ModItemProperties.ResistorColorCode multiplier) {
@@ -21,5 +23,24 @@ public class ModUtils {
             int multiplierValue = (int) Math.pow(10, multiplier.getDigit());
             return significantFigures * multiplierValue;
         }
+
+        private static final String[] RESISTANCE_PREFIXES = new String[]{
+                "Ω", "kΩ", "MΩ", "GΩ", "TΩ", "PΩ"
+        };
+
+        public static String getResistanceWithPrefix(long resistance) {
+            double value = resistance;
+            int index = 0;
+            while (value >= 1000 && index + 1 < RESISTANCE_PREFIXES.length) {
+                value /= 1000.0;
+                index++;
+            }
+
+            String formatted = (value % 1.0 == 0)
+                    ? String.format(Locale.ENGLISH, "%d", (long) value)
+                    : String.format(Locale.ENGLISH, "%.2f", value);
+            return formatted + " " + RESISTANCE_PREFIXES[index];
+        }
+
     }
 }
