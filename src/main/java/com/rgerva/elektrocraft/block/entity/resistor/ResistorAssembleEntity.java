@@ -14,6 +14,7 @@
 
 package com.rgerva.elektrocraft.block.entity.resistor;
 
+import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.block.entity.ModBlockEntities;
 import com.rgerva.elektrocraft.component.ModDataComponents;
 import com.rgerva.elektrocraft.gui.menu.ResistorAssembleMenu;
@@ -115,10 +116,11 @@ public class ResistorAssembleEntity extends BlockEntity implements MenuProvider 
                     ItemStack painted = new ItemStack(ModItems.BLANK_RESISTOR.get());
                     painted.set(ModDataComponents.RESISTANCE.get(), resistance);
                     entity.itemHandler.setStackInSlot(OUTPUT_SLOT, painted);
+
                 }
 
             } catch (IllegalArgumentException e) {
-
+                ElektroCraft.LOGGER.warn("Wrong color code: {}", e.getMessage());
             }
 
         } else {
@@ -164,5 +166,6 @@ public class ResistorAssembleEntity extends BlockEntity implements MenuProvider 
     @Override
     public void onDataPacket(Connection net, ValueInput valueInput) {
         super.onDataPacket(net, valueInput);
+        loadAdditional(valueInput);
     }
 }
