@@ -117,6 +117,10 @@ public class ResistorAssembleEntity extends BlockEntity implements MenuProvider 
                     painted.set(ModDataComponents.RESISTANCE.get(), resistance);
                     entity.itemHandler.setStackInSlot(OUTPUT_SLOT, painted);
 
+                    blank.shrink(1);
+                    first.shrink(1);
+                    second.shrink(1);
+                    third.shrink(1);
                 }
 
             } catch (IllegalArgumentException e) {
@@ -142,7 +146,8 @@ public class ResistorAssembleEntity extends BlockEntity implements MenuProvider 
 
     @Override
     protected void saveAdditional(ValueOutput valueOutput) {
-        valueOutput.putChild("resistor_assemble_inventory", itemHandler);
+        valueOutput.putChild("resistor_assemble.inventory", itemHandler);
+        itemHandler.serialize(valueOutput);
         super.saveAdditional(valueOutput);
     }
 

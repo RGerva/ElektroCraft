@@ -17,12 +17,14 @@ package com.rgerva.elektrocraft.gui.menu;
 import com.rgerva.elektrocraft.block.ModBlocks;
 import com.rgerva.elektrocraft.block.entity.resistor.ResistorAssembleEntity;
 import com.rgerva.elektrocraft.gui.ModGUI;
+import com.rgerva.elektrocraft.item.ModItems;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -42,11 +44,35 @@ public class ResistorAssembleMenu extends AbstractContainerMenu {
         this.level = inventory.player.level();
         this.entity = (ResistorAssembleEntity) blockEntity;
 
-        this.addSlot(new SlotItemHandler(this.entity.itemHandler, ResistorAssembleEntity.BLANK_RESISTOR_SLOT, 40, 35));
-        this.addSlot(new SlotItemHandler(this.entity.itemHandler, ResistorAssembleEntity.FIRST_DYE_SLOT, 60, 35));
-        this.addSlot(new SlotItemHandler(this.entity.itemHandler, ResistorAssembleEntity.SECOND_DYE_SLOT, 80, 35));
-        this.addSlot(new SlotItemHandler(this.entity.itemHandler, ResistorAssembleEntity.THIRD_DYE_SLOT, 100, 35));
-        this.addSlot(new SlotItemHandler(this.entity.itemHandler, ResistorAssembleEntity.OUTPUT_SLOT, 140, 35){
+        this.addSlot(new SlotItemHandler(this.entity.itemHandler, ResistorAssembleEntity.BLANK_RESISTOR_SLOT, 9, 35){
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return stack.is(ModItems.BLANK_RESISTOR.get());
+            }
+        });
+
+        this.addSlot(new SlotItemHandler(this.entity.itemHandler, ResistorAssembleEntity.FIRST_DYE_SLOT, 48, 35) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return stack.getItem() instanceof DyeItem;
+            }
+        });
+
+        this.addSlot(new SlotItemHandler(this.entity.itemHandler, ResistorAssembleEntity.SECOND_DYE_SLOT, 68, 35) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return stack.getItem() instanceof DyeItem;
+            }
+        });
+
+        this.addSlot(new SlotItemHandler(this.entity.itemHandler, ResistorAssembleEntity.THIRD_DYE_SLOT, 87, 35) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return stack.getItem() instanceof DyeItem;
+            }
+        });
+        
+        this.addSlot(new SlotItemHandler(this.entity.itemHandler, ResistorAssembleEntity.OUTPUT_SLOT, 147, 35){
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return false;
@@ -73,23 +99,33 @@ public class ResistorAssembleMenu extends AbstractContainerMenu {
             ItemStack slotStack = slot.getItem();
             slotStackCopy = slotStack.copy();
 
-            if (pIndex < 1) {
-                if (!moveItemStackTo(slotStack, 1, 37, true)){
+            // Se o item está nos slots de entrada (0-3), mover para inventário do jogador
+            if (pIndex >= 0 && pIndex <= 3) {
+                if (!moveItemStackTo(slotStack, 4, slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onQuickCraft(slotStack, slotStackCopy);
             }
-            else if (!moveItemStackTo(slotStack, 0, 1, false)){
-                return ItemStack.EMPTY;
+            else {
+                if (isResistor(slotStack)) {
+                    if (!moveItemStackTo(slotStack, 0, 1, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                }
+                else if (isDye(slotStack)) {
+                    if (!moveItemStackTo(slotStack, 1, 4, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else {
+                    return ItemStack.EMPTY;
+                }
             }
 
-            if (slotStack.getCount() == 0){
+            if (slotStack.getCount() == 0) {
                 slot.set(ItemStack.EMPTY);
-            }
-            else{
+            } else {
                 slot.setChanged();
             }
-
 
             if (slotStack.getCount() == slotStackCopy.getCount()) {
                 return ItemStack.EMPTY;
@@ -102,9 +138,18 @@ public class ResistorAssembleMenu extends AbstractContainerMenu {
         return slotStackCopy;
     }
 
+
     @Override
     public boolean stillValid(Player player) {
         return stillValid(ContainerLevelAccess.create(level, entity.getBlockPos()),
                 player, ModBlocks.RESISTOR_ASSEMBLE.get());
+    }
+
+    private boolean isResistor(ItemStack stack) {
+        return stack.getItem() == ModItems.BLANK_RESISTOR.get();
+    }
+
+    private boolean isDye(ItemStack stack) {
+        return stack.getItem() instanceof DyeItem;
     }
 }
