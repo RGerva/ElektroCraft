@@ -31,6 +31,7 @@
   "item.elektrocraft.tin_solder_wire": "Tin Solder Wire",
   "item.elektrocraft.hammer": "Hammer",
   "item.elektrocraft.blank_resistor": "Blank Resistor",
+  "item.elektrocraft.resistor": "Resistor",
 
   "tooltip.elektrocraft.shift_details": "Press [SHIFT] for details",
   "tooltip.elektrocraft.resistance" : "Resistance Value: "

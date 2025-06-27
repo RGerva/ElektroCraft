@@ -62,6 +62,7 @@ public class ModCreativeTab {
                         output.accept(ModItems.TIN_SOLDER_WIRE.get());
                         output.accept(ModItems.HAMMER.get());
                         output.accept(ModItems.BLANK_RESISTOR.get());
+                        output.accept(ModItems.RESISTOR.get());
 
                         output.accept(ModBlocks.RESISTOR_ASSEMBLE.get());
 

@@ -66,6 +66,7 @@ public class ModModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ModItems.HAMMER.get(), ModelTemplates.FLAT_ITEM);
 
         itemModels.generateFlatItem(ModItems.BLANK_RESISTOR.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.RESISTOR.get(), ModelTemplates.FLAT_ITEM);
     }
 
     protected void registerBlock(BlockModelGenerators blockModels) {

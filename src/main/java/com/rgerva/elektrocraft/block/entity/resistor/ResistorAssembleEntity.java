@@ -102,7 +102,7 @@ public class ResistorAssembleEntity extends BlockEntity implements MenuProvider 
 
                 boolean shouldCreate = true;
 
-                if (!output.isEmpty() && output.is(ModItems.BLANK_RESISTOR.get())) {
+                if (!output.isEmpty() && output.is(ModItems.RESISTOR.get())) {
                     Integer existingResistanceObj = output.get(ModDataComponents.RESISTANCE.get());
                     if (existingResistanceObj != null) {
                         int existingResistance = existingResistanceObj;
@@ -113,7 +113,7 @@ public class ResistorAssembleEntity extends BlockEntity implements MenuProvider 
                 }
 
                 if (shouldCreate) {
-                    ItemStack painted = new ItemStack(ModItems.BLANK_RESISTOR.get());
+                    ItemStack painted = new ItemStack(ModItems.RESISTOR.get());
                     painted.set(ModDataComponents.RESISTANCE.get(), resistance);
                     entity.itemHandler.setStackInSlot(OUTPUT_SLOT, painted);
 

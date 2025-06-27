@@ -35,6 +35,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .add(ModItems.TIN_SOLDER_WIRE.get());
 
         this.tag(ModTags.Items.RESISTORS)
-                .add(ModItems.BLANK_RESISTOR.get());
+                .add(ModItems.BLANK_RESISTOR.get())
+                .add(ModItems.RESISTOR.get());
     }
 }

@@ -79,6 +79,9 @@ public class ModItems {
     public static final DeferredItem<Item> BLANK_RESISTOR = ITEMS.register("blank_resistor",
             () -> new ResistorItem(new Item.Properties().setId(id("blank_resistor")), 0));
 
+    public static final DeferredItem<Item> RESISTOR = ITEMS.register("resistor",
+            () -> new ResistorItem(new Item.Properties().setId(id("resistor")), 0));
+
     protected static ResourceKey<Item> id(@NotNull String path) {
         return ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, path));
     }
