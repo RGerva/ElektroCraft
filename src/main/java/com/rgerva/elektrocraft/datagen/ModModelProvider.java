@@ -67,6 +67,9 @@ public class ModModelProvider extends ModelProvider {
 
         itemModels.generateFlatItem(ModItems.BLANK_RESISTOR.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.RESISTOR.get(), ModelTemplates.FLAT_ITEM);
+
+        itemModels.generateFlatItem(ModItems.SILICON.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.DIODE.get(), ModelTemplates.FLAT_ITEM);
     }
 
     protected void registerBlock(BlockModelGenerators blockModels) {
@@ -90,7 +93,7 @@ public class ModModelProvider extends ModelProvider {
     private void horizontalBlockWithItem(Holder<Block> block, boolean uniqueBottomTexture) {
         ResourceLocation model = TexturedModel.createDefault(unused -> new TextureMapping().
                         put(TextureSlot.UP, TextureMapping.getBlockTexture(block.value(), "_top")).
-                        put(TextureSlot.DOWN, TextureMapping.getBlockTexture(block.value(), uniqueBottomTexture?"_bottom":"_top")).
+                        put(TextureSlot.DOWN, TextureMapping.getBlockTexture(block.value(), uniqueBottomTexture ? "_bottom" : "_top")).
                         put(TextureSlot.NORTH, TextureMapping.getBlockTexture(block.value(), "_side")).
                         put(TextureSlot.SOUTH, TextureMapping.getBlockTexture(block.value(), "_side")).
                         put(TextureSlot.EAST, TextureMapping.getBlockTexture(block.value(), "_side")).

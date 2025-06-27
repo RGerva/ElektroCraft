@@ -83,16 +83,16 @@ public class ModRecipeProvider extends RecipeProvider {
         this.shaped(RecipeCategory.TOOLS, ModItems.HAMMER.get(), 1)
                 .define('#', Items.IRON_INGOT)
                 .define('@', Items.STICK)
-                        .pattern(" # ")
-                        .pattern(" @#")
-                        .pattern("@  ")
-                        .group(getItemName(ModItems.HAMMER.get()))
-                        .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
-                        .save(this.output, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID,
-                                getSimpleRecipeName(ModItems.HAMMER.get()).concat("_from_").concat(getSimpleRecipeName(Items.IRON_INGOT)))));
+                .pattern(" # ")
+                .pattern(" @#")
+                .pattern("@  ")
+                .group(getItemName(ModItems.HAMMER.get()))
+                .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
+                .save(this.output, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID,
+                        getSimpleRecipeName(ModItems.HAMMER.get()).concat("_from_").concat(getSimpleRecipeName(Items.IRON_INGOT)))));
 
-        customHammerRecipe(ModItems.LEAD_INGOT, ModItems.LEAD_DUST);
-        customHammerRecipe(ModItems.TIN_INGOT, ModItems.TIN_DUST);
+        customHammerRecipe(ModItems.LEAD_INGOT, ModItems.LEAD_DUST, 2);
+        customHammerRecipe(ModItems.TIN_INGOT, ModItems.TIN_DUST, 2);
 
         customSolderRecipe(ModItems.TIN_DUST, ModItems.LEAD_DUST, ModItems.TIN_SOLDER, "solder");
 
@@ -109,10 +109,37 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(ModItems.LEAD_INGOT.get()), has(ModItems.LEAD_INGOT.get()))
                 .save(this.output, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID,
                         getSimpleRecipeName(ModItems.BLANK_RESISTOR.get()))));
+
+        this.shaped(RecipeCategory.MISC, ModBlocks.RESISTOR_ASSEMBLE.get(), 1)
+                .define('W', Ingredient.of(Items.OAK_PLANKS))
+                .define('R', ModItems.BLANK_RESISTOR.get())
+                .pattern("WWW")
+                .pattern("WRW")
+                .pattern("WWW")
+                .group(getItemName(ModBlocks.RESISTOR_ASSEMBLE.get()))
+                .unlockedBy(getHasName(ModItems.BLANK_RESISTOR.get()), has(ModItems.BLANK_RESISTOR.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID,
+                        getSimpleRecipeName(ModBlocks.RESISTOR_ASSEMBLE.get()))));
+
+        customHammerRecipe(Items.QUARTZ, ModItems.SILICON, 4);
+
+        this.shaped(RecipeCategory.MISC, ModItems.DIODE.get(), 2)
+                .define('R', Items.REDSTONE)
+                .define('G', Items.GLASS_PANE)
+                .define('I', Items.IRON_NUGGET)
+                .define('Q', Items.QUARTZ)
+                .define('S', ModItems.SILICON.get())
+                .pattern("RSR")
+                .pattern("GIG")
+                .pattern(" Q ")
+                .group(getItemName(ModItems.DIODE.get()))
+                .unlockedBy(getHasName(ModItems.SILICON.get()), has(ModItems.SILICON.get()))
+                .save(this.output, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID,
+                        getSimpleRecipeName(ModItems.DIODE.get()))));
     }
 
-    protected void customHammerRecipe(ItemLike pInput, ItemLike pOutput) {
-        this.shapeless(RecipeCategory.MISC, pOutput, 2)
+    protected void customHammerRecipe(ItemLike pInput, ItemLike pOutput, int count) {
+        this.shapeless(RecipeCategory.MISC, pOutput, count)
                 .requires(pInput)
                 .requires(ModItems.HAMMER.get())
                 .group(getItemName(pOutput))
@@ -184,9 +211,9 @@ public class ModRecipeProvider extends RecipeProvider {
      *
      * @param recipeOutput is like this.output
      * @param pIngredients is the list of ingredients
-     * @param pCategory the category of output
-     * @param pResult is the output of recipe
-     * @param pGroup is the group of material
+     * @param pCategory    the category of output
+     * @param pResult      is the output of recipe
+     * @param pGroup       is the group of material
      */
     protected void oreCook(RecipeOutput recipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, String pGroup) {
         oreCooking(recipeOutput, RecipeSerializer.SMELTING_RECIPE, SmeltingRecipe::new, pIngredients, pCategory, pResult,

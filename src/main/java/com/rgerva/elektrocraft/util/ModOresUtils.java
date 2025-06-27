@@ -22,7 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ModOresUtils {
-    public record ModBlockVeinProperties(int veinSize, int minY, int maxY, int count) {}
+    public record ModBlockVeinProperties(int veinSize, int minY, int maxY, int count) {
+    }
 
     private static final Map<Block, ModBlockVeinProperties> blockPropertiesMap = new HashMap<>();
 

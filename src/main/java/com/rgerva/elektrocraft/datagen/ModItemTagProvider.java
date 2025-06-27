@@ -37,5 +37,10 @@ public class ModItemTagProvider extends ItemTagsProvider {
         this.tag(ModTags.Items.RESISTORS)
                 .add(ModItems.BLANK_RESISTOR.get())
                 .add(ModItems.RESISTOR.get());
+
+        this.tag(ModTags.Items.VOLTAGE)
+                .add(ModItems.DIODE.get());
+
+        this.tag(ModTags.Items.CURRENT);
     }
 }

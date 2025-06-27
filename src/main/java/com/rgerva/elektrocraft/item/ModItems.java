@@ -15,6 +15,7 @@
 package com.rgerva.elektrocraft.item;
 
 import com.rgerva.elektrocraft.ElektroCraft;
+import com.rgerva.elektrocraft.item.diode.DiodeItem;
 import com.rgerva.elektrocraft.item.resistor.ResistorItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -61,7 +62,7 @@ public class ModItems {
     //endregion
 
     public static final DeferredItem<Item> HAMMER = ITEMS.register("hammer",
-            () -> new Item(new Item.Properties().setId(id("hammer")).durability(10).stacksTo(1)){
+            () -> new Item(new Item.Properties().setId(id("hammer")).durability(10).stacksTo(1)) {
                 @Override
                 public @NotNull ItemStack getCraftingRemainder(ItemStack itemStack) {
                     ItemStack result = itemStack.copy();
@@ -81,6 +82,12 @@ public class ModItems {
 
     public static final DeferredItem<Item> RESISTOR = ITEMS.register("resistor",
             () -> new ResistorItem(new Item.Properties().setId(id("resistor")), 0));
+
+    public static final DeferredItem<Item> DIODE = ITEMS.register("diode",
+            () -> new DiodeItem(new Item.Properties().setId(id("diode"))));
+
+    public static final DeferredItem<Item> SILICON = ITEMS.register("silicon",
+            () -> new Item(new Item.Properties().setId(id("silicon"))));
 
     protected static ResourceKey<Item> id(@NotNull String path) {
         return ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, path));

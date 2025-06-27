@@ -66,6 +66,9 @@ public class ModCreativeTab {
 
                         output.accept(ModBlocks.RESISTOR_ASSEMBLE.get());
 
+                        output.accept(ModItems.SILICON.get());
+                        output.accept(ModItems.DIODE.get());
+
                     }))
                     .build());
 

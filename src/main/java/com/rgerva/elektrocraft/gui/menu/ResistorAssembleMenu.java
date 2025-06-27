@@ -44,7 +44,7 @@ public class ResistorAssembleMenu extends AbstractContainerMenu {
         this.level = inventory.player.level();
         this.entity = (ResistorAssembleEntity) blockEntity;
 
-        this.addSlot(new SlotItemHandler(this.entity.itemHandler, ResistorAssembleEntity.BLANK_RESISTOR_SLOT, 9, 35){
+        this.addSlot(new SlotItemHandler(this.entity.itemHandler, ResistorAssembleEntity.BLANK_RESISTOR_SLOT, 9, 35) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return stack.is(ModItems.BLANK_RESISTOR.get());
@@ -71,8 +71,8 @@ public class ResistorAssembleMenu extends AbstractContainerMenu {
                 return stack.getItem() instanceof DyeItem;
             }
         });
-        
-        this.addSlot(new SlotItemHandler(this.entity.itemHandler, ResistorAssembleEntity.OUTPUT_SLOT, 147, 35){
+
+        this.addSlot(new SlotItemHandler(this.entity.itemHandler, ResistorAssembleEntity.OUTPUT_SLOT, 147, 35) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return false;
@@ -105,14 +105,12 @@ public class ResistorAssembleMenu extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
                 slot.onQuickCraft(slotStack, slotStackCopy);
-            }
-            else {
+            } else {
                 if (isResistor(slotStack)) {
                     if (!moveItemStackTo(slotStack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                }
-                else if (isDye(slotStack)) {
+                } else if (isDye(slotStack)) {
                     if (!moveItemStackTo(slotStack, 1, 4, false)) {
                         return ItemStack.EMPTY;
                     }
