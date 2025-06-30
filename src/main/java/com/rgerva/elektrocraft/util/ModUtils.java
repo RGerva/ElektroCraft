@@ -116,4 +116,31 @@ public class ModUtils {
             return formatted + " " + CURRENT_PREFIXES[index];
         }
     }
+
+    public static class ModCapacitanceUtil {
+        private static final String[] CAPACITANCE_PREFIXES = new String[]{
+                "pF", "nF", "μF", "mF", "F", "kF", "MF", "GF"
+        };
+
+        private static final double[] THRESHOLDS = new double[]{
+                1e-12, 1e-9, 1e-6, 1e-3, 1, 1e3, 1e6, 1e9
+        };
+
+        public static String getCapacitanceWithPrefix(double farads) {
+            int index = 0;
+            for (int i = THRESHOLDS.length - 1; i >= 0; i--) {
+                if (farads >= THRESHOLDS[i]) {
+                    index = i;
+                    break;
+                }
+            }
+
+            double adjusted = farads / THRESHOLDS[index];
+            String formatted = (adjusted % 1.0 == 0)
+                    ? String.format(Locale.ENGLISH, "%d", (long) adjusted)
+                    : String.format(Locale.ENGLISH, "%.2f", adjusted);
+
+            return formatted + " " + CAPACITANCE_PREFIXES[index];
+        }
+    }
 }

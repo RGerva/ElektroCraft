@@ -37,6 +37,9 @@ public class ModDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Double>> CURRENT =
             register("current", builder -> builder.persistent(Codec.DOUBLE));
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Double>> CAPACITANCE =
+            register("capacitance", builder -> builder.persistent(Codec.DOUBLE));
+
     private static <T> DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name,
                                                                                            UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
         return DATA_COMPONENT_TYPES.register(name, () -> builderOperator.apply(DataComponentType.builder()).build());

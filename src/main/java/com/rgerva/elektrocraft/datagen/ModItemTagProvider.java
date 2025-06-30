@@ -42,5 +42,8 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .add(ModItems.DIODE.get());
 
         this.tag(ModTags.Items.CURRENT);
+
+        this.tag(ModTags.Items.CAPACITANCE)
+                .add(ModItems.CAPACITOR.get());
     }
 }

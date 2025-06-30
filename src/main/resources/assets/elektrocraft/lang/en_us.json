@@ -33,11 +33,14 @@
   "item.elektrocraft.blank_resistor": "Blank Resistor",
   "item.elektrocraft.resistor": "Resistor",
 
+  "item.elektrocraft.capacitor": "Capacitor",
+
   "item.elektrocraft.silicon": "Silicon",
   "item.elektrocraft.diode": "Diode",
 
   "tooltip.elektrocraft.shift_details": "Press [SHIFT] for details",
   "tooltip.elektrocraft.resistance" : "Resistance Value: ",
   "tooltip.elektrocraft.voltage" : "Voltage Value: ",
-  "tooltip.elektrocraft.current" : "Current Value: "
+  "tooltip.elektrocraft.current" : "Current Value: ",
+  "tooltip.elektrocraft.capacitance" : "Capacitance Value: "
 }

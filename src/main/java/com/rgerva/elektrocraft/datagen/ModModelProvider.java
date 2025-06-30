@@ -70,6 +70,8 @@ public class ModModelProvider extends ModelProvider {
 
         itemModels.generateFlatItem(ModItems.SILICON.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.DIODE.get(), ModelTemplates.FLAT_ITEM);
+
+        itemModels.generateFlatItem(ModItems.CAPACITOR.get(), ModelTemplates.FLAT_ITEM);
     }
 
     protected void registerBlock(BlockModelGenerators blockModels) {

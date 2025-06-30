@@ -15,6 +15,7 @@
 package com.rgerva.elektrocraft.item;
 
 import com.rgerva.elektrocraft.ElektroCraft;
+import com.rgerva.elektrocraft.item.capacitor.CapacitorItem;
 import com.rgerva.elektrocraft.item.diode.DiodeItem;
 import com.rgerva.elektrocraft.item.resistor.ResistorItem;
 import net.minecraft.core.registries.Registries;
@@ -88,6 +89,9 @@ public class ModItems {
 
     public static final DeferredItem<Item> SILICON = ITEMS.register("silicon",
             () -> new Item(new Item.Properties().setId(id("silicon"))));
+
+    public static final DeferredItem<Item> CAPACITOR = ITEMS.register("capacitor",
+            () -> new CapacitorItem(new Item.Properties().setId(id("capacitor"))));
 
     protected static ResourceKey<Item> id(@NotNull String path) {
         return ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, path));

@@ -37,6 +37,7 @@ public class ModTags {
         public static final TagKey<Item> RESISTORS = createTag("resistor_items");
         public static final TagKey<Item> VOLTAGE = createTag("voltage_items");
         public static final TagKey<Item> CURRENT = createTag("current_items");
+        public static final TagKey<Item> CAPACITANCE = createTag("capacitance_items");
 
         private static TagKey<Item> createTag(String name) {
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, name));

@@ -69,6 +69,8 @@ public class ModCreativeTab {
                         output.accept(ModItems.SILICON.get());
                         output.accept(ModItems.DIODE.get());
 
+                        output.accept(ModItems.CAPACITOR.get());
+
                     }))
                     .build());
 
