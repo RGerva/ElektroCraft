@@ -12,7 +12,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
 
-package com.rgerva.elektrocraft.block.entity.resistor;
+package com.rgerva.elektrocraft.block.entity.station;
 
 import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.block.entity.ModBlockEntities;

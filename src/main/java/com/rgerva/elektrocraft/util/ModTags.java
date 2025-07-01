@@ -25,7 +25,6 @@ import net.minecraft.world.level.block.Block;
 public class ModTags {
     public static class Blocks {
 
-
         private static TagKey<Block> createTag(String name) {
             return BlockTags.create(ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, name));
         }
@@ -38,6 +37,7 @@ public class ModTags {
         public static final TagKey<Item> VOLTAGE = createTag("voltage_items");
         public static final TagKey<Item> CURRENT = createTag("current_items");
         public static final TagKey<Item> CAPACITANCE = createTag("capacitance_items");
+        public static final TagKey<Item> DIELECTRIC_CONSTANTS = createTag("dielectric_items");
 
         private static TagKey<Item> createTag(String name) {
             return ItemTags.create(ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, name));

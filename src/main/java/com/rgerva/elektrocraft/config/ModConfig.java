@@ -10,22 +10,15 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public class ModConfig {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    private static final ModConfigSpec.IntValue MAGIC_NUMBER = BUILDER
-            .comment("A magic number")
-            .defineInRange("magicNumber", 42, 0, Integer.MAX_VALUE);
-
-    public static final ModConfigSpec.ConfigValue<String> MAGIC_NUMBER_INTRODUCTION = BUILDER
-            .comment("What you want the introduction message to be for the magic number")
-            .define("magicNumberIntroduction", "The magic number is... ");
-
+    private static final ModConfigSpec.IntValue FE_PER_VOLT = BUILDER
+            .comment("How many FE equals 1 Volt (ex: 20 = 1V = 20FE)")
+            .defineInRange("fePerVolt", 20, 1, Integer.MAX_VALUE);
 
     public static final ModConfigSpec SPEC = BUILDER.build();
-    public static int magicNumber;
-    public static String magicNumberIntroduction;
+    public static int fePerVolt;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
-        magicNumber = MAGIC_NUMBER.get();
-        magicNumberIntroduction = MAGIC_NUMBER_INTRODUCTION.get();
+        fePerVolt = FE_PER_VOLT.get();
     }
 }

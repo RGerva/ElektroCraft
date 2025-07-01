@@ -42,6 +42,9 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.TIN_NETHER_ORE.get())
                 .add(ModBlocks.TIN_END_ORE.get());
 
+        tag(BlockTags.MINEABLE_WITH_AXE)
+                .add(ModBlocks.RESISTOR_ASSEMBLE.get());
+
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocks.LEAD_ORE.get())
                 .add(ModBlocks.LEAD_DEEPSLATE_ORE.get())
@@ -55,7 +58,12 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.TIN_NETHER_ORE.get())
                 .add(ModBlocks.TIN_END_ORE.get())
                 .add(ModBlocks.TIN_BLOCK.get())
-                .add(ModBlocks.TIN_RAW_BLOCK.get());
+                .add(ModBlocks.TIN_RAW_BLOCK.get())
+
+                .add(ModBlocks.CHARGER_STATION.get());
+
+        tag(BlockTags.NEEDS_STONE_TOOL)
+                .add(ModBlocks.RESISTOR_ASSEMBLE.get());
 
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(ModBlocks.LEAD_ORE.get())
@@ -70,6 +78,8 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.TIN_NETHER_ORE.get())
                 .add(ModBlocks.TIN_END_ORE.get())
                 .add(ModBlocks.TIN_BLOCK.get())
-                .add(ModBlocks.TIN_RAW_BLOCK.get());
+                .add(ModBlocks.TIN_RAW_BLOCK.get())
+
+                .add(ModBlocks.CHARGER_STATION.get());
     }
 }

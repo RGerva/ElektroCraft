@@ -28,7 +28,7 @@ import java.util.function.Consumer;
 
 public class CapacitorItem extends Item {
 
-    private static final double defaultCapacitance = 0;
+    private static final double defaultCapacitance = 0.0;
 
     public CapacitorItem(Properties properties) {
         super(properties);

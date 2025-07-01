@@ -14,9 +14,37 @@
 
 package com.rgerva.elektrocraft.util;
 
+import com.rgerva.elektrocraft.config.ModConfig;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+
 import java.util.Locale;
+import java.util.Map;
+import java.util.OptionalDouble;
 
 public class ModUtils {
+    public static class ModUnits {
+        public static int fePerVolt() {
+            return ModConfig.fePerVolt;
+        }
+
+        public static long toFE(double volts) {
+            return Math.round(volts * fePerVolt());
+        }
+
+        public static double toVolts(long fe) {
+            return fe / (double) fePerVolt();
+        }
+
+        public static String formatVolts(double volts) {
+            return String.format("%.2f V", volts);
+        }
+
+        public static String formatFE(long fe) {
+            return fe + " FE";
+        }
+    }
+
     public static class ModLaws {
         public static class Ohm {
             public static float getVoltage(float Amp, int resistance) {
@@ -75,6 +103,11 @@ public class ModUtils {
         public static String getVoltageWithPrefix(double volts) {
             int index = 0;
             for (int i = THRESHOLDS.length - 1; i >= 0; i--) {
+                if(volts == 0.0){
+                    index = 2;
+                    break;
+                }
+
                 if (volts >= THRESHOLDS[i]) {
                     index = i;
                     break;
@@ -102,6 +135,11 @@ public class ModUtils {
         public static String getCurrentWithPrefix(double amperes) {
             int index = 0;
             for (int i = THRESHOLDS.length - 1; i >= 0; i--) {
+                if(amperes == 0.0){
+                    index = 3;
+                    break;
+                }
+
                 if (amperes >= THRESHOLDS[i]) {
                     index = i;
                     break;
@@ -129,6 +167,11 @@ public class ModUtils {
         public static String getCapacitanceWithPrefix(double farads) {
             int index = 0;
             for (int i = THRESHOLDS.length - 1; i >= 0; i--) {
+                if(farads == 0.0){
+                    index = 4;
+                    break;
+                }
+
                 if (farads >= THRESHOLDS[i]) {
                     index = i;
                     break;
@@ -142,5 +185,23 @@ public class ModUtils {
 
             return formatted + " " + CAPACITANCE_PREFIXES[index];
         }
+
+        public static final Map<Item, Double> DIELECTRIC_CONSTANTS = Map.ofEntries(
+                Map.entry(Items.SLIME_BALL, 80.0),
+                Map.entry(Items.PAPER, 3.0),
+                Map.entry(Items.GLASS_PANE, 7.0),
+                Map.entry(Items.GLOWSTONE_DUST, 100.0),
+                Map.entry(Items.QUARTZ, 4.0),
+                Map.entry(Items.REDSTONE, 120.0),
+                Map.entry(Items.SNOWBALL, 1.0),
+                Map.entry(Items.HONEYCOMB, 5.0),
+                Map.entry(Items.AMETHYST_SHARD, 50.0)
+        );
+
+        public static OptionalDouble getDielectricConstant(Item item) {
+            Double value = DIELECTRIC_CONSTANTS.get(item);
+            return value != null ? OptionalDouble.of(value) : OptionalDouble.empty();
+        }
+
     }
 }

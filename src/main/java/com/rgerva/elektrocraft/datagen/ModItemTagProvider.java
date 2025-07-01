@@ -17,9 +17,12 @@ package com.rgerva.elektrocraft.datagen;
 import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.item.ModItems;
 import com.rgerva.elektrocraft.util.ModTags;
+import com.rgerva.elektrocraft.util.ModUtils;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.data.ItemTagsProvider;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -30,7 +33,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider provider) {
+    protected void addTags(HolderLookup.@NotNull Provider provider) {
         this.tag(ModTags.Items.WIRE_ITEMS)
                 .add(ModItems.TIN_SOLDER_WIRE.get());
 
@@ -44,6 +47,12 @@ public class ModItemTagProvider extends ItemTagsProvider {
         this.tag(ModTags.Items.CURRENT);
 
         this.tag(ModTags.Items.CAPACITANCE)
+                .add(ModItems.BLANK_CAPACITOR.get())
                 .add(ModItems.CAPACITOR.get());
+
+        for (Item item : ModUtils.ModCapacitanceUtil.DIELECTRIC_CONSTANTS.keySet()) {
+            this.tag(ModTags.Items.DIELECTRIC_CONSTANTS)
+                    .add(item);
+        }
     }
 }

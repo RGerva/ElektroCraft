@@ -15,7 +15,8 @@
 package com.rgerva.elektrocraft.block;
 
 import com.rgerva.elektrocraft.ElektroCraft;
-import com.rgerva.elektrocraft.block.resitor.ResistorAssembleBlock;
+import com.rgerva.elektrocraft.block.station.ChargerStationBlock;
+import com.rgerva.elektrocraft.block.station.ResistorAssembleBlock;
 import com.rgerva.elektrocraft.item.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -134,16 +135,27 @@ public class ModBlocks {
 
     //endregion
 
-    //region RESISTOR
+    //region STATIONS
 
     public static final DeferredBlock<Block> RESISTOR_ASSEMBLE = registerBlock("resistor_assemble",
             (properties) -> new ResistorAssembleBlock(BlockBehaviour.Properties.of()
                     .setId(id("resistor_assemble"))
                     .instrument(NoteBlockInstrument.BASS)
-                    .strength(2.5F).sound(SoundType.WOOD)
-                    .ignitedByLava()));
+                    .strength(2.5F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava()
+                    .requiresCorrectToolForDrops()));
+
+    public static final DeferredBlock<Block> CHARGER_STATION = registerBlock("charger_station",
+            (properties) -> new ChargerStationBlock(BlockBehaviour.Properties.of()
+                    .setId(id("charger_station"))
+                    .instrument(NoteBlockInstrument.BASS)
+                    .strength(2.5F)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops()));
 
     //endregion
+
     protected static ResourceKey<Block> id(@NotNull String path) {
         return ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, path));
     }

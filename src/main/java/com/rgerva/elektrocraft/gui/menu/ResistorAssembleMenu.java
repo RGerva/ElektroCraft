@@ -15,7 +15,7 @@
 package com.rgerva.elektrocraft.gui.menu;
 
 import com.rgerva.elektrocraft.block.ModBlocks;
-import com.rgerva.elektrocraft.block.entity.resistor.ResistorAssembleEntity;
+import com.rgerva.elektrocraft.block.entity.station.ResistorAssembleEntity;
 import com.rgerva.elektrocraft.gui.ModGUI;
 import com.rgerva.elektrocraft.item.ModItems;
 import net.minecraft.network.FriendlyByteBuf;

@@ -16,7 +16,8 @@ package com.rgerva.elektrocraft.block.entity;
 
 import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.block.ModBlocks;
-import com.rgerva.elektrocraft.block.entity.resistor.ResistorAssembleEntity;
+import com.rgerva.elektrocraft.block.entity.station.ChargerStationEntity;
+import com.rgerva.elektrocraft.block.entity.station.ResistorAssembleEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -31,6 +32,9 @@ public class ModBlockEntities {
 
     public static final Supplier<BlockEntityType<ResistorAssembleEntity>> RESISTOR_ASSEMBLE_ENTITY = BLOCK_ENTITIES.register("resistor_assemble",
             () -> new BlockEntityType<>(ResistorAssembleEntity::new, ModBlocks.RESISTOR_ASSEMBLE.get()));
+
+    public static final Supplier<BlockEntityType<ChargerStationEntity>> CHARGER_STATION_ENTITY = BLOCK_ENTITIES.register("charger_station",
+            () -> new BlockEntityType<>(ChargerStationEntity::new, ModBlocks.CHARGER_STATION.get()));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

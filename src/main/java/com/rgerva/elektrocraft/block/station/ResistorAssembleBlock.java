@@ -12,11 +12,11 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
 
-package com.rgerva.elektrocraft.block.resitor;
+package com.rgerva.elektrocraft.block.station;
 
 import com.mojang.serialization.MapCodec;
 import com.rgerva.elektrocraft.block.entity.ModBlockEntities;
-import com.rgerva.elektrocraft.block.entity.resistor.ResistorAssembleEntity;
+import com.rgerva.elektrocraft.block.entity.station.ResistorAssembleEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;

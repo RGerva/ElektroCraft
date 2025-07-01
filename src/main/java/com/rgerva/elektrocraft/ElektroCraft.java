@@ -95,7 +95,7 @@ public class ElektroCraft {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         LOGGER.info("HELLO FROM COMMON SETUP");
-        LOGGER.info("{}{}", ModConfig.magicNumberIntroduction, ModConfig.magicNumber);
+        LOGGER.info("{}", ModConfig.fePerVolt);
     }
 
     @SubscribeEvent

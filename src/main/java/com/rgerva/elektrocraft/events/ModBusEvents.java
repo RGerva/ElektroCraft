@@ -16,20 +16,29 @@ package com.rgerva.elektrocraft.events;
 
 import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.gui.ModGUI;
+import com.rgerva.elektrocraft.gui.screen.ChargerStationScreen;
 import com.rgerva.elektrocraft.gui.screen.ResistorAssembleScreen;
+import com.rgerva.elektrocraft.util.ModUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
-@EventBusSubscriber(modid = ElektroCraft.MOD_ID)
+import java.util.Locale;
+import java.util.OptionalDouble;
+
+@EventBusSubscriber(modid = ElektroCraft.MOD_ID, value = Dist.CLIENT)
 public class ModBusEvents {
 
     @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
     public static void onClientSetup(FMLClientSetupEvent event) {
         // Some client setup code
         ElektroCraft.LOGGER.info("HELLO FROM CLIENT SETUP");
@@ -37,9 +46,27 @@ public class ModBusEvents {
     }
 
     @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
     public static void onRegisterMenuScreens(RegisterMenuScreensEvent event) {
-
         event.register(ModGUI.RESISTOR_ASSEMBLE_MENU.get(), ResistorAssembleScreen::new);
+        event.register(ModGUI.CHARGER_STATION_MENU.get(), ChargerStationScreen::new);
+    }
+
+    @SubscribeEvent
+    public static void onItemTooltip(ItemTooltipEvent event) {
+        ItemStack stack = event.getItemStack();
+        Item item = stack.getItem();
+        OptionalDouble eps = ModUtils.ModCapacitanceUtil.getDielectricConstant(item);
+        if (eps.isPresent()) {
+            if(Screen.hasShiftDown()){
+                double value = eps.getAsDouble();
+                String formatted = String.format(Locale.ENGLISH, "ε = %.2f", value);
+                event.getToolTip()
+                        .add(Component.literal(formatted)
+                        .withStyle(ChatFormatting.AQUA));
+            }else{
+                event.getToolTip().add(Component.translatable("tooltip.elektrocraft.shift_details")
+                        .withStyle(ChatFormatting.YELLOW));
+            }
+        }
     }
 }

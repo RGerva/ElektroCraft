@@ -93,6 +93,9 @@ public class ModItems {
     public static final DeferredItem<Item> CAPACITOR = ITEMS.register("capacitor",
             () -> new CapacitorItem(new Item.Properties().setId(id("capacitor"))));
 
+    public static final DeferredItem<Item> BLANK_CAPACITOR = ITEMS.register("blank_capacitor",
+            () -> new CapacitorItem(new Item.Properties().setId(id("blank_capacitor"))));
+
     protected static ResourceKey<Item> id(@NotNull String path) {
         return ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, path));
     }

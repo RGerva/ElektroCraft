@@ -137,7 +137,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(this.output, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID,
                         getSimpleRecipeName(ModItems.DIODE.get()))));
 
-        this.shaped(RecipeCategory.MISC, ModItems.CAPACITOR.get(), 2)
+        this.shaped(RecipeCategory.MISC, ModItems.BLANK_CAPACITOR.get(), 2)
                 .define('I', Items.IRON_NUGGET)
                 .define('P', Items.PAPER)
                 .define('R', Items.REDSTONE)
@@ -149,7 +149,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .group(getItemName(ModItems.CAPACITOR.get()))
                 .unlockedBy(getHasName(Items.QUARTZ), has(Items.QUARTZ))
                 .save(this.output, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID,
-                        getSimpleRecipeName(ModItems.CAPACITOR.get()))));
+                        getSimpleRecipeName(ModItems.BLANK_CAPACITOR.get()))));
     }
 
     protected void customHammerRecipe(ItemLike pInput, ItemLike pOutput, int count) {

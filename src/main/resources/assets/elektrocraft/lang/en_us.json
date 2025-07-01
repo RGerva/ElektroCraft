@@ -16,6 +16,7 @@
   "block.elektrocraft.tin_ore": "Tin Ore",
 
   "block.elektrocraft.resistor_assemble": "Resistor Assemble",
+  "block.elektrocraft.charger_station": "Charger Station",
 
   "item.elektrocraft.lead_ingot": "Lead Ingot",
   "item.elektrocraft.lead_nugget": "Lead Nugget",
@@ -33,6 +34,7 @@
   "item.elektrocraft.blank_resistor": "Blank Resistor",
   "item.elektrocraft.resistor": "Resistor",
 
+  "item.elektrocraft.blank_capacitor": "Blank Capacitor",
   "item.elektrocraft.capacitor": "Capacitor",
 
   "item.elektrocraft.silicon": "Silicon",
