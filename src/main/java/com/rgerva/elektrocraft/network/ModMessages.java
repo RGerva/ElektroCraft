@@ -18,6 +18,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
@@ -27,7 +28,7 @@ public class ModMessages {
     }
 
     public static void sendToServer(CustomPacketPayload message) {
-        PacketDistributor.sendToServer(message);
+        ClientPacketDistributor.sendToServer(message);
     }
 
     public static void sendToPlayer(CustomPacketPayload message, ServerPlayer player) {
