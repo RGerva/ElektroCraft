@@ -18,18 +18,23 @@ import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.gui.menu.ChargerStationMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
-import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ChargerStationScreen extends AbstractContainerScreen<ChargerStationMenu> {
     private static final ResourceLocation TEXTURE =
             ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, "textures/gui/container/charger_station_gui.png");
+
+    private static final ResourceLocation TEXTURE_SPRITES =
+            ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, "textures/gui/container/sprites/machine_sprites.png");
 
     public ChargerStationScreen(ChargerStationMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -38,63 +43,84 @@ public class ChargerStationScreen extends AbstractContainerScreen<ChargerStation
     }
 
     @Override
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
+    }
+
+    @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
 
-        // 🔲 Fundo
-        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
+                TEXTURE,
+                x,
+                y,
+                0,
+                0,
+                imageWidth,
+                imageHeight,
+                256,
+                256);
 
+        setProgressArrow(guiGraphics, x, y);
+        renderEnergyBar(guiGraphics, x, y);
+    }
+
+    public void setProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         int progress = menu.getProgress();
         int maxProgress = menu.getMaxProgress();
-        int storedVolts = menu.getStoredVolts();
-        int maxVolts = menu.getMaxVolts();
+        int progressArrowSize = 24;
 
-        // ⚙️ Barra de progresso
-        if (maxProgress > 0) {
-            int progressWidth = 24;
-            int scaled = (int) ((float) progress / maxProgress * progressWidth);
-            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE,
-                    x + 80, y + 34,
-                    176, 0,
-                    scaled, 16,
-                    256, 256
-            );
-        }
+        int scaled = (maxProgress == 0 || progress == 0)?0:progress * progressArrowSize / maxProgress;
 
-        // ⚡ Barra de energia
-        if (maxVolts > 0) {
-            int barHeight = 48;
-            int scaled = (int) ((float) storedVolts / maxVolts * barHeight);
-            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE,
-                    x + 11, y + 16 + (barHeight - scaled),
-                    176, 16 + (barHeight - scaled),
-                    6, scaled,
-                    256, 256
-            );
-        }
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
+                TEXTURE_SPRITES,
+                x + 100, y + 36,
+                0, 58,
+                scaled, 17,
+                256, 256
+        );
     }
 
     @Override
-    protected void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+    protected void renderTooltip(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY) {
         super.renderTooltip(guiGraphics, mouseX, mouseY);
 
-        int barX = leftPos + 11;
-        int barY = topPos + 16;
-        int barW = 6;
-        int barH = 48;
+        if (isHovering(0, menu.getClientMaxVolts(), 16, 53, mouseX, mouseY)){
+            List<Component> components = new ArrayList<>(2);
+            components.add(Component.translatable("tooltip.elektrocraft.voltage")
+                            .append(menu.getClientStoredVolts() + "/" + menu.getClientMaxVolts()));
 
-        if (isHovering(barX, barY, barW, barH, mouseX, mouseY)) {
-            int stored = menu.getStoredVolts();
-            int max = menu.getMaxVolts();
-            Component tooltip = Component.literal(stored + " V / " + max + " V");
-            guiGraphics.renderTooltip(this.font, List.of((ClientTooltipComponent) tooltip), mouseX, mouseY, DefaultTooltipPositioner.INSTANCE, null);
+            guiGraphics.setTooltipForNextFrame(font, components, Optional.empty(), mouseX, mouseY);
         }
-
     }
 
-    private boolean isHovering(int x, int y, int w, int h, int mouseX, int mouseY) {
-        return mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h;
+    private float displayedVolts = 0;
+    private void renderEnergyBar(GuiGraphics guiGraphics, int x, int y) {
+        int stored = menu.getClientStoredVolts();
+        int capacity = menu.getClientMaxVolts();
+        if (capacity <= 0) return;
+
+        int maxHeight = 53;
+
+        displayedVolts = Mth.lerp(0.1F, displayedVolts, stored);
+
+        int fill = (int) ((displayedVolts / capacity) * maxHeight);
+        fill = Mth.clamp(fill, 0, maxHeight + 1);
+
+        guiGraphics.blit(RenderPipelines.GUI_TEXTURED,
+                TEXTURE_SPRITES,
+                x + 8,
+                y + 18 + (maxHeight - fill),
+                0,
+                52 - fill,
+                16,
+                fill,
+                256,
+                256);
     }
 
 }

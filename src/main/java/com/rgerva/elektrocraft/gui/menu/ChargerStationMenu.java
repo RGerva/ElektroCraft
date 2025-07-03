@@ -22,10 +22,7 @@ import com.rgerva.elektrocraft.util.ModTags;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
@@ -38,6 +35,9 @@ public class ChargerStationMenu extends AbstractContainerMenu {
     private final ChargerStationEntity entity;
     public final ContainerData data;
 
+    private int clientStoredVolts = -1;
+    private int clientMaxVolts = -1;
+
     public ChargerStationMenu(int pContainerId, Inventory inv, FriendlyByteBuf buffer) {
         this(pContainerId, inv, inv.player.level().getBlockEntity(buffer.readBlockPos()));
     }
@@ -48,27 +48,67 @@ public class ChargerStationMenu extends AbstractContainerMenu {
         this.data = ((ChargerStationEntity) blockEntity).data;
 
         this.addDataSlots(data);
-        addSlot(new SlotItemHandler(entity.getInventory(), ChargerStationEntity.BLANK_CAPACITOR_SLOT, 26, 21));
-        addSlot(new SlotItemHandler(entity.getInventory(), ChargerStationEntity.METALLIC_SLOT, 44, 21));
-        addSlot(new SlotItemHandler(entity.getInventory(), ChargerStationEntity.CONDUCTOR_WIRE_SLOT, 26, 39));
-        addSlot(new SlotItemHandler(entity.getInventory(), ChargerStationEntity.ACTIVE_POWER_SLOT, 44, 39));
-        addSlot(new SlotItemHandler(entity.getInventory(), ChargerStationEntity.OUTPUT_SLOT, 116, 30) {
+        addSlot(new SlotItemHandler(entity.getInventory(), ChargerStationEntity.BLANK_CAPACITOR_SLOT, 44, 37));
+        addSlot(new SlotItemHandler(entity.getInventory(), ChargerStationEntity.METALLIC_SLOT, 62, 19));
+        addSlot(new SlotItemHandler(entity.getInventory(), ChargerStationEntity.CONDUCTOR_WIRE_SLOT, 80, 37));
+        addSlot(new SlotItemHandler(entity.getInventory(), ChargerStationEntity.ACTIVE_POWER_SLOT, 62, 55));
+        addSlot(new SlotItemHandler(entity.getInventory(), ChargerStationEntity.OUTPUT_SLOT, 134, 37) {
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
                 return false;
             }
         });
 
+        addPlayerInventorySlots(inventory);
 
+        this.addDataSlot(new DataSlot() {
+            @Override
+            public int get() {
+                return (int) entity.getStoredVolts();
+            }
+
+            @Override
+            public void set(int value) {
+                clientStoredVolts = value;
+            }
+        });
+
+        this.addDataSlot(new DataSlot() {
+            @Override
+            public int get() {
+                return (int) entity.getCapacityVolts();
+            }
+
+            @Override
+            public void set(int value) {
+                clientMaxVolts = value;
+            }
+        });
+    }
+
+    protected void addPlayerInventorySlots(Inventory inventory) {
         for (int playerInvRow = 0; playerInvRow < 3; playerInvRow++) {
             for (int playerInvCol = 0; playerInvCol < 9; playerInvCol++) {
-                this.addSlot(new Slot(inventory, playerInvCol + playerInvRow * 9 + 9, 8 + playerInvCol * 18, 84 + playerInvRow * 18));
+                this.addSlot(new Slot(inventory, playerInvCol + playerInvRow * 9 + 9, 8 + playerInvCol * 18, 88 + playerInvRow * 18));
             }
         }
 
         for (int hotHarSlot = 0; hotHarSlot < 9; hotHarSlot++) {
-            this.addSlot(new Slot(inventory, hotHarSlot, 8 + hotHarSlot * 18, 142));
+            this.addSlot(new Slot(inventory, hotHarSlot, 8 + hotHarSlot * 18, 146));
         }
+    }
+
+    public int getMachineSlotCount() {
+        return 5;
+    }
+
+    public boolean handleCustomSlotTransfer(ItemStack stack) {
+        if (stack.is(ModItems.BLANK_CAPACITOR.get())) {
+            return this.moveItemStackTo(stack, 0, 1, false);
+        } else if (stack.is(ModTags.Items.DIELECTRIC_CONSTANTS)) {
+            return this.moveItemStackTo(stack, 3, 4, false);
+        }
+        return false;
     }
 
     @Override
@@ -77,29 +117,19 @@ public class ChargerStationMenu extends AbstractContainerMenu {
         if (!sourceSlot.hasItem()) return ItemStack.EMPTY;
 
         ItemStack sourceStack = sourceSlot.getItem();
-        ItemStack copyStack = sourceStack.copy();
+        ItemStack copy = sourceStack.copy();
 
-        int containerSize = 5;
-        int playerStart = containerSize;
-        int playerEnd = containerSize + 36;
+        int machineSlotCount = getMachineSlotCount();
+        int playerStart = machineSlotCount;
+        int playerEnd = playerStart + 36;
 
         if (index < playerStart) {
-            if (!this.moveItemStackTo(sourceStack, playerStart, playerEnd, true)) {
+            if (!this.moveItemStackTo(sourceStack, playerStart, playerEnd, false))
                 return ItemStack.EMPTY;
-            }
         } else {
-            if (sourceStack.is(ModItems.BLANK_CAPACITOR.get())) {
-                if (!this.moveItemStackTo(sourceStack, ChargerStationEntity.BLANK_CAPACITOR_SLOT, ChargerStationEntity.BLANK_CAPACITOR_SLOT + 1, false)) {
+            if (!handleCustomSlotTransfer(sourceStack)) {
+                if (!this.moveItemStackTo(sourceStack, 0, machineSlotCount, false))
                     return ItemStack.EMPTY;
-                }
-            } else if (sourceStack.is(ModTags.Items.DIELECTRIC_CONSTANTS)) {
-                if (!this.moveItemStackTo(sourceStack, ChargerStationEntity.ACTIVE_POWER_SLOT, ChargerStationEntity.ACTIVE_POWER_SLOT + 1, false)) {
-                    return ItemStack.EMPTY;
-                }
-            } else {
-                if (!this.moveItemStackTo(sourceStack, ChargerStationEntity.METALLIC_SLOT, ChargerStationEntity.OUTPUT_SLOT, false)) {
-                    return ItemStack.EMPTY;
-                }
             }
         }
 
@@ -110,8 +140,7 @@ public class ChargerStationMenu extends AbstractContainerMenu {
         }
 
         sourceSlot.onTake(player, sourceStack);
-        return copyStack;
-
+        return copy;
     }
 
     @Override
@@ -128,12 +157,11 @@ public class ChargerStationMenu extends AbstractContainerMenu {
         return data.get(1);
     }
 
-    public int getStoredVolts() {
-        return data.get(2);
+    public int getClientStoredVolts() {
+        return clientStoredVolts;
     }
 
-    public int getMaxVolts() {
-        return data.get(3);
+    public int getClientMaxVolts() {
+        return clientMaxVolts;
     }
-
 }

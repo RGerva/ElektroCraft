@@ -16,6 +16,7 @@ package com.rgerva.elektrocraft.util;
 
 import com.rgerva.elektrocraft.config.ModConfig;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 import java.util.Locale;
@@ -23,6 +24,12 @@ import java.util.Map;
 import java.util.OptionalDouble;
 
 public class ModUtils {
+    public static class ModTime {
+        public static int getTickByMinutes(int minutes){
+            return minutes * 60 * 20;
+        }
+    }
+
     public static class ModUnits {
         public static int fePerVolt() {
             return ModConfig.fePerVolt;
@@ -203,5 +210,9 @@ public class ModUtils {
             return value != null ? OptionalDouble.of(value) : OptionalDouble.empty();
         }
 
+        public static double computeCapacitance(ItemStack dielectric) {
+            double k = getDielectricConstant(dielectric.getItem()).orElse(1.0);
+            return 100e-6 * k;
+        }
     }
 }

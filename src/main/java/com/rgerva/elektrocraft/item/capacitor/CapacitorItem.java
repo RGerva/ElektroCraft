@@ -46,7 +46,7 @@ public class CapacitorItem extends Item {
         if (Screen.hasShiftDown()) {
             double capacity = getDefaultCapacitance();
             if(stack.has(ModDataComponents.CAPACITANCE.get())){
-                Double capacitanceObj = stack.get(ModDataComponents.VOLTAGE.get());
+                Double capacitanceObj = stack.get(ModDataComponents.CAPACITANCE.get());
                 if(capacitanceObj != null){
                     capacity = capacitanceObj;
                 }

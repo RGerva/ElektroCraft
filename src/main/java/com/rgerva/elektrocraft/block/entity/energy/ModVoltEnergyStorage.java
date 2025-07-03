@@ -14,34 +14,45 @@
 
 package com.rgerva.elektrocraft.block.entity.energy;
 
+import com.rgerva.elektrocraft.network.interfaces.IEnergyPacketUpdate;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 
-public class ModVoltEnergyStorage implements IEnergyStorage, IVoltEnergy{
+public class ModVoltEnergyStorage implements IEnergyStorage, IVoltEnergy, IEnergyPacketUpdate {
+
     private long energy;
     private final long capacity;
     private final long maxReceive;
     private final long maxExtract;
 
+    private final boolean allowInternalUse;
+
     public static ModVoltEnergyStorage makeConsumer(long cap, long in) {
-        return new ModVoltEnergyStorage(cap, in, 0);
+        return new ModVoltEnergyStorage(cap, in, 0, true);
     }
 
     public static ModVoltEnergyStorage makeGenerator(long cap, long out) {
-        return new ModVoltEnergyStorage(cap, 0, out);
+        return new ModVoltEnergyStorage(cap, 0, out, false);
     }
 
     public static ModVoltEnergyStorage makeBattery(long cap, long in, long out) {
-        return new ModVoltEnergyStorage(cap, in, out);
+        return new ModVoltEnergyStorage(cap, in, out, true);
     }
 
-    public ModVoltEnergyStorage(long capacity, long maxReceive, long maxExtract) {
+    public ModVoltEnergyStorage(long capacity, long maxReceive, long maxExtract, boolean allowInternalUse) {
         this.capacity = capacity;
         this.maxReceive = maxReceive;
         this.maxExtract = maxExtract;
+        this.allowInternalUse = allowInternalUse;
     }
 
-    public void setEnergy(long energy) {
+    @Override
+    public void setEnergy(int energy) {
         this.energy = Math.min(energy, capacity);
+    }
+
+    @Override
+    public void setCapacity(int capacity) {
+        return;
     }
 
     @Override
@@ -56,7 +67,8 @@ public class ModVoltEnergyStorage implements IEnergyStorage, IVoltEnergy{
 
     @Override
     public long extractFE(long amount, boolean simulate) {
-        long extracted = Math.min(amount, Math.min(maxExtract, energy));
+        long allowed = allowInternalUse ? energy : Math.min(maxExtract, energy);
+        long extracted = Math.min(amount, allowed);
         if (!simulate) energy -= extracted;
         return extracted;
     }
@@ -81,6 +93,10 @@ public class ModVoltEnergyStorage implements IEnergyStorage, IVoltEnergy{
     @Override
     public int getEnergyStored() {
         return (int) Math.min(energy, Integer.MAX_VALUE);
+    }
+
+    public int getCapacityStored() {
+        return (int) Math.min(capacity, Integer.MAX_VALUE);
     }
 
     @Override

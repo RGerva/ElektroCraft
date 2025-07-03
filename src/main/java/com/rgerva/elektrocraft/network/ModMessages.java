@@ -14,6 +14,7 @@
 
 package com.rgerva.elektrocraft.network;
 
+import com.rgerva.elektrocraft.network.packages.EnergySyncS2CPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerLevel;
@@ -21,10 +22,14 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 public class ModMessages {
     public static void register(final RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar("1.0");
 
+        registrar.playToClient(EnergySyncS2CPacket.ID, EnergySyncS2CPacket.STREAM_CODEC,
+                EnergySyncS2CPacket::handle);
     }
 
     public static void sendToServer(CustomPacketPayload message) {
