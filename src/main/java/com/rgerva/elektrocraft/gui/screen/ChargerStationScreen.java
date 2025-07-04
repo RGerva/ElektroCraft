@@ -15,7 +15,10 @@
 package com.rgerva.elektrocraft.gui.screen;
 
 import com.rgerva.elektrocraft.ElektroCraft;
+import com.rgerva.elektrocraft.block.entity.station.ChargerStationEntity;
 import com.rgerva.elektrocraft.gui.menu.ChargerStationMenu;
+import com.rgerva.elektrocraft.util.ModUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -89,13 +92,34 @@ public class ChargerStationScreen extends AbstractContainerScreen<ChargerStation
     protected void renderTooltip(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY) {
         super.renderTooltip(guiGraphics, mouseX, mouseY);
 
-        if (isHovering(0, 53, 16, 53, mouseX, mouseY)){
-            List<Component> components = new ArrayList<>(2);
-            components.add(Component.translatable("tooltip.elektrocraft.voltage")
-                            .append(menu.getClientStoredVolts() + "/" + menu.getClientMaxVolts()));
+        if (isHovering(7, 18, 15, 53, mouseX, mouseY)){
+            List<Component> components = new ArrayList<>();
 
+            if(AbstractContainerScreen.hasShiftDown()){
+                components.add(Component.translatable("tooltip.elektrocraft.energy_bar_fe",
+                        ModUtils.ModUnits.toFE(menu.getClientStoredVolts()),
+                        ModUtils.ModUnits.toFE(menu.getClientMaxVolts())));
+
+                components.add(Component.translatable("tooltip.elektrocraft.energy_usage",
+                        ModUtils.ModUnits.toFE(ChargerStationEntity.VOLTAGE_USAGE)));
+            } else{
+                components.add(Component.translatable("tooltip.elektrocraft.energy_bar_volts",
+                        menu.getClientStoredVolts(), menu.getClientMaxVolts()));
+
+                components.add(Component.translatable("tooltip.elektrocraft.energy_usage",
+                        ChargerStationEntity.VOLTAGE_USAGE));
+
+                components.add(Component.translatable("tooltip.elektrocraft.shift_details")
+                        .withStyle(ChatFormatting.YELLOW));
+            }
             guiGraphics.setTooltipForNextFrame(font, components, Optional.empty(), mouseX, mouseY);
         }
+    }
+
+    @Override
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        guiGraphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, -12566464, false);
+        guiGraphics.drawString(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY + 4, -12566464, false);
     }
 
     private float displayedVolts = 0;
