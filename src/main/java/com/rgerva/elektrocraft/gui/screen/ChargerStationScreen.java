@@ -89,7 +89,7 @@ public class ChargerStationScreen extends AbstractContainerScreen<ChargerStation
     protected void renderTooltip(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY) {
         super.renderTooltip(guiGraphics, mouseX, mouseY);
 
-        if (isHovering(0, menu.getClientMaxVolts(), 16, 53, mouseX, mouseY)){
+        if (isHovering(0, 53, 16, 53, mouseX, mouseY)){
             List<Component> components = new ArrayList<>(2);
             components.add(Component.translatable("tooltip.elektrocraft.voltage")
                             .append(menu.getClientStoredVolts() + "/" + menu.getClientMaxVolts()));
