@@ -17,6 +17,7 @@ package com.rgerva.elektrocraft.utils;
 public class LogUtils {
 
     public interface Logger {
+        void func(String msg, Object... args);
         void info(String msg, Object... args);
         void debug(String msg, Object... args);
         void warn(String msg, Object... args);
@@ -32,6 +33,7 @@ public class LogUtils {
             private final String YELLOW = "\u001B[33m";
             private final String BLUE = "\u001B[34m";
             private final String GRAY = "\u001B[37m";
+            private final String CYAN = "\u001B[36m";
 
             private void log(String label, String color, String msg, Object... args) {
                 String formatted = format(msg, args);
@@ -64,11 +66,12 @@ public class LogUtils {
                 return sb.toString();
             }
 
+            public void func(String msg, Object... args)   { log("FUNCTION", CYAN, msg, args); }
             public void info(String msg, Object... args)   { log("INFO", BLUE, msg, args); }
             public void debug(String msg, Object... args)  { log("DEBUG", GRAY, msg, args); }
             public void warn(String msg, Object... args)   { log("WARN", YELLOW, msg, args); }
             public void error(String msg, Object... args)  { log("ERROR", RED, msg, args); }
-            public void success(String msg, Object... args){ log("OK", GREEN, msg, args); }
+            public void success(String msg, Object... args){ log("SUCCESS", GREEN, msg, args); }
         };
     }
 }

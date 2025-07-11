@@ -15,7 +15,6 @@
 package com.rgerva.elektrocraft.gradle;
 
 import com.rgerva.elektrocraft.Main;
-import com.rgerva.elektrocraft.neoforge.VersionField;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,46 +23,106 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Files;
-import java.util.EnumMap;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.rgerva.elektrocraft.utils.ConstantsURL.GRADLE_VERSION_URL;
-import static com.rgerva.elektrocraft.utils.ConstantsURL.WRAPPER_PROPERTIES_PATH;
-
 public class GradleVersions {
 
-    public static EnumMap<VersionField, String> fetchGradleWrapperVersion() {
-        EnumMap<VersionField, String> data = new EnumMap<>(VersionField.class);
-        String localVersion = getLocalGradleWrapperVersion();
-        data.put(VersionField.GRADLE_VERSION, localVersion);
-        return data;
+    private static final String GRADLE_VERSION_URL = "https://services.gradle.org/versions/current";
+    private static final Path WRAPPER_PROPERTIES_PATH = Path.of("gradle", "wrapper", "gradle-wrapper.properties");
+
+    private final String localVersion;
+    private final String latestVersion;
+    private final boolean outdated;
+
+    public GradleVersions(){
+        this.localVersion = getGradleWrapperLocalVersion();
+        this.latestVersion = getLatestGradleVersion();
+        this.outdated = isGradleOutdated(localVersion, latestVersion);
     }
 
-    public static String getLocalGradleWrapperVersion() {
-        Properties props = new Properties();
-        try (InputStream input = Files.newInputStream(WRAPPER_PROPERTIES_PATH)) {
-            props.load(input);
-            String distributionUrl = props.getProperty("distributionUrl");
-            return extractVersionFromUrl(distributionUrl);
+    public String getLocalVersion() {
+        return localVersion;
+    }
+
+    public String getLatestVersion() {
+        return latestVersion;
+    }
+
+    public boolean isOutdated() {
+        return outdated;
+    }
+
+    public void gradleCheck() {
+        Main.LOGGER.func("Gradle Wrapper Version Check");
+        Main.LOGGER.info("Current version: {}", localVersion);
+        Main.LOGGER.info("Latest available version: {}", latestVersion);
+        if(isOutdated()){
+            Main.LOGGER.info("Gradle is outdated.");
+            getUserConfirmation();
+        }else{
+            Main.LOGGER.success("Gradle is up to date.");
+        }
+    }
+
+    private void getUserConfirmation() {
+        Main.LOGGER.info("Do you want to update Gradle from {} to {} ? (y/N): ", getLocalVersion(), getLatestVersion());
+        String input = new java.util.Scanner(System.in).nextLine().trim().toLowerCase();
+
+        if (input.equals("y") || input.equals("yes")) {
+            updateGradleWrapperVersion(getLatestVersion());
+        }else {
+            Main.LOGGER.warn("Update canceled by user.");
+        }
+    }
+
+    protected static void updateGradleWrapperVersion(String newVersion){
+        try {
+            String newUrl = "https\\://services.gradle.org/distributions/gradle-" + newVersion + "-bin.zip";
+            String content = "distributionUrl=" + newUrl + "\n";
+            Files.writeString(WRAPPER_PROPERTIES_PATH, content, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
+            Main.LOGGER.success("gradle-wrapper.properties updated to: {}", newVersion);
+
         } catch (IOException e) {
-            Main.LOGGER.error("Error to read gradle-wrapper.properties");
-            throw new RuntimeException(e);
+            Main.LOGGER.error("Fail on update gradle-wrapper.properties {}", e.getMessage());
         }
     }
 
-    private static String extractVersionFromUrl(String url) {
-        if (url == null) return null;
-        Pattern pattern = Pattern.compile("gradle-(.*?)-bin.zip");
-        Matcher matcher = pattern.matcher(url);
-        if (matcher.find()) {
-            return matcher.group(1);
-        }
-        return null;
+    protected static boolean isGradleOutdated(String current, String latest) {
+        if (current == null || latest == null) return false;
+        return !current.trim().equals(latest.trim());
     }
 
-    public static String fetchLatestGradleVersion() {
+    protected static String getGradleWrapperLocalVersion(){
+        Properties properties = new Properties();
+        try (InputStream inputStream = Files.newInputStream(WRAPPER_PROPERTIES_PATH)){
+            properties.load(inputStream);
+            String getTag = properties.getProperty("distributionUrl");
+            if(getTag == null){
+                return null;
+            }
+
+            Pattern pattern = Pattern.compile("gradle-(.*?)-bin.zip");
+            Matcher matcher = pattern.matcher(getTag);
+
+            if(matcher.find()) {
+                return matcher.group(1);
+            }
+
+            Main.LOGGER.error("Error: Could not find tag in gradle-wrapper.properties");
+            return null;
+        } catch (IOException e) {
+            Main.LOGGER.error("Error: Could not read gradle-wrapper.properties {}", e.getMessage());
+            return null;
+        }
+    }
+
+
+    protected static String getLatestGradleVersion() {
         try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
@@ -73,20 +132,23 @@ public class GradleVersions {
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if (response.statusCode() != 200) {
-                Main.LOGGER.error("Error HTTP: {}", response.statusCode());
+            if(response.statusCode() == 200){
+                Pattern pattern = Pattern.compile("\"version\"\\s*:\\s*\"([^\"]+)\"");
+                Matcher matcher = pattern.matcher(response.body());
+
+                if (matcher.find()) {
+                    return matcher.group(1);
+                }
+
+                Main.LOGGER.error("Error: could not find tag on JSON");
                 return null;
             }
-            Pattern pattern = Pattern.compile("\"version\"\\s*:\\s*\"([^\"]+)\"");
-            Matcher matcher = pattern.matcher(response.body());
-            if (matcher.find()) {
-                return matcher.group(1);
-            }
-            Main.LOGGER.error("Error: could not find JSON field");
+            Main.LOGGER.error("Error HTTP: {}", response.statusCode());
             return null;
+
         } catch (Exception e) {
-            Main.LOGGER.error("Error: Fail to search online Gradle version");
-            throw new RuntimeException(e);
+            Main.LOGGER.error("Error: Fail to search online Gradle version {}", e.getMessage());
+            return null;
         }
     }
 }

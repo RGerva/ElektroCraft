@@ -23,36 +23,26 @@
 package com.rgerva.elektrocraft;
 
 import com.rgerva.elektrocraft.gradle.GradleVersions;
+import com.rgerva.elektrocraft.jupiter.JUnitVersions;
+import com.rgerva.elektrocraft.moddev.ModDevVersions;
 import com.rgerva.elektrocraft.neoforge.NeoforgeVersions;
-import com.rgerva.elektrocraft.neoforge.VersionField;
 import com.rgerva.elektrocraft.utils.LogUtils;
-
-import java.util.EnumMap;
-
-import static com.rgerva.elektrocraft.utils.ConstantsURL.MODDEV_URL;
-import static com.rgerva.elektrocraft.utils.ConstantsURL.NEOFORGE_URL;
 
 public class Main {
     public static final LogUtils.Logger LOGGER = LogUtils.getLogger();
 
     public static void main(String[] args) {
 
-        EnumMap<VersionField, String> neoforgeMetadata = NeoforgeVersions.getInfos(NEOFORGE_URL);
+        NeoforgeVersions neo = new NeoforgeVersions();
+        neo.neoforgeCheck();
 
-        LOGGER.info("ARTIFACT_ID: {}", neoforgeMetadata.get(VersionField.ARTIFACT_ID));
-        LOGGER.info("GROUP_ID: {}", neoforgeMetadata.get(VersionField.GROUP_ID));
-        LOGGER.info("LATEST: {}", neoforgeMetadata.get(VersionField.LATEST));
-        LOGGER.info("RELEASE: {}", neoforgeMetadata.get(VersionField.RELEASE));
+        ModDevVersions modDevVersions = new ModDevVersions();
+        modDevVersions.modDevCheck();
 
-        EnumMap<VersionField, String> moddevMetadata = NeoforgeVersions.getInfos(MODDEV_URL);
+        JUnitVersions jUnitVersions = new JUnitVersions();
+        jUnitVersions.junitCheck();
 
-        LOGGER.info("ARTIFACT_ID: {}", moddevMetadata.get(VersionField.ARTIFACT_ID));
-        LOGGER.info("GROUP_ID: {}", moddevMetadata.get(VersionField.GROUP_ID));
-        LOGGER.info("LATEST: {}", moddevMetadata.get(VersionField.LATEST));
-        LOGGER.info("RELEASE: {}", moddevMetadata.get(VersionField.RELEASE));
-
-        var gradleLocal = GradleVersions.fetchGradleWrapperVersion();
-        LOGGER.info("Gradle Wrapper local: {}", gradleLocal.get(VersionField.GRADLE_VERSION));
-        LOGGER.info("Gradle Version {}",GradleVersions.fetchLatestGradleVersion());
+        GradleVersions gradle = new GradleVersions();
+        gradle.gradleCheck();
     }
 }
