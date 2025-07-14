@@ -71,7 +71,9 @@ neoForge {
             // gameDirectory = project.file('run-data')
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+            programArguments.addAll '--mod', project.mod_id, '--all',
+                    '--output', file('src/generated/resources/').toPath().toAbsolutePath().toString(),
+                    '--existing', file('src/main/resources/').toPath().toAbsolutePath().toString()
         }
 
         // applies to all the run configs above
@@ -152,7 +154,7 @@ tasks.withType(ProcessResources).configureEach {
                              mod_authors            : mod_authors,
                              mod_description        : mod_description]
     inputs.properties replaceProperties
-
+    
     filesMatching(['META-INF/neoforge.mods.toml']) {
         expand replaceProperties
     }
@@ -175,7 +177,7 @@ publishing {
     }
     repositories {
         maven {
-            url "file://${project.projectDir}/repo"
+            url = file("${project.projectDir}/repo")
         }
     }
 }
