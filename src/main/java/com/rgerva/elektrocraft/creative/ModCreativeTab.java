@@ -72,7 +72,7 @@ public class ModCreativeTab {
                         output.accept(ModItems.BLANK_CAPACITOR.get());
                         output.accept(ModItems.CAPACITOR.get());
 
-                        output.accept(ModBlocks.CHARGER_STATION.get());
+                        output.accept(ModBlocks.CHARGING_STATION.get());
 
                     }))
                     .build());

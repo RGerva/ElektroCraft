@@ -14,14 +14,21 @@
 
 package com.rgerva.elektrocraft.util;
 
+import com.rgerva.elektrocraft.component.ModDataComponents;
 import com.rgerva.elektrocraft.config.ModConfig;
+import com.rgerva.elektrocraft.item.capacitor.CapacitorItem;
+import com.rgerva.elektrocraft.item.resistor.ResistorItem;
+import com.rgerva.elektrocraft.recipe.ModRecipes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.*;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
-import java.util.Locale;
-import java.util.Map;
-import java.util.OptionalDouble;
+import java.util.*;
 
 public class ModUtils {
     public static class ModTime {
@@ -95,6 +102,10 @@ public class ModUtils {
                     ? String.format(Locale.ENGLISH, "%d", (long) value)
                     : String.format(Locale.ENGLISH, "%.2f", value);
             return formatted + " " + RESISTANCE_PREFIXES[index];
+        }
+
+        public static boolean isResistor(ItemStack itemStack) {
+            return itemStack.getItem() instanceof ResistorItem;
         }
     }
 
@@ -213,6 +224,93 @@ public class ModUtils {
         public static double computeCapacitance(ItemStack dielectric) {
             double k = getDielectricConstant(dielectric.getItem()).orElse(1.0);
             return 100e-6 * k;
+        }
+
+        public static boolean isCapacitor(ItemStack itemStack) {
+            return itemStack.getItem() instanceof CapacitorItem;
+        }
+    }
+
+    public static class ModRecipeUtil {
+        public static <C extends RecipeInput, T extends Recipe<C>> Collection<RecipeHolder<T>> getAllRecipesFor(ServerLevel level, RecipeType<T> recipeType) {
+            return level.recipeAccess().recipeMap().byType(recipeType);
+        }
+
+        public static boolean isIngredientOfAny(List<Ingredient> ingredientList, ItemStack itemStack) {
+            return ingredientList.stream().anyMatch(ingredient -> ingredient.test(itemStack));
+        }
+
+        public static <C extends RecipeInput, T extends Recipe<C>> boolean isIngredientOfAny(ServerLevel level, RecipeType<T> recipeType, ItemStack itemStack) {
+            Collection<RecipeHolder<T>> recipes = getAllRecipesFor(level, recipeType);
+
+            return recipes.stream().map(RecipeHolder::value).anyMatch(recipe -> {
+                if(recipe instanceof ModRecipes.ModBasicRecipe<?> epRecipe)
+                    return epRecipe.isIngredient(itemStack);
+
+                return recipe.placementInfo().ingredients().stream().
+                        anyMatch(ingredient -> ingredient.test(itemStack));
+            });
+        }
+
+        public static <C extends RecipeInput, T extends Recipe<C>> List<Ingredient> getIngredientsOf(ServerLevel level, RecipeType<T> recipeType) {
+            Collection<RecipeHolder<T>> recipes = getAllRecipesFor(level, recipeType);
+
+            return recipes.stream().map(RecipeHolder::value).flatMap(recipe -> {
+                if(recipe instanceof ModRecipes.ModBasicRecipe<?> epRecipe)
+                    return epRecipe.getIngredients().stream();
+
+                return recipe.placementInfo().ingredients().stream();
+            }).toList();
+        }
+    }
+
+    public static final class InventoryUtils{
+        public static boolean canInsertItemIntoSlot(Container inventory, int slot, ItemStack itemStack) {
+            ItemStack inventoryItemStack = inventory.getItem(slot);
+
+            if (inventoryItemStack.isEmpty()) {
+                return true;
+            }
+
+            if(ModCapacitanceUtil.isCapacitor(inventory.getItem(0))){
+                for (int i = 0; i < inventory.getContainerSize(); i++) {
+                    if(inventory.getItem(i).is(ModTags.Items.DIELECTRIC_CONSTANTS)){
+                        double capacitance = ModUtils.ModCapacitanceUtil.computeCapacitance(inventory.getItem(i));
+                        itemStack.set(ModDataComponents.CAPACITANCE.get(), capacitance);
+                        break;
+                    }
+                }
+
+                if (ItemStack.isSameItem(inventoryItemStack, itemStack)) {
+                    Double currentCap = inventoryItemStack.get(ModDataComponents.CAPACITANCE);
+                    Double newCap = itemStack.get(ModDataComponents.CAPACITANCE);
+
+                    if (Objects.equals(currentCap, newCap)) {
+                        return inventoryItemStack.getMaxStackSize() >= inventoryItemStack.getCount() + itemStack.getCount();
+                    }
+                }
+
+            } else {
+                return inventoryItemStack.isEmpty() || (ItemStack.isSameItemSameComponents(inventoryItemStack, itemStack) &&
+                        inventoryItemStack.getMaxStackSize() >= inventoryItemStack.getCount() + itemStack.getCount());
+            }
+            return false;
+        }
+
+        public static int getRedstoneSignalFromItemStackHandler(ItemStackHandler itemHandler) {
+            float fullnessPercentSum = 0;
+            boolean isEmptyFlag = true;
+
+            int size = itemHandler.getSlots();
+            for(int i = 0;i < size;i++) {
+                ItemStack item = itemHandler.getStackInSlot(i);
+                if(!item.isEmpty()) {
+                    fullnessPercentSum += (float)item.getCount() / Math.min(item.getMaxStackSize(), itemHandler.getSlotLimit(i));
+                    isEmptyFlag = false;
+                }
+            }
+
+            return Math.min(Mth.floor(fullnessPercentSum / size * 14.f) + (isEmptyFlag?0:1), 15);
         }
     }
 }

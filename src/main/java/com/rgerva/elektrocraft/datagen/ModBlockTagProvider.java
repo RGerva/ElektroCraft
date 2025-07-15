@@ -60,7 +60,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.TIN_BLOCK.get())
                 .add(ModBlocks.TIN_RAW_BLOCK.get())
 
-                .add(ModBlocks.CHARGER_STATION.get());
+                .add(ModBlocks.CHARGING_STATION.get());
 
         tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(ModBlocks.RESISTOR_ASSEMBLE.get());
@@ -80,6 +80,6 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.TIN_BLOCK.get())
                 .add(ModBlocks.TIN_RAW_BLOCK.get())
 
-                .add(ModBlocks.CHARGER_STATION.get());
+                .add(ModBlocks.CHARGING_STATION.get());
     }
 }

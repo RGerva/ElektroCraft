@@ -15,7 +15,7 @@
 package com.rgerva.elektrocraft.block;
 
 import com.rgerva.elektrocraft.ElektroCraft;
-import com.rgerva.elektrocraft.block.station.ChargerStationBlock;
+import com.rgerva.elektrocraft.block.station.ChargingStationBlock;
 import com.rgerva.elektrocraft.block.station.ResistorAssembleBlock;
 import com.rgerva.elektrocraft.item.ModItems;
 import net.minecraft.core.registries.Registries;
@@ -146,9 +146,9 @@ public class ModBlocks {
                     .ignitedByLava()
                     .requiresCorrectToolForDrops()));
 
-    public static final DeferredBlock<Block> CHARGER_STATION = registerBlock("charger_station",
-            (properties) -> new ChargerStationBlock(BlockBehaviour.Properties.of()
-                    .setId(id("charger_station"))
+    public static final DeferredBlock<Block> CHARGING_STATION = registerBlock("charging_station",
+            (properties) -> new ChargingStationBlock(BlockBehaviour.Properties.of()
+                    .setId(id("charging_station"))
                     .instrument(NoteBlockInstrument.BASS)
                     .strength(2.5F)
                     .sound(SoundType.METAL)

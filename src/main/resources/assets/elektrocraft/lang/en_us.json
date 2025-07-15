@@ -17,6 +17,7 @@
 
   "block.elektrocraft.resistor_assemble": "Resistor Assemble",
   "block.elektrocraft.charger_station": "Charger Station",
+  "block.elektrocraft.charging_station": "Charging Station",
 
   "item.elektrocraft.lead_ingot": "Lead Ingot",
   "item.elektrocraft.lead_nugget": "Lead Nugget",

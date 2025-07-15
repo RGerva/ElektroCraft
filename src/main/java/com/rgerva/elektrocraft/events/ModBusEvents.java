@@ -16,7 +16,7 @@ package com.rgerva.elektrocraft.events;
 
 import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.gui.ModGUI;
-import com.rgerva.elektrocraft.gui.screen.ChargerStationScreen;
+import com.rgerva.elektrocraft.gui.screen.ChargingStationScreen;
 import com.rgerva.elektrocraft.gui.screen.ResistorAssembleScreen;
 import com.rgerva.elektrocraft.util.ModUtils;
 import net.minecraft.ChatFormatting;
@@ -48,7 +48,7 @@ public class ModBusEvents {
     @SubscribeEvent
     public static void onRegisterMenuScreens(RegisterMenuScreensEvent event) {
         event.register(ModGUI.RESISTOR_ASSEMBLE_MENU.get(), ResistorAssembleScreen::new);
-        event.register(ModGUI.CHARGER_STATION_MENU.get(), ChargerStationScreen::new);
+        event.register(ModGUI.CHARGER_STATION_MENU.get(), ChargingStationScreen::new);
     }
 
     @SubscribeEvent

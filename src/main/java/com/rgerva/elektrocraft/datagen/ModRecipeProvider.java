@@ -17,6 +17,9 @@ package com.rgerva.elektrocraft.datagen;
 import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.block.ModBlocks;
 import com.rgerva.elektrocraft.item.ModItems;
+import com.rgerva.elektrocraft.recipe.IngredientWithCount;
+import com.rgerva.elektrocraft.recipe.station.ChargerStationRecipe;
+import com.rgerva.elektrocraft.util.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -26,9 +29,11 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
+import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -150,8 +155,32 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(Items.QUARTZ), has(Items.QUARTZ))
                 .save(this.output, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID,
                         getSimpleRecipeName(ModItems.BLANK_CAPACITOR.get()))));
+
+        buildChargerStationRecipes();
     }
 
+    private void buildChargerStationRecipes() {
+        customChargerStationRecipes(this.output, new IngredientWithCount[]{
+                new IngredientWithCount(Ingredient.of(ModItems.BLANK_CAPACITOR), 1),
+                new IngredientWithCount(Ingredient.of(registries.lookupOrThrow(Registries.ITEM).getOrThrow(Tags.Items.INGOTS_IRON)), 1),
+                new IngredientWithCount(Ingredient.of(ModItems.TIN_SOLDER_WIRE.get()), 1),
+                new IngredientWithCount(Ingredient.of(registries.lookupOrThrow(Registries.ITEM).getOrThrow(ModTags.Items.DIELECTRIC_CONSTANTS)), 1)
+        }, new ItemStack(ModItems.CAPACITOR.get()));
+    }
+
+    protected void customChargerStationRecipes(RecipeOutput recipeOutput, IngredientWithCount[] inputs, ItemStack output) {
+        ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, "charger_station/" + getItemName(output.getItem()));
+        ChargerStationRecipe recipe = new ChargerStationRecipe(output, inputs);
+        recipeOutput.accept(getKey(texture), recipe, null);
+    }
+
+    /**
+     * Custom method to create Dust hammering.
+     *
+     * @param pInput  is main item for recipe
+     * @param pOutput is the output from recipe
+     * @param count  is number of output
+     */
     protected void customHammerRecipe(ItemLike pInput, ItemLike pOutput, int count) {
         this.shapeless(RecipeCategory.MISC, pOutput, count)
                 .requires(pInput)
@@ -161,6 +190,14 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(this.output, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, getSimpleRecipeName(pOutput))));
     }
 
+    /**
+     * Custom method to create Solder from 2 Dust.
+     *
+     * @param pInput1  is main item for recipe
+     * @param pInput2  is main item for recipe
+     * @param pOutput is the output from recipe
+     * @param pGroup  is group name
+     */
     protected void customSolderRecipe(ItemLike pInput1, ItemLike pInput2, ItemLike pOutput, String pGroup) {
         this.shapeless(RecipeCategory.MISC, pOutput, 4)
                 .requires(pInput1, 2)
@@ -170,7 +207,6 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(this.output, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID,
                         getSimpleRecipeName(pOutput).concat("_from_").concat(getSimpleRecipeName(pInput1).concat("_and_").concat(getSimpleRecipeName(pInput2))))));
     }
-
 
     /**
      * Custom method to generate Nuggets from Ingot Recipe.
@@ -255,5 +291,9 @@ public class ModRecipeProvider extends RecipeProvider {
             SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), pCategory, pResult, pExperience, pCookingTime, pCookingSerializer, factory).group(pGroup).unlockedBy(getHasName(itemlike), has(itemlike))
                     .save(recipeOutput, ElektroCraft.MOD_ID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(itemlike));
         }
+    }
+
+    private static ResourceKey<Recipe<?>> getKey(ResourceLocation recipeId) {
+        return ResourceKey.create(Registries.RECIPE, recipeId);
     }
 }

@@ -15,7 +15,7 @@
 package com.rgerva.elektrocraft.gui;
 
 import com.rgerva.elektrocraft.ElektroCraft;
-import com.rgerva.elektrocraft.gui.menu.ChargerStationMenu;
+import com.rgerva.elektrocraft.gui.menu.ChargingStationMenu;
 import com.rgerva.elektrocraft.gui.menu.ResistorAssembleMenu;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -37,8 +37,8 @@ public class ModGUI {
     public static final Supplier<MenuType<ResistorAssembleMenu>> RESISTOR_ASSEMBLE_MENU =
             registerMenuType("resistor_assemble", ResistorAssembleMenu::new);
 
-    public static final Supplier<MenuType<ChargerStationMenu>> CHARGER_STATION_MENU =
-            registerMenuType("charger_station", ChargerStationMenu::new);
+    public static final Supplier<MenuType<ChargingStationMenu>> CHARGER_STATION_MENU =
+            registerMenuType("charger_station", ChargingStationMenu::new);
 
 
     private static <T extends AbstractContainerMenu> DeferredHolder<MenuType<?>, MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {

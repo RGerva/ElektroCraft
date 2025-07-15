@@ -94,7 +94,7 @@ public class ModModelProvider extends ModelProvider {
         blockModels.createTrivialCube(ModBlocks.TIN_RAW_BLOCK.get());
 
         horizontalBlockWithItem(ModBlocks.RESISTOR_ASSEMBLE, false, false);
-        horizontalBlockWithItem(ModBlocks.CHARGER_STATION, true, true);
+        horizontalBlockWithItem(ModBlocks.CHARGING_STATION, true, true);
     }
 
     private void horizontalBlockWithItem(Holder<Block> block, boolean uniqueBottomTexture, boolean uniqueFrontTexture) {

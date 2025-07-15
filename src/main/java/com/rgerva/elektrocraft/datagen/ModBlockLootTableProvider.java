@@ -56,7 +56,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         dropSelf(ModBlocks.TIN_BLOCK.get());
         dropSelf(ModBlocks.TIN_RAW_BLOCK.get());
         dropSelf(ModBlocks.RESISTOR_ASSEMBLE.get());
-        dropSelf(ModBlocks.CHARGER_STATION.get());
+        dropSelf(ModBlocks.CHARGING_STATION.get());
     }
 
     protected void LootTableOre(Block pInput, Item pOutput, float minDrops, float maxDrops) {
