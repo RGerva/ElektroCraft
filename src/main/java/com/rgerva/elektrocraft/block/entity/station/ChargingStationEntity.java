@@ -43,8 +43,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class ChargingStationEntity extends ModRecipeBlockEntity<RecipeInput, ChargerStationRecipe> {
-    public boolean SPARKS = false; //TODO
-    public static final double VOLTAGE_USAGE = 5.0; //TODO
+    public static final double VOLTAGE_USAGE = ModUtils.ModUnits.toVolts(256);
     public static final int BLANK_CAPACITOR_SLOT = 0;
     public static final int METALLIC_SLOT = 1;
     public static final int CONDUCTOR_WIRE_SLOT = 2;
@@ -54,7 +53,7 @@ public class ChargingStationEntity extends ModRecipeBlockEntity<RecipeInput, Cha
     public ChargingStationEntity(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.CHARGING_STATION_ENTITY.get(), blockPos, blockState,
                 ModRecipes.CHARGER_STATION_TYPE.get(), 5,
-                512, 256);
+                512,  (int)VOLTAGE_USAGE);
     }
 
     public @Nullable IItemHandler getItemHandlerCapability(@Nullable Direction side) {

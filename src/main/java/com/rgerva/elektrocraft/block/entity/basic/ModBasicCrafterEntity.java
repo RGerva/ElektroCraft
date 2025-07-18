@@ -15,6 +15,7 @@
 package com.rgerva.elektrocraft.block.entity.basic;
 
 import com.rgerva.elektrocraft.block.entity.basic.energy.ModVoltEnergyStorage;
+import com.rgerva.elektrocraft.util.ModUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -54,7 +55,7 @@ public abstract class ModBasicCrafterEntity<W> extends BlockEntity {
 
         super(type, pos, blockState);
 
-        this.baseEnergyConsumptionPerTick = baseEnergyConsumptionPerTick;
+        this.baseEnergyConsumptionPerTick = (int) ModUtils.ModUnits.toFE(baseEnergyConsumptionPerTick);
         this.baseWorkDuration = baseWorkDuration;
         this.energy = makeConsumer();
         this.data = initContainerData();

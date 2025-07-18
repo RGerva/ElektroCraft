@@ -100,13 +100,13 @@ public class ChargingStationScreen extends AbstractContainerScreen<ChargingStati
                         ModUtils.ModUnits.toFE(menu.getClientStoredVolts()),
                         ModUtils.ModUnits.toFE(menu.getClientMaxVolts())));
 
-                components.add(Component.translatable("tooltip.elektrocraft.energy_usage",
+                components.add(Component.translatable("tooltip.elektrocraft.energy_usage.fe",
                         ModUtils.ModUnits.toFE(ChargingStationEntity.VOLTAGE_USAGE)));
             } else{
                 components.add(Component.translatable("tooltip.elektrocraft.energy_bar_volts",
                         menu.getClientStoredVolts(), menu.getClientMaxVolts()));
 
-                components.add(Component.translatable("tooltip.elektrocraft.energy_usage",
+                components.add(Component.translatable("tooltip.elektrocraft.energy_usage.volts",
                         ChargingStationEntity.VOLTAGE_USAGE));
 
                 components.add(Component.translatable("tooltip.elektrocraft.shift_details")

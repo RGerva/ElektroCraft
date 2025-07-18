@@ -48,5 +48,6 @@
   "tooltip.elektrocraft.capacitance" : "Capacitance Value: ",
   "tooltip.elektrocraft.energy_bar_volts": "Voltage: %s / %s V",
   "tooltip.elektrocraft.energy_bar_fe": "Energy: %s / %s FE",
-  "tooltip.elektrocraft.energy_usage": "Consumption: %s V/tick"
+  "tooltip.elektrocraft.energy_usage.volts": "Consumption: %s V/tick",
+  "tooltip.elektrocraft.energy_usage.fe": "Consumption: %s FE/tick"
 }
