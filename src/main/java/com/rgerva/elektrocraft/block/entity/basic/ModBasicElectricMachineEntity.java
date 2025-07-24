@@ -1,5 +1,5 @@
 /**
- * Generic Class: ModBasicElectricMachine <T>
+ * Generic Class: ModBasicElectricMachineEntity <T>
  * A generic structure that works with type parameters.
  * <p>
  * Created by: D56V1OK
@@ -16,17 +16,24 @@ package com.rgerva.elektrocraft.block.entity.basic;
 
 import com.rgerva.elektrocraft.block.entity.basic.energy.ModVoltEnergyStorage;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import org.jetbrains.annotations.Nullable;
 
-public abstract class ModBasicElectricMachine extends BlockEntity {
+public abstract class ModBasicElectricMachineEntity<W> extends BlockEntity {
     protected final double requiredVoltage;
     protected final double requiredCurrent;
 
     protected final ModVoltEnergyStorage energy;
+    protected int energyConsumptionLeft = -1;
+    protected boolean hasEnoughEnergy;
 
-    public ModBasicElectricMachine(BlockEntityType<?> type, BlockPos pos, BlockState state,
+    public ModBasicElectricMachineEntity(BlockEntityType<?> type, BlockPos pos, BlockState state,
                                          double requiredVoltage, double requiredCurrent) {
         super(type, pos, state);
         this.requiredVoltage = requiredVoltage;
@@ -36,36 +43,30 @@ public abstract class ModBasicElectricMachine extends BlockEntity {
 
     protected abstract ModVoltEnergyStorage createEnergyStorage();
 
-    public double getRequiredVoltage() {
-        return requiredVoltage;
-    }
-
-    public double getRequiredCurrent() {
-        return requiredCurrent;
-    }
-
-    public long getRequiredFEPerTick() {
-        return ModUnits.toFE(requiredVoltage * requiredCurrent); // P = V × I
-    }
-
-    public ModVoltEnergyStorage getEnergy() {
+    public @Nullable IEnergyStorage getEnergyStorageCapability(@Nullable Direction side) {
         return energy;
     }
 
-    public boolean isPoweredEnough() {
-        return energy.getEnergyStored() >= getRequiredFEPerTick();
-    }
-
-    public double getEfficiencyFactor() {
-        return Math.min(1.0, energy.getEnergyStored() / (double) getRequiredFEPerTick());
-    }
-
-    public ElectricShockRisk getShockRisk() {
-        return ElectricShockRisk.fromVoltage(requiredVoltage);
-    }
-
-    public int getSignalStrength() {
+    public int getSignalStrength(){
         return (int) Math.floor(15.0 * energy.getStoredFE() / energy.getCapacityFE());
     }
 
+    @Override
+    protected void loadAdditional(ValueInput valueInput) {
+        super.loadAdditional(valueInput);
+        this.energy.setEnergy(valueInput.getIntOr(this.getNameForReporting() + ".energy", 0));
+        this.energyConsumptionLeft = valueInput.getIntOr(this.getNameForReporting() + ".recipe.energy_consumption_left", 0);
+    }
+
+    @Override
+    protected void saveAdditional(ValueOutput valueOutput) {
+        valueOutput.putInt(this.getNameForReporting() + ".energy", energy.getEnergyStored());
+        valueOutput.putInt(this.getNameForReporting() + ".recipe.energy_consumption_left", energyConsumptionLeft);
+        super.saveAdditional(valueOutput);
+    }
+
+    protected void restEnergyProgress(){
+        energyConsumptionLeft = -1;
+        hasEnoughEnergy = false;
+    }
 }

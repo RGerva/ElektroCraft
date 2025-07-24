@@ -22,6 +22,8 @@ import com.rgerva.elektrocraft.recipe.ModRecipes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -32,7 +34,7 @@ import java.util.*;
 
 public class ModUtils {
     public static class ModTime {
-        public static int getTickByMinutes(int minutes){
+        public static int getTickByMinutes(int minutes) {
             return minutes * 60 * 20;
         }
     }
@@ -121,7 +123,7 @@ public class ModUtils {
         public static String getVoltageWithPrefix(double volts) {
             int index = 0;
             for (int i = THRESHOLDS.length - 1; i >= 0; i--) {
-                if(volts == 0.0){
+                if (volts == 0.0) {
                     index = 2;
                     break;
                 }
@@ -153,7 +155,7 @@ public class ModUtils {
         public static String getCurrentWithPrefix(double amperes) {
             int index = 0;
             for (int i = THRESHOLDS.length - 1; i >= 0; i--) {
-                if(amperes == 0.0){
+                if (amperes == 0.0) {
                     index = 3;
                     break;
                 }
@@ -185,7 +187,7 @@ public class ModUtils {
         public static String getCapacitanceWithPrefix(double farads) {
             int index = 0;
             for (int i = THRESHOLDS.length - 1; i >= 0; i--) {
-                if(farads == 0.0){
+                if (farads == 0.0) {
                     index = 4;
                     break;
                 }
@@ -244,7 +246,7 @@ public class ModUtils {
             Collection<RecipeHolder<T>> recipes = getAllRecipesFor(level, recipeType);
 
             return recipes.stream().map(RecipeHolder::value).anyMatch(recipe -> {
-                if(recipe instanceof ModRecipes.ModBasicRecipe<?> epRecipe)
+                if (recipe instanceof ModRecipes.ModBasicRecipe<?> epRecipe)
                     return epRecipe.isIngredient(itemStack);
 
                 return recipe.placementInfo().ingredients().stream().
@@ -256,7 +258,7 @@ public class ModUtils {
             Collection<RecipeHolder<T>> recipes = getAllRecipesFor(level, recipeType);
 
             return recipes.stream().map(RecipeHolder::value).flatMap(recipe -> {
-                if(recipe instanceof ModRecipes.ModBasicRecipe<?> epRecipe)
+                if (recipe instanceof ModRecipes.ModBasicRecipe<?> epRecipe)
                     return epRecipe.getIngredients().stream();
 
                 return recipe.placementInfo().ingredients().stream();
@@ -264,7 +266,7 @@ public class ModUtils {
         }
     }
 
-    public static final class InventoryUtils{
+    public static final class InventoryUtils {
         public static boolean canInsertItemIntoSlot(Container inventory, int slot, ItemStack itemStack) {
             ItemStack inventoryItemStack = inventory.getItem(slot);
 
@@ -272,9 +274,9 @@ public class ModUtils {
                 return true;
             }
 
-            if(ModCapacitanceUtil.isCapacitor(inventory.getItem(0))){
+            if (ModCapacitanceUtil.isCapacitor(inventory.getItem(0))) {
                 for (int i = 0; i < inventory.getContainerSize(); i++) {
-                    if(inventory.getItem(i).is(ModTags.Items.DIELECTRIC_CONSTANTS)){
+                    if (inventory.getItem(i).is(ModTags.Items.DIELECTRIC_CONSTANTS)) {
                         double capacitance = ModUtils.ModCapacitanceUtil.computeCapacitance(inventory.getItem(i));
                         itemStack.set(ModDataComponents.CAPACITANCE.get(), capacitance);
                         break;
@@ -302,15 +304,41 @@ public class ModUtils {
             boolean isEmptyFlag = true;
 
             int size = itemHandler.getSlots();
-            for(int i = 0;i < size;i++) {
+            for (int i = 0; i < size; i++) {
                 ItemStack item = itemHandler.getStackInSlot(i);
-                if(!item.isEmpty()) {
-                    fullnessPercentSum += (float)item.getCount() / Math.min(item.getMaxStackSize(), itemHandler.getSlotLimit(i));
+                if (!item.isEmpty()) {
+                    fullnessPercentSum += (float) item.getCount() / Math.min(item.getMaxStackSize(), itemHandler.getSlotLimit(i));
                     isEmptyFlag = false;
                 }
             }
 
-            return Math.min(Mth.floor(fullnessPercentSum / size * 14.f) + (isEmptyFlag?0:1), 15);
+            return Math.min(Mth.floor(fullnessPercentSum / size * 14.f) + (isEmptyFlag ? 0 : 1), 15);
         }
     }
+
+    public static final class ModPlayerUtils {
+
+        public static float getInsulationLevel(Player player) {
+            float level = 0F;
+
+            if (isInsulating(player.getItemBySlot(EquipmentSlot.FEET)))  level += 2.0F;
+            if (isInsulating(player.getItemBySlot(EquipmentSlot.LEGS)))  level += 0.3F;
+            if (isInsulating(player.getItemBySlot(EquipmentSlot.CHEST))) level += 0.8F;
+            if (isInsulating(player.getItemBySlot(EquipmentSlot.HEAD)))  level += 1.0F;
+
+            return level;
+        }
+
+        public static boolean isPlayerInsulated(Player player) {
+            return isInsulating(player.getItemBySlot(EquipmentSlot.HEAD)) ||
+                    isInsulating(player.getItemBySlot(EquipmentSlot.CHEST)) ||
+                    isInsulating(player.getItemBySlot(EquipmentSlot.LEGS)) ||
+                    isInsulating(player.getItemBySlot(EquipmentSlot.FEET));
+        }
+
+        private static boolean isInsulating(ItemStack stack) {
+            return stack != null && stack.is(ModTags.Items.INSULATOR);
+        }
+    }
+
 }

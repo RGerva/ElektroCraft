@@ -16,6 +16,7 @@ package com.rgerva.elektrocraft.datagen;
 
 import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.block.ModBlocks;
+import com.rgerva.elektrocraft.util.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
@@ -80,6 +81,9 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.TIN_BLOCK.get())
                 .add(ModBlocks.TIN_RAW_BLOCK.get())
 
+                .add(ModBlocks.CHARGING_STATION.get());
+
+        tag(ModTags.Blocks.CONDUCTIVE)
                 .add(ModBlocks.CHARGING_STATION.get());
     }
 }

@@ -54,5 +54,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
             this.tag(ModTags.Items.DIELECTRIC_CONSTANTS)
                     .add(item);
         }
+
+        this.tag(ModTags.Items.INSULATOR);
     }
 }
