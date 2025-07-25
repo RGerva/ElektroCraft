@@ -1,6 +1,6 @@
-![Codecov](https://img.shields.io/codecov/c/github/RGerva/ElektroCraft?logo=codecov)
-
 ![ElektroCraft Logo](https://github.com/RGerva/ElektroCraft/blob/master/src/main/resources/icon.png)
+
+[![codecov](https://codecov.io/gh/RGerva/ElektroCraft/graph/badge.svg?token=66QAIT2Q05)](https://codecov.io/gh/RGerva/ElektroCraft)
 
 # ElektroCraft ⚡  
 
