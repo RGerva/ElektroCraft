@@ -19,6 +19,9 @@ jobs:
           distribution: 'temurin'
           java-version: ${{ matrix.java-version }}
 
+      - name: Give permission to Gradlew
+        run: chmod +x gradlew
+
       - name: Build e testes com JaCoCo
         run: ./gradlew clean test jacocoTestReport
 
