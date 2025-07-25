@@ -1,17 +1,14 @@
 /**
- * Generic Class: ChargingStationEntity <T>
- * A generic structure that works with type parameters.
- * <p>
- * Created by: D56V1OK
- * On: 2025/jul.
- * <p>
- * GitHub: https://github.com/RGerva
- * <p>
- * Copyright (c) 2025 @RGerva. All Rights Reserved.
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Generic Class: ChargingStationEntity <T> A generic structure that works with type parameters.
+ *
+ * <p>Created by: D56V1OK On: 2025/jul.
+ *
+ * <p>GitHub: https://github.com/RGerva
+ *
+ * <p>Copyright (c) 2025 @RGerva. All Rights Reserved.
+ *
+ * <p>Licensed under the Apache License, Version 2.0 (the "License");
  */
-
 package com.rgerva.elektrocraft.block.entity.station;
 
 import com.rgerva.elektrocraft.ElektroCraft;
@@ -43,147 +40,155 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class ChargingStationEntity extends ModRecipeBlockEntity<RecipeInput, ChargerStationRecipe> {
-    public static final double VOLTAGE_USAGE = ModUtils.ModUnits.toVolts(256);
-    public static final int BLANK_CAPACITOR_SLOT = 0;
-    public static final int METALLIC_SLOT = 1;
-    public static final int CONDUCTOR_WIRE_SLOT = 2;
-    public static final int ACTIVE_POWER_SLOT = 3;
-    public static final int OUTPUT_SLOT = 4;
+  public static final double VOLTAGE_USAGE = ModUtils.ModUnits.toVolts(256);
+  public static final int BLANK_CAPACITOR_SLOT = 0;
+  public static final int METALLIC_SLOT = 1;
+  public static final int CONDUCTOR_WIRE_SLOT = 2;
+  public static final int ACTIVE_POWER_SLOT = 3;
+  public static final int OUTPUT_SLOT = 4;
 
-    public ChargingStationEntity(BlockPos blockPos, BlockState blockState) {
-        super(ModBlockEntities.CHARGING_STATION_ENTITY.get(), blockPos, blockState,
-                ModRecipes.CHARGER_STATION_TYPE.get(), 5,
-                512,  (int)VOLTAGE_USAGE);
+  public ChargingStationEntity(BlockPos blockPos, BlockState blockState) {
+    super(
+        ModBlockEntities.CHARGING_STATION_ENTITY.get(),
+        blockPos,
+        blockState,
+        ModRecipes.CHARGER_STATION_TYPE.get(),
+        5,
+        512,
+        (int) VOLTAGE_USAGE);
+  }
+
+  public @Nullable IItemHandler getItemHandlerCapability(@Nullable Direction side) {
+    if (side == null) {
+      return getInventory();
     }
+    return null;
+  }
 
-    public @Nullable IItemHandler getItemHandlerCapability(@Nullable Direction side) {
-        if(side == null) {
-            return getInventory();
-        }
-        return null;
-    }
-
-    @Override
-    public ContainerData initContainerData() {
-        return new ContainerData() {
-            @Override
-            public int get(int index) {
-                return switch (index) {
-                    case 0 -> progress;
-                    case 1 -> maxProgress;
-                    case 2 -> (int) Math.floor(energy.getStoredVolts());
-                    case 3 -> (int) Math.floor(energy.getCapacityVolts());
-                    default -> 0;
-                };
-            }
-
-            @Override
-            public void set(int index, int value) {
-                switch (index) {
-                    case 0 -> progress = value;
-                    case 1 -> maxProgress = value;
-                }
-            }
-
-            @Override
-            public int getCount() {
-                return 4;
-            }
+  @Override
+  public ContainerData initContainerData() {
+    return new ContainerData() {
+      @Override
+      public int get(int index) {
+        return switch (index) {
+          case 0 -> progress;
+          case 1 -> maxProgress;
+          case 2 -> (int) Math.floor(energy.getStoredVolts());
+          case 3 -> (int) Math.floor(energy.getCapacityVolts());
+          default -> 0;
         };
-    }
+      }
 
-    @Override
-    protected RecipeInput getRecipeInput(Container inventory) {
-        return new ContainerRecipeInputWrapper(inventory);
-    }
-
-    public int getProgress(){
-        return this.progress;
-    }
-
-    public int getMaxProgress(){
-        return this.maxProgress;
-    }
-
-    public ItemStackHandler getInventory(){
-        return inventory;
-    }
-
-    public ContainerData getData(){
-        return data;
-    }
-
-    public ModVoltEnergyStorage getEnergy(){
-        return energy;
-    }
-
-    @Override
-    public Component getDisplayName() {
-        return Component.translatable("block.elektrocraft.charging_station");
-    }
-
-    @Override
-    public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        syncIngredientListToPlayer(player);
-        return new ChargingStationMenu(i, inventory, this);
-    }
-
-    @Override
-    protected void craftItem(RecipeHolder<ChargerStationRecipe> recipe) {
-        if(level == null || !hasRecipe())
-            return;
-
-        IngredientWithCount[] inputs = recipe.value().inputs();
-        boolean[] usedIndices = new boolean[4];
-        for(int i = 0;i < 4;i++)
-            usedIndices[i] = inventory.getStackInSlot(i).isEmpty();
-
-        int len = Math.min(inputs.length, 4);
-        for(int i = 0;i < len;i++) {
-            IngredientWithCount input = inputs[i];
-
-            int indexMinCount = -1;
-            int minCount = Integer.MAX_VALUE;
-
-            for(int j = 0;j < 4;j++) {
-                if(usedIndices[j])
-                    continue;
-
-                ItemStack item = inventory.getStackInSlot(j);
-
-                if((indexMinCount == -1 || item.getCount() < minCount) && input.input().test(item) &&
-                        item.getCount() >= input.count()) {
-                    indexMinCount = j;
-                    minCount = item.getCount();
-                }
-            }
-
-            if(indexMinCount == -1)
-                return; //Should never happen: Ingredient did not match any item
-
-            usedIndices[indexMinCount] = true;
-
-            inventory.extractItem(indexMinCount, input.count(), false);
+      @Override
+      public void set(int index, int value) {
+        switch (index) {
+          case 0 -> progress = value;
+          case 1 -> maxProgress = value;
         }
+      }
 
-        ItemStack stack = recipe.value().assemble(null, level.registryAccess()).copyWithCount(
-                inventory.getStackInSlot(4).getCount() +
-                        recipe.value().assemble(null, level.registryAccess()).getCount());
+      @Override
+      public int getCount() {
+        return 4;
+      }
+    };
+  }
 
-        ElektroCraft.LOGGER.info("Result Stack; {}", stack.getItemName());
+  @Override
+  protected RecipeInput getRecipeInput(Container inventory) {
+    return new ContainerRecipeInputWrapper(inventory);
+  }
 
-        ItemStack dielectric = inventory.getStackInSlot(ACTIVE_POWER_SLOT);
-        double capacitance = ModUtils.ModCapacitanceUtil.computeCapacitance(dielectric);
-        stack.set(ModDataComponents.CAPACITANCE.get(), capacitance);
+  public int getProgress() {
+    return this.progress;
+  }
 
-        inventory.setStackInSlot(4, stack);
+  public int getMaxProgress() {
+    return this.maxProgress;
+  }
 
-        resetProgress();
+  public ItemStackHandler getInventory() {
+    return inventory;
+  }
+
+  public ContainerData getData() {
+    return data;
+  }
+
+  public ModVoltEnergyStorage getEnergy() {
+    return energy;
+  }
+
+  @Override
+  public Component getDisplayName() {
+    return Component.translatable("block.elektrocraft.charging_station");
+  }
+
+  @Override
+  public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
+    syncIngredientListToPlayer(player);
+    return new ChargingStationMenu(i, inventory, this);
+  }
+
+  @Override
+  protected void craftItem(RecipeHolder<ChargerStationRecipe> recipe) {
+    if (level == null || !hasRecipe()) return;
+
+    IngredientWithCount[] inputs = recipe.value().inputs();
+    boolean[] usedIndices = new boolean[4];
+    for (int i = 0; i < 4; i++) usedIndices[i] = inventory.getStackInSlot(i).isEmpty();
+
+    int len = Math.min(inputs.length, 4);
+    for (int i = 0; i < len; i++) {
+      IngredientWithCount input = inputs[i];
+
+      int indexMinCount = -1;
+      int minCount = Integer.MAX_VALUE;
+
+      for (int j = 0; j < 4; j++) {
+        if (usedIndices[j]) continue;
+
+        ItemStack item = inventory.getStackInSlot(j);
+
+        if ((indexMinCount == -1 || item.getCount() < minCount)
+            && input.input().test(item)
+            && item.getCount() >= input.count()) {
+          indexMinCount = j;
+          minCount = item.getCount();
+        }
+      }
+
+      if (indexMinCount == -1) return; // Should never happen: Ingredient did not match any item
+
+      usedIndices[indexMinCount] = true;
+
+      inventory.extractItem(indexMinCount, input.count(), false);
     }
 
-    @Override
-    protected boolean canCraftRecipe(SimpleContainer inventory, RecipeHolder<ChargerStationRecipe> recipe) {
-        return level != null &&
-                ModUtils.InventoryUtils.canInsertItemIntoSlot(inventory, 4, recipe.value().assemble(null, level.registryAccess()));
-    }
+    ItemStack stack =
+        recipe
+            .value()
+            .assemble(null, level.registryAccess())
+            .copyWithCount(
+                inventory.getStackInSlot(4).getCount()
+                    + recipe.value().assemble(null, level.registryAccess()).getCount());
+
+    ElektroCraft.LOGGER.info("Result Stack; {}", stack.getItemName());
+
+    ItemStack dielectric = inventory.getStackInSlot(ACTIVE_POWER_SLOT);
+    double capacitance = ModUtils.ModCapacitanceUtil.computeCapacitance(dielectric);
+    stack.set(ModDataComponents.CAPACITANCE.get(), capacitance);
+
+    inventory.setStackInSlot(4, stack);
+
+    resetProgress();
+  }
+
+  @Override
+  protected boolean canCraftRecipe(
+      SimpleContainer inventory, RecipeHolder<ChargerStationRecipe> recipe) {
+    return level != null
+        && ModUtils.InventoryUtils.canInsertItemIntoSlot(
+            inventory, 4, recipe.value().assemble(null, level.registryAccess()));
+  }
 }

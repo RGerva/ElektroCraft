@@ -122,3 +122,8 @@ src/generated
 
 # Jqwik test database
 .jqwik-database
+
+# Gradle Wrapper
+gradle/wrapper/gradle-wrapper.jar
+gradlew
+gradlew.bat

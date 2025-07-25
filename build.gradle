@@ -2,7 +2,9 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'idea'
+    id 'jacoco'
     id 'net.neoforged.moddev' version '2.0.105'
+    id 'com.diffplug.spotless' version '7.2.1'
 }
 
 version = mod_version
@@ -131,6 +133,9 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:6.0.0-M1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:6.0.0-M1'
 
+    testImplementation 'org.junit.platform:junit-platform-launcher:6.0.0-M1'
+    testRuntimeOnly 'org.junit.platform:junit-platform-engine:6.0.0-M1'
+
     // For unit tests
     testImplementation 'org.mockito:mockito-core:5.18.0'
 
@@ -166,6 +171,59 @@ tasks.withType(Test).configureEach {
         events "passed", "skipped", "failed"
         showStandardStreams = true
     }
+
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+jacocoTestReport {
+    group = 'other'
+    dependsOn tasks.test
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+        csv.required.set(false)
+    }
+
+    afterEvaluate {
+        classDirectories.setFrom(files([
+                fileTree(dir: "$buildDir/classes/java/test", includes: ["**/*.class"])
+        ]))
+    }
+}
+
+jacocoTestCoverageVerification {
+    group = 'other'
+    dependsOn tasks.test
+    violationRules {
+        rule {
+            enabled = true
+            element = 'BUNDLE'
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.95
+            }
+        }
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files([
+                fileTree(dir: "$buildDir/classes/java/test", includes: ["**/*.class"])
+        ]))
+    }
+}
+
+spotless {
+    java {
+        importOrder()
+        removeUnusedImports()
+        googleJavaFormat()
+    }
+}
+
+tasks.register("customUnitTest") {
+    description = 'Optimize imports, execute unit tests and generate coverage report'
+    group       = 'Tests'
+    dependsOn   'spotlessCheck', 'spotlessApply', 'test', 'jacocoTestReport', 'jacocoTestCoverageVerification'
 }
 
 // Example configuration to allow publishing using the maven-publish plugin

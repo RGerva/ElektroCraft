@@ -1,38 +1,37 @@
 /**
- * Interface: IVoltEnergy
- * Defines the contract for implementations of this type.
- * <p>
- * Created by: D56V1OK
- * On: 2025/jul.
- * <p>
- * GitHub: https://github.com/RGerva
- * <p>
- * Copyright (c) 2025 @RGerva. All Rights Reserved.
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Interface: IVoltEnergy Defines the contract for implementations of this type.
+ *
+ * <p>Created by: D56V1OK On: 2025/jul.
+ *
+ * <p>GitHub: https://github.com/RGerva
+ *
+ * <p>Copyright (c) 2025 @RGerva. All Rights Reserved.
+ *
+ * <p>Licensed under the Apache License, Version 2.0 (the "License");
  */
-
 package com.rgerva.elektrocraft.block.entity.basic.energy;
 
 import com.rgerva.elektrocraft.util.ModUtils;
 
 public interface IVoltEnergy {
-    long getStoredFE();
-    long getCapacityFE();
+  long getStoredFE();
 
-    default double getStoredVolts() {
-        return ModUtils.ModUnits.toVolts(getStoredFE());
-    }
+  long getCapacityFE();
 
-    default double getCapacityVolts() {
-        return ModUtils.ModUnits.toVolts(getCapacityFE());
-    }
+  default double getStoredVolts() {
+    return ModUtils.ModUnits.toVolts(getStoredFE());
+  }
 
-    default boolean consumeVolts(double volts, boolean simulate) {
-        long fe = ModUtils.ModUnits.toFE(volts);
-        return extractFE(fe, simulate) == fe;
-    }
+  default double getCapacityVolts() {
+    return ModUtils.ModUnits.toVolts(getCapacityFE());
+  }
 
-    long extractFE(long fe, boolean simulate);
-    long receiveFE(long fe, boolean simulate);
+  default boolean consumeVolts(double volts, boolean simulate) {
+    long fe = ModUtils.ModUnits.toFE(volts);
+    return extractFE(fe, simulate) == fe;
+  }
+
+  long extractFE(long fe, boolean simulate);
+
+  long receiveFE(long fe, boolean simulate);
 }

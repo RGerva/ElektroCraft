@@ -8,17 +8,18 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 
 @EventBusSubscriber(modid = ElektroCraft.MOD_ID)
 public class ModConfig {
-    private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+  private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    private static final ModConfigSpec.IntValue FE_PER_VOLT = BUILDER
-            .comment("How many FE equals 1 Volt (ex: 20 = 1V = 20FE)")
-            .defineInRange("fePerVolt", 20, 1, Integer.MAX_VALUE);
+  private static final ModConfigSpec.IntValue FE_PER_VOLT =
+      BUILDER
+          .comment("How many FE equals 1 Volt (ex: 20 = 1V = 20FE)")
+          .defineInRange("fePerVolt", 20, 1, Integer.MAX_VALUE);
 
-    public static final ModConfigSpec SPEC = BUILDER.build();
-    public static int fePerVolt;
+  public static final ModConfigSpec SPEC = BUILDER.build();
+  public static int fePerVolt;
 
-    @SubscribeEvent
-    static void onLoad(final ModConfigEvent event) {
-        fePerVolt = FE_PER_VOLT.get();
-    }
+  @SubscribeEvent
+  static void onLoad(final ModConfigEvent event) {
+    fePerVolt = FE_PER_VOLT.get();
+  }
 }

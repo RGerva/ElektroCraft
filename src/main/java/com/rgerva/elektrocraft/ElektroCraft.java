@@ -1,25 +1,20 @@
 /**
- * Class: ElektroCraft <T>
- * Created by: D56V1OK
- * On: 2025/jun.
- * <p>
- * GitHub: https://github.com/RGerva
- * <p>
- * Copyright (c) 2025 @RGerva. All Rights Reserved.
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * You may not use this file except in compliance with the License.
- * You may obtain a copy of the License at:
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * Class: ElektroCraft <T> Created by: D56V1OK On: 2025/jun.
+ *
+ * <p>GitHub: https://github.com/RGerva
+ *
+ * <p>Copyright (c) 2025 @RGerva. All Rights Reserved.
+ *
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); You may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at:
+ *
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.rgerva.elektrocraft;
 
 import com.mojang.logging.LogUtils;
@@ -53,54 +48,53 @@ import org.slf4j.Logger;
 
 @Mod(ElektroCraft.MOD_ID)
 public class ElektroCraft {
-    public static final String MOD_ID = "elektrocraft";
-    public static final Logger LOGGER = LogUtils.getLogger();
+  public static final String MOD_ID = "elektrocraft";
+  public static final Logger LOGGER = LogUtils.getLogger();
 
-    public ElektroCraft(IEventBus modEventBus, ModContainer modContainer) {
-        modEventBus.addListener(this::commonSetup);
+  public ElektroCraft(IEventBus modEventBus, ModContainer modContainer) {
+    modEventBus.addListener(this::commonSetup);
 
-        NeoForge.EVENT_BUS.register(this);
+    NeoForge.EVENT_BUS.register(this);
 
-        ModCreativeTab.register(modEventBus);
+    ModCreativeTab.register(modEventBus);
 
-        ModItems.register(modEventBus);
-        ModBlocks.register(modEventBus);
+    ModItems.register(modEventBus);
+    ModBlocks.register(modEventBus);
 
-        ModDataComponents.register(modEventBus);
-        ModSounds.register(modEventBus);
+    ModDataComponents.register(modEventBus);
+    ModSounds.register(modEventBus);
 
-        ModEffects.register(modEventBus);
-        ModPotions.register(modEventBus);
+    ModEffects.register(modEventBus);
+    ModPotions.register(modEventBus);
 
-        ModEnchantmentEffects.register(modEventBus);
-        ModEntities.register(modEventBus);
+    ModEnchantmentEffects.register(modEventBus);
+    ModEntities.register(modEventBus);
 
-        ModVillagers.register(modEventBus);
-        ModParticles.register(modEventBus);
+    ModVillagers.register(modEventBus);
+    ModParticles.register(modEventBus);
 
-        ModLootModifiers.register(modEventBus);
-        ModBlockEntities.register(modEventBus);
+    ModLootModifiers.register(modEventBus);
+    ModBlockEntities.register(modEventBus);
 
-        ModGUI.register(modEventBus);
-        ModRecipes.register(modEventBus);
+    ModGUI.register(modEventBus);
+    ModRecipes.register(modEventBus);
 
-        ModFluids.register(modEventBus);
+    ModFluids.register(modEventBus);
 
-        modEventBus.addListener(ModCreativeTab::addCreative);
-        modEventBus.addListener(ModCapabilities::registerCapabilities);
-        modEventBus.addListener(ModMessages::register);
+    modEventBus.addListener(ModCreativeTab::addCreative);
+    modEventBus.addListener(ModCapabilities::registerCapabilities);
+    modEventBus.addListener(ModMessages::register);
 
-        modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, ModConfig.SPEC);
-    }
+    modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, ModConfig.SPEC);
+  }
 
-    private void commonSetup(final FMLCommonSetupEvent event) {
-        LOGGER.info("HELLO FROM COMMON SETUP");
-        LOGGER.info("{}", ModConfig.fePerVolt);
-    }
+  private void commonSetup(final FMLCommonSetupEvent event) {
+    LOGGER.info("HELLO FROM COMMON SETUP");
+    LOGGER.info("{}", ModConfig.fePerVolt);
+  }
 
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
-        ElektroCraft.LOGGER.info("HELLO from server starting");
-    }
-
+  @SubscribeEvent
+  public void onServerStarting(ServerStartingEvent event) {
+    ElektroCraft.LOGGER.info("HELLO from server starting");
+  }
 }

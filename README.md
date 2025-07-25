@@ -1,4 +1,4 @@
-[![Coverage](badges/jacoco.svg)](build/reports/jacoco/html/index.html)
+![Codecov](https://img.shields.io/codecov/c/github/RGerva/ElektroCraft?logo=codecov)
 
 ![ElektroCraft Logo](https://github.com/RGerva/ElektroCraft/blob/master/src/main/resources/icon.png)
 
