@@ -1,3 +1,5 @@
+[![Coverage](badges/jacoco.svg)](build/reports/jacoco/html/index.html)
+
 ![ElektroCraft Logo](https://github.com/RGerva/ElektroCraft/blob/master/src/main/resources/icon.png)
 
 # ElektroCraft ⚡  
