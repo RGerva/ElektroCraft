@@ -21,6 +21,9 @@ jobs:
       - name: Give permission to Gradlew
         run: chmod +x gradlew
 
+      - name: Create Wrapper
+        run: .\gradlew wrapper
+
       - name: Build e testes + cobertura
         run: ./gradlew clean test jacocoTestReport
 
