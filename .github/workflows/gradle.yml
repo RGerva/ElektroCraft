@@ -33,7 +33,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Create Wrapper
-        run: .\gradlew wrapper
+        run: ./gradlew wrapper
 
       - name: Build with Gradle Wrapper
         run: ./gradlew build

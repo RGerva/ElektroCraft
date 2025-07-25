@@ -23,7 +23,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Create Wrapper
-        run: .\gradlew wrapper
+        run: ./gradlew wrapper
 
       - name: Build e testes com JaCoCo
         run: ./gradlew clean test jacocoTestReport
