@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ElektroCraft.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ElektroCraft.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ElektroCraft.test.iml" filepath="$PROJECT_DIR$/.idea/modules/ElektroCraft.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.rgerva.elektrocraft.ElektroCraft.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.rgerva.elektrocraft.ElektroCraft.main.iml" />
     </modules>
   </component>
 </project>
