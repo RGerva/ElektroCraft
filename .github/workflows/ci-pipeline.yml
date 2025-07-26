@@ -41,6 +41,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      - name: Give permission to Gradlew
+        run: chmod +x gradlew
+
       - name: Run tests
         run: ./gradlew test --no-daemon
 
@@ -60,6 +63,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      - name: Give permission to Gradlew
+        run: chmod +x gradlew
+
       - name: Run generateDataTask
         run: ./gradlew runData --no-daemon
 
@@ -78,6 +84,9 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
+
+      - name: Give permission to Gradlew
+        run: chmod +x gradlew
 
       - name: Build package
         run: ./gradlew build --no-daemon
