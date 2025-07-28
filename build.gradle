@@ -130,11 +130,11 @@ dependencies {
     // implementation project(":myproject")
 
     // Add JUnit for tests
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:6.0.0-M1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:6.0.0-M1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:6.0.0-M2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:6.0.0-M2'
 
-    testImplementation 'org.junit.platform:junit-platform-launcher:6.0.0-M1'
-    testRuntimeOnly 'org.junit.platform:junit-platform-engine:6.0.0-M1'
+    testImplementation 'org.junit.platform:junit-platform-launcher:6.0.0-M2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-engine:6.0.0-M2'
 
     // For unit tests
     testImplementation 'org.mockito:mockito-core:5.18.0'
