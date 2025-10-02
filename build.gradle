@@ -12,10 +12,12 @@ group = mod_group_id
 
 repositories {
     mavenLocal()
+
     exclusiveContent {
         forRepository {
             maven {
-                url = "https://cursemaven.com"
+                name = "curseMaven"
+                url = uri("https://cursemaven.com")
             }
         }
         filter {
@@ -48,13 +50,13 @@ neoForge {
             client()
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id.toString()
         }
 
         server {
             server()
             programArgument '--nogui'
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id.toString()
         }
 
         // This run config launches GameTestServer and runs all registered gametests, then exits.
@@ -62,7 +64,7 @@ neoForge {
         // The gametest system is also enabled by default for other run configs under the /test command.
         gameTestServer {
             type = "gameTestServer"
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id.toString()
         }
 
         data {
@@ -72,7 +74,7 @@ neoForge {
             // gameDirectory = project.file('run-data')
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+            programArguments.addAll '--mod', project.mod_id.toString(), '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
         }
 
         // applies to all the run configs above
@@ -107,14 +109,15 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 
 dependencies {
-    // Example mod dependency with JEI
-    // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
-    // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
-    // compileOnly "mezz.jei:jei-${mc_version}-forge-api:${jei_version}"
-    // runtimeOnly "mezz.jei:jei-${mc_version}-forge:${jei_version}"
 
-    // Jade Mod
-    // runtimeOnly "curse.maven:Jade-324717:${jade_version}"
+    // JEI ********************************************************************************************************
+    // compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    // compileOnly "mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"
+    // runtimeOnly "mezz.jei:jei-${minecraft_version}-forge:${jei_version}"
+    runtimeOnly "curse.maven:jei-238222:${jei_version}"
+
+    // JADE ********************************************************************************************************
+    runtimeOnly "curse.maven:Jade-324717:${jade_version}"
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
@@ -127,14 +130,13 @@ dependencies {
     // Example project dependency using a sister or child project:
     // implementation project(":myproject")
 
-    // Add JUnit for tests
+    // JUNIT ******************************************************************************************************
     testImplementation 'org.junit.jupiter:junit-jupiter-api:6.0.0-M2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:6.0.0-M2'
 
     testImplementation 'org.junit.platform:junit-platform-launcher:6.0.0-M2'
     testRuntimeOnly 'org.junit.platform:junit-platform-engine:6.0.0-M2'
 
-    // For unit tests
     testImplementation 'org.mockito:mockito-core:5.18.0'
 
     // For more info:
@@ -182,9 +184,16 @@ jacocoTestReport {
         csv.required.set(false)
     }
 
+//    afterEvaluate {
+//        classDirectories.setFrom(files([
+//                fileTree(dir: "$buildDir/classes/java/test", includes: ["**/*.class"])
+//        ]))
+//    }
     afterEvaluate {
         classDirectories.setFrom(files([
-                fileTree(dir: "$buildDir/classes/java/test", includes: ["**/*.class"])
+                layout.buildDirectory.dir("classes/java/test").get().asFileTree.matching {
+                    include("**/*.class")
+                }
         ]))
     }
 }
@@ -203,9 +212,17 @@ jacocoTestCoverageVerification {
             }
         }
     }
+//    afterEvaluate {
+//        classDirectories.setFrom(files([
+//                fileTree(dir: "$buildDir/classes/java/test", includes: ["**/*.class"])
+//        ]))
+//    }
+
     afterEvaluate {
         classDirectories.setFrom(files([
-                fileTree(dir: "$buildDir/classes/java/test", includes: ["**/*.class"])
+                layout.buildDirectory.dir("classes/java/test").get().asFileTree.matching {
+                    include("**/*.class")
+                }
         ]))
     }
 }
@@ -233,7 +250,7 @@ publishing {
     }
     repositories {
         maven {
-            url "file://${project.projectDir}/repo"
+            url = 'file://${project.projectDir}/repo'
         }
     }
 }
