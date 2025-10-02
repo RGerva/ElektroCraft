@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
     id 'idea'
     id 'jacoco'
-    id 'net.neoforged.moddev' version '2.0.105'
+    id 'net.neoforged.moddev' version '2.0.111'
     id 'com.diffplug.spotless' version '7.2.1'
 }
 
@@ -116,7 +116,7 @@ dependencies {
     // runtimeOnly "curse.maven:jei-238222:${jei_version}"
 
     // Jade Mod
-    runtimeOnly "curse.maven:Jade-324717:${jade_version}"
+    // runtimeOnly "curse.maven:Jade-324717:${jade_version}"
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar

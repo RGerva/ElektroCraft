@@ -1,4 +1,4 @@
-![ElektroCraft Logo](https://github.com/RGerva/ElektroCraft/blob/master/src/main/resources/icon.png)
+![ElektroCraft Logo](src/main/resources/assets/elektrocraft/icon.png)
 
 [![codecov](https://codecov.io/gh/RGerva/ElektroCraft/graph/badge.svg?token=66QAIT2Q05)](https://codecov.io/gh/RGerva/ElektroCraft)
 

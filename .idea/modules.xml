@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ElektroCraft.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ElektroCraft.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ElektroCraft.test.iml" filepath="$PROJECT_DIR$/.idea/modules/ElektroCraft.test.iml" />
     </modules>
   </component>
 </project>
