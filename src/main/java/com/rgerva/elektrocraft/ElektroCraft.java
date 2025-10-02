@@ -1,100 +1,138 @@
 /**
  * Class: ElektroCraft <T> Created by: D56V1OK On: 2025/jun.
- *
- * <p>GitHub: https://github.com/RGerva
- *
- * <p>Copyright (c) 2025 @RGerva. All Rights Reserved.
- *
- * <p>Licensed under the Apache License, Version 2.0 (the "License"); You may not use this file
+ * <p>
+ * GitHub: https://github.com/RGerva
+ * <p>
+ * Copyright (c) 2025 @RGerva. All Rights Reserved.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License"); You may not use this file
  * except in compliance with the License. You may obtain a copy of the License at:
- *
- * <p>http://www.apache.org/licenses/LICENSE-2.0
- *
- * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software distributed under the
  * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
  * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.rgerva.elektrocraft;
 
 import com.mojang.logging.LogUtils;
-import com.rgerva.elektrocraft.block.ModBlocks;
-import com.rgerva.elektrocraft.block.entity.ModBlockEntities;
-import com.rgerva.elektrocraft.capabilities.ModCapabilities;
-import com.rgerva.elektrocraft.component.ModDataComponents;
-import com.rgerva.elektrocraft.config.ModConfig;
-import com.rgerva.elektrocraft.creative.ModCreativeTab;
-import com.rgerva.elektrocraft.effect.ModEffects;
-import com.rgerva.elektrocraft.enchantment.ModEnchantmentEffects;
-import com.rgerva.elektrocraft.entity.ModEntities;
-import com.rgerva.elektrocraft.fluid.ModFluids;
-import com.rgerva.elektrocraft.gui.ModGUI;
-import com.rgerva.elektrocraft.item.ModItems;
-import com.rgerva.elektrocraft.loot.ModLootModifiers;
-import com.rgerva.elektrocraft.network.ModMessages;
-import com.rgerva.elektrocraft.particles.ModParticles;
-import com.rgerva.elektrocraft.potion.ModPotions;
-import com.rgerva.elektrocraft.recipe.ModRecipes;
-import com.rgerva.elektrocraft.sound.ModSounds;
-import com.rgerva.elektrocraft.villager.ModVillagers;
+import net.minecraft.client.Minecraft;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
 
-@Mod(ElektroCraft.MOD_ID)
-public class ElektroCraft {
-  public static final String MOD_ID = "elektrocraft";
-  public static final Logger LOGGER = LogUtils.getLogger();
+// The value here should match an entry in the META-INF/neoforge.mods.toml file
+@Mod(Elektrocraft.MODID)
+public class Elektrocraft {
+    // Define mod id in a common place for everything to reference
+    public static final String MODID = "elektrocraft";
+    // Directly reference a slf4j logger
+    private static final Logger LOGGER = LogUtils.getLogger();
+    // Create a Deferred Register to hold Blocks which will all be registered under the "elektrocraft" namespace
+    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
+    // Create a Deferred Register to hold Items which will all be registered under the "elektrocraft" namespace
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
+    // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "elektrocraft" namespace
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-  public ElektroCraft(IEventBus modEventBus, ModContainer modContainer) {
-    modEventBus.addListener(this::commonSetup);
+    // Creates a new Block with the id "elektrocraft:example_block", combining the namespace and path
+    public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
+    // Creates a new BlockItem with the id "elektrocraft:example_block", combining the namespace and path
+    public static final DeferredItem<BlockItem> EXAMPLE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("example_block", EXAMPLE_BLOCK);
 
-    NeoForge.EVENT_BUS.register(this);
+    // Creates a new food item with the id "elektrocraft:example_id", nutrition 1 and saturation 2
+    public static final DeferredItem<Item> EXAMPLE_ITEM = ITEMS.registerSimpleItem("example_item", new Item.Properties().food(new FoodProperties.Builder().alwaysEdible().nutrition(1).saturationModifier(2f).build()));
 
-    ModCreativeTab.register(modEventBus);
+    // Creates a creative tab with the id "elektrocraft:example_tab" for the example item, that is placed after the combat tab
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.elektrocraft")).withTabsBefore(CreativeModeTabs.COMBAT).icon(() -> EXAMPLE_ITEM.get().getDefaultInstance()).displayItems((parameters, output) -> {
+        output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
+    }).build());
 
-    ModItems.register(modEventBus);
-    ModBlocks.register(modEventBus);
+    // The constructor for the mod class is the first code that is run when your mod is loaded.
+    // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
+    public Elektrocraft(IEventBus modEventBus, ModContainer modContainer) {
+        // Register the commonSetup method for modloading
+        modEventBus.addListener(this::commonSetup);
 
-    ModDataComponents.register(modEventBus);
-    ModSounds.register(modEventBus);
+        // Register the Deferred Register to the mod event bus so blocks get registered
+        BLOCKS.register(modEventBus);
+        // Register the Deferred Register to the mod event bus so items get registered
+        ITEMS.register(modEventBus);
+        // Register the Deferred Register to the mod event bus so tabs get registered
+        CREATIVE_MODE_TABS.register(modEventBus);
 
-    ModEffects.register(modEventBus);
-    ModPotions.register(modEventBus);
+        // Register ourselves for server and other game events we are interested in.
+        // Note that this is necessary if and only if we want *this* class (Elektrocraft) to respond directly to events.
+        // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
+        NeoForge.EVENT_BUS.register(this);
 
-    ModEnchantmentEffects.register(modEventBus);
-    ModEntities.register(modEventBus);
+        // Register the item to a creative tab
+        modEventBus.addListener(this::addCreative);
 
-    ModVillagers.register(modEventBus);
-    ModParticles.register(modEventBus);
+        // Register our mod's ModConfigSpec so that FML can create and load the config file for us
+        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+    }
 
-    ModLootModifiers.register(modEventBus);
-    ModBlockEntities.register(modEventBus);
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        // Some common setup code
+        LOGGER.info("HELLO FROM COMMON SETUP");
 
-    ModGUI.register(modEventBus);
-    ModRecipes.register(modEventBus);
+        if (Config.logDirtBlock) LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
 
-    ModFluids.register(modEventBus);
+        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
 
-    modEventBus.addListener(ModCreativeTab::addCreative);
-    modEventBus.addListener(ModCapabilities::registerCapabilities);
-    modEventBus.addListener(ModMessages::register);
+        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+    }
 
-    modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, ModConfig.SPEC);
-  }
+    // Add the example block item to the building blocks tab
+    private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) event.accept(EXAMPLE_BLOCK_ITEM);
+    }
 
-  private void commonSetup(final FMLCommonSetupEvent event) {
-    LOGGER.info("HELLO FROM COMMON SETUP");
-    LOGGER.info("{}", ModConfig.fePerVolt);
-  }
+    // You can use SubscribeEvent and let the Event Bus discover methods to call
+    @SubscribeEvent
+    public void onServerStarting(ServerStartingEvent event) {
+        // Do something when the server starts
+        LOGGER.info("HELLO from server starting");
+    }
 
-  @SubscribeEvent
-  public void onServerStarting(ServerStartingEvent event) {
-    ElektroCraft.LOGGER.info("HELLO from server starting");
-  }
+    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
+    @EventBusSubscriber(modid = MODID, value = Dist.CLIENT)
+    public static class ClientModEvents {
+        @SubscribeEvent
+        public static void onClientSetup(FMLClientSetupEvent event) {
+            // Some client setup code
+            LOGGER.info("HELLO FROM CLIENT SETUP");
+            LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+        }
+    }
 }

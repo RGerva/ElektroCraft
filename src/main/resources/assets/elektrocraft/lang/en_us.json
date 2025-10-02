@@ -1,53 +1,5 @@
 {
-  "itemGroup.elektrocraft": "ElektroCraft Tab",
-
-  "block.elektrocraft.lead_block": "Lead Block",
-  "block.elektrocraft.lead_raw_block": "Raw Lead Block",
-  "block.elektrocraft.lead_deepslate_ore": "Deepslate Lead Ore",
-  "block.elektrocraft.lead_end_ore": "End Lead Ore",
-  "block.elektrocraft.lead_nether_ore": "Nether Lead Ore",
-  "block.elektrocraft.lead_ore": "Lead Ore",
-
-  "block.elektrocraft.tin_block": "Tin Block",
-  "block.elektrocraft.tin_raw_block": "Raw Tin Block",
-  "block.elektrocraft.tin_deepslate_ore": "Deepslate Tin Ore",
-  "block.elektrocraft.tin_end_ore": "End Tin Ore",
-  "block.elektrocraft.tin_nether_ore": "Nether Tin Ore",
-  "block.elektrocraft.tin_ore": "Tin Ore",
-
-  "block.elektrocraft.resistor_assemble": "Resistor Assemble",
-  "block.elektrocraft.charger_station": "Charger Station",
-  "block.elektrocraft.charging_station": "Charging Station",
-
-  "item.elektrocraft.lead_ingot": "Lead Ingot",
-  "item.elektrocraft.lead_nugget": "Lead Nugget",
-  "item.elektrocraft.lead_raw": "Lead Raw",
-  "item.elektrocraft.lead_dust": "Lead Dust",
-
-  "item.elektrocraft.tin_ingot": "Tin Ingot",
-  "item.elektrocraft.tin_nugget": "Tin Nugget",
-  "item.elektrocraft.tin_raw": "Tin Raw",
-  "item.elektrocraft.tin_dust": "Tin Dust",
-
-  "item.elektrocraft.tin_solder": "Tin Solder",
-  "item.elektrocraft.tin_solder_wire": "Tin Solder Wire",
-  "item.elektrocraft.hammer": "Hammer",
-  "item.elektrocraft.blank_resistor": "Blank Resistor",
-  "item.elektrocraft.resistor": "Resistor",
-
-  "item.elektrocraft.blank_capacitor": "Blank Capacitor",
-  "item.elektrocraft.capacitor": "Capacitor",
-
-  "item.elektrocraft.silicon": "Silicon",
-  "item.elektrocraft.diode": "Diode",
-
-  "tooltip.elektrocraft.shift_details": "Press [SHIFT] for details",
-  "tooltip.elektrocraft.resistance" : "Resistance Value: ",
-  "tooltip.elektrocraft.voltage" : "Voltage Value: ",
-  "tooltip.elektrocraft.current" : "Current Value: ",
-  "tooltip.elektrocraft.capacitance" : "Capacitance Value: ",
-  "tooltip.elektrocraft.energy_bar_volts": "Voltage: %s / %s V",
-  "tooltip.elektrocraft.energy_bar_fe": "Energy: %s / %s FE",
-  "tooltip.elektrocraft.energy_usage.volts": "Consumption: %s V/tick",
-  "tooltip.elektrocraft.energy_usage.fe": "Consumption: %s FE/tick"
+  "itemGroup.elektrocraft": "Example Mod Tab",
+  "block.elektrocraft.example_block": "Example Block",
+  "item.elektrocraft.example_item": "Example Item"
 }

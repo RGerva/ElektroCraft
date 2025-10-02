@@ -26,7 +26,7 @@
 This project is licensed under the **Apache License 2.0** – see the [`LICENSE`](https://github.com/RGerva/ElektroCraft/blob/master/LICENSE) file for details.  
 
 ## 🛠 Requirements  
-- **Minecraft Version**: 1.21.5+  
+- **Minecraft Version**: 1.21.9+  
 - **Forge Version**: Latest stable release  
 - **Minimum RAM**: 4GB (recommended for complex circuits)  
 - **GPU & CPU**: No special requirements beyond standard Minecraft mod performance  
