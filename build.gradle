@@ -184,11 +184,6 @@ jacocoTestReport {
         csv.required.set(false)
     }
 
-//    afterEvaluate {
-//        classDirectories.setFrom(files([
-//                fileTree(dir: "$buildDir/classes/java/test", includes: ["**/*.class"])
-//        ]))
-//    }
     afterEvaluate {
         classDirectories.setFrom(files([
                 layout.buildDirectory.dir("classes/java/test").get().asFileTree.matching {
@@ -212,11 +207,6 @@ jacocoTestCoverageVerification {
             }
         }
     }
-//    afterEvaluate {
-//        classDirectories.setFrom(files([
-//                fileTree(dir: "$buildDir/classes/java/test", includes: ["**/*.class"])
-//        ]))
-//    }
 
     afterEvaluate {
         classDirectories.setFrom(files([
