@@ -16,6 +16,7 @@ package com.rgerva.elektrocraft.datagen;
 
 import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.item.ModItems;
+import java.util.function.BiConsumer;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -23,8 +24,6 @@ import net.minecraft.client.data.models.model.ModelInstance;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-
-import java.util.function.BiConsumer;
 
 public class ModModelProvider extends ModelProvider {
     static BlockModelGenerators blockModelGenerator;
