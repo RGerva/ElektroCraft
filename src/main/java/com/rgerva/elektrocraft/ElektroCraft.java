@@ -20,9 +20,13 @@ package com.rgerva.elektrocraft;
 
 import com.mojang.logging.LogUtils;
 import com.rgerva.elektrocraft.block.ModBlocks;
+import com.rgerva.elektrocraft.block_entities.ModBlockEntities;
 import com.rgerva.elektrocraft.configs.ModConfigs;
 import com.rgerva.elektrocraft.creative.ModCreativeTab;
 import com.rgerva.elektrocraft.item.ModItems;
+import com.rgerva.elektrocraft.network.ModNetwork;
+import com.rgerva.elektrocraft.recipe.ModRecipes;
+import com.rgerva.elektrocraft.screen.ModScreen;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
@@ -49,7 +53,13 @@ public class ElektroCraft {
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
 
+        ModBlockEntities.register(modEventBus);
+
+        ModScreen.register(modEventBus);
+        ModRecipes.register(modEventBus);
+
         modEventBus.addListener(ModCreativeTab::addCreative);
+        modEventBus.addListener(ModNetwork::register);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, ModConfigs.SPEC);
     }

@@ -15,6 +15,7 @@
 package com.rgerva.elektrocraft.creative;
 
 import com.rgerva.elektrocraft.ElektroCraft;
+import com.rgerva.elektrocraft.block.ModBlocks;
 import com.rgerva.elektrocraft.item.ModItems;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
@@ -37,6 +38,7 @@ public class ModCreativeTab {
                             .title(Component.translatable("itemGroup.elektrocraft"))
                             .displayItems((itemDisplayParameters, output) -> {
                                 output.accept(ModItems.HAMMER.get());
+                                output.accept(ModBlocks.EXTENDED_CRAFTING_STATION.get());
                             }).build());
 
     public static void addCreative(BuildCreativeModeTabContentsEvent event) {}

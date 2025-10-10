@@ -15,6 +15,7 @@
 package com.rgerva.elektrocraft.datagen;
 
 import com.rgerva.elektrocraft.ElektroCraft;
+import com.rgerva.elektrocraft.block.ModBlocks;
 import com.rgerva.elektrocraft.item.ModItems;
 import java.util.function.BiConsumer;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -22,8 +23,11 @@ import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ModelInstance;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 public class ModModelProvider extends ModelProvider {
     static BlockModelGenerators blockModelGenerator;
@@ -50,5 +54,7 @@ public class ModModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ModItems.HAMMER.get(), ModelTemplates.FLAT_ITEM);
     }
 
-    protected void registerBlock(BlockModelGenerators blockModels) {}
+    protected void registerBlock(BlockModelGenerators blockModels) {
+        blockModels.createCraftingTableLike(ModBlocks.EXTENDED_CRAFTING_STATION.get(), Blocks.STONE, TextureMapping::craftingTable);
+    }
 }

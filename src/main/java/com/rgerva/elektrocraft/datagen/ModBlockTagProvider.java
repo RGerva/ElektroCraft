@@ -16,9 +16,14 @@ package com.rgerva.elektrocraft.datagen;
 
 import com.rgerva.elektrocraft.ElektroCraft;
 import java.util.concurrent.CompletableFuture;
+
+import com.rgerva.elektrocraft.block.ModBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.tags.BlockTags;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import org.jetbrains.annotations.NotNull;
 
 public class ModBlockTagProvider extends BlockTagsProvider {
     public ModBlockTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
@@ -26,7 +31,14 @@ public class ModBlockTagProvider extends BlockTagsProvider {
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider provider) {
+    protected void addTags(HolderLookup.@NotNull Provider provider) {
+        tag(Tags.Blocks.PLAYER_WORKSTATIONS_CRAFTING_TABLES)
+                .add(ModBlocks.EXTENDED_CRAFTING_STATION.get());
 
+        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(ModBlocks.EXTENDED_CRAFTING_STATION.get());
+
+        tag(BlockTags.NEEDS_IRON_TOOL)
+                .add(ModBlocks.EXTENDED_CRAFTING_STATION.get());
     }
 }
