@@ -15,6 +15,7 @@
 package com.rgerva.elektrocraft.network;
 
 import com.rgerva.elektrocraft.network.packages.EnergySyncS2CPacket;
+import com.rgerva.elektrocraft.network.packages.IngredientsSyncS2CPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerLevel;
@@ -30,6 +31,8 @@ public class ModNetwork {
         final PayloadRegistrar registrar = event.registrar("1.0");
 
         registrar.playToClient(EnergySyncS2CPacket.TYPE, EnergySyncS2CPacket.STREAM_CODEC, EnergySyncS2CPacket::handle);
+
+        registrar.playToClient(IngredientsSyncS2CPacket.TYPE, IngredientsSyncS2CPacket.STREAM_CODEC, IngredientsSyncS2CPacket::handle);
     }
 
     public static void sendToServer(CustomPacketPayload message) {

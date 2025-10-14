@@ -1,0 +1,9 @@
+{
+  "type": "elektrocraft:extended_crafting_table",
+  "ingredient": {
+    "item": "minecraft:diamond"
+  },
+  "result": {
+    "id": "elektrocraft:hammer"
+  }
+}

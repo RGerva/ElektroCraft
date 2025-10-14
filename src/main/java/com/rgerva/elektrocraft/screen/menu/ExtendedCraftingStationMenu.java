@@ -18,6 +18,8 @@ import com.rgerva.elektrocraft.block.ModBlocks;
 import com.rgerva.elektrocraft.block_entities.custom.stations.ExtendedCraftingStationEntity;
 import com.rgerva.elektrocraft.screen.ModScreen;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedItemContents;
@@ -42,11 +44,11 @@ public class ExtendedCraftingStationMenu extends AbstractContainerMenu {
         this.level = inventory.player.level();
         this.entity = (ExtendedCraftingStationEntity) blockEntity;
 
-        this.addSlot(new ResultSlot(inventory.player,null, inventory, 0, 141, 48));
+        this.addSlot(new ResultSlot(inventory.player,null, this.entity.resultContainer, 0, 141, 48));
 
         for(int playerInvRow = 0; playerInvRow < 5; ++playerInvRow) {
             for(int playerInvCol = 0; playerInvCol < 5; ++playerInvCol) {
-                this.addSlot(new Slot(inventory, playerInvCol + playerInvRow * 5, 12 + playerInvCol * 18, 11 + playerInvRow * 18));
+                this.addSlot(new Slot(this.entity.craftingContainer, playerInvCol + playerInvRow * 5, 12 + playerInvCol * 18, 11 + playerInvRow * 18));
             }
         }
 

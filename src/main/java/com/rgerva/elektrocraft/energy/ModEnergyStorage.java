@@ -15,35 +15,35 @@
 package com.rgerva.elektrocraft.energy;
 
 import com.rgerva.elektrocraft.network.interfaces.IEnergyPacketUpdate;
-import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
-import net.neoforged.neoforge.transfer.resource.Resource;
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
-public class ModEnergyStorage implements EnergyHandler, IEnergyPacketUpdate {
+public class ModEnergyStorage extends SimpleEnergyHandler implements IEnergyPacketUpdate {
 
-    private long energy;
-    private long capacity;
-    private final long maxReceive;
-    private final long maxExtract;
+    private int energy;
+    private int capacity;
+    private final int maxReceive;
+    private final int maxExtract;
 
     private final boolean allowInternalUse;
 
-    public static ModEnergyStorage makeConsumer(long capacity, long maxReceive){
+    public static ModEnergyStorage makeConsumer(int capacity, int maxReceive){
         return new ModEnergyStorage(capacity, maxReceive, 0, true);
     }
 
-    public static ModEnergyStorage makeGenerator(long capacity, long maxExtract) {
+    public static ModEnergyStorage makeGenerator(int capacity, int maxExtract) {
         return new ModEnergyStorage(capacity, 0, maxExtract, false);
     }
 
-    public static ModEnergyStorage makeBattery(long capacity, long maxReceive, long maxExtract) {
+    public static ModEnergyStorage makeBattery(int capacity, int maxReceive, int maxExtract) {
         return new ModEnergyStorage(capacity, maxReceive, maxExtract, true);
     }
 
-    private ModEnergyStorage(long capacity, long maxReceive, long maxExtract, boolean allowInternalUse) {
+    public ModEnergyStorage(int capacity, int maxInsert, int maxExtract, boolean allowInternalUse) {
+        super(capacity, maxInsert, maxExtract);
         this.capacity = capacity;
-        this.maxReceive = maxReceive;
+        this.maxReceive = maxInsert;
         this.maxExtract = maxExtract;
         this.allowInternalUse = allowInternalUse;
     }

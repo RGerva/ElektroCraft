@@ -15,10 +15,11 @@
 package com.rgerva.elektrocraft.datagen;
 
 import com.rgerva.elektrocraft.ElektroCraft;
-import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.client.data.SpriteSourceProvider;
+
+import java.util.concurrent.CompletableFuture;
 
 public class ModSpriteProvider extends SpriteSourceProvider {
     public ModSpriteProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {

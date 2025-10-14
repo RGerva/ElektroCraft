@@ -14,26 +14,37 @@
 
 package com.rgerva.elektrocraft.block_entities.custom.stations;
 
+import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.block_entities.ModBlockEntities;
 import com.rgerva.elektrocraft.screen.menu.ExtendedCraftingStationMenu;
+import net.minecraft.WorldVersion;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.ResourceHandler;
-import net.neoforged.neoforge.transfer.item.ItemAccessItemHandler;
+import net.neoforged.neoforge.transfer.ResourceStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStackResourceHandler;
-import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.plaf.basic.BasicComboBoxUI;
+import java.util.List;
+
 public class ExtendedCraftingStationEntity extends BlockEntity implements MenuProvider {
+
+    public final SimpleContainer craftingContainer = new SimpleContainer(25);
+    public final SimpleContainer resultContainer = new SimpleContainer(1);
 
     public ExtendedCraftingStationEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.EXTENDED_CRAFTING_STATION_ENTITY.get(), pos, blockState);
@@ -50,9 +61,16 @@ public class ExtendedCraftingStationEntity extends BlockEntity implements MenuPr
     }
 
     public void dropsContent(){
-
+        for(int i = 0; i < craftingContainer.getContainerSize(); i++){
+            assert this.level != null;
+            Containers.dropContents(this.level, this.worldPosition, craftingContainer);
+        }
     }
 
     public static void tick(Level level, BlockPos blockPos, BlockState blockState, ExtendedCraftingStationEntity entity) {
+        ItemStack slot = entity.craftingContainer.getItems().getFirst();
+        if(slot.isStackable()){
+            ElektroCraft.LOGGER.info("HAS ITEM");
+        }
     }
 }

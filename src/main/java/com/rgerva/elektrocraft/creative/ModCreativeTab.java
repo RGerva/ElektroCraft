@@ -17,7 +17,6 @@ package com.rgerva.elektrocraft.creative;
 import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.block.ModBlocks;
 import com.rgerva.elektrocraft.item.ModItems;
-import java.util.function.Supplier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -25,6 +24,8 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.function.Supplier;
 
 public class ModCreativeTab {
 
@@ -38,6 +39,11 @@ public class ModCreativeTab {
                             .title(Component.translatable("itemGroup.elektrocraft"))
                             .displayItems((itemDisplayParameters, output) -> {
                                 output.accept(ModItems.HAMMER.get());
+                                output.accept(ModItems.CAPACITOR.get());
+                                output.accept(ModItems.DIODE.get());
+                                output.accept(ModItems.INDUCTOR.get());
+                                output.accept(ModItems.SILICON.get());
+
                                 output.accept(ModBlocks.EXTENDED_CRAFTING_STATION.get());
                             }).build());
 

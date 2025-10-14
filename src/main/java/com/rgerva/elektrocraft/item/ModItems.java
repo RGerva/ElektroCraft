@@ -30,8 +30,8 @@ public class ModItems {
     public static final DeferredRegister.Items ITEMS =
             DeferredRegister.createItems(ElektroCraft.MOD_ID);
 
-    public static final DeferredItem<Item> HAMMER = ITEMS.register("hammer",
-            () -> new Item(new Item.Properties().setId(id("hammer"))
+    public static final DeferredItem<Item> HAMMER = ITEMS.registerItem("hammer",
+            (properties) -> new Item(properties
                     .durability(10)
                     .stacksTo(1)) {
                 @Override
@@ -45,11 +45,18 @@ public class ModItems {
                 }
             });
 
+    public static final DeferredItem<Item> CAPACITOR = ITEMS.registerItem("capacitor",
+            (properties) -> new Item(properties));
 
-    protected static ResourceKey<Item> id(@NotNull String path) {
-        return ResourceKey.create(
-                Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, path));
-    }
+    public static final DeferredItem<Item> DIODE = ITEMS.registerItem("diode",
+            (properties -> new Item(properties)));
+
+    public static final DeferredItem<Item> INDUCTOR = ITEMS.registerItem("inductor",
+            (properties -> new Item(properties)));
+
+    public static final DeferredItem<Item> SILICON = ITEMS.registerItem("silicon",
+            (properties -> new Item(properties)));
+
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
