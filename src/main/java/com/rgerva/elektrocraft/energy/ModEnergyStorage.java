@@ -15,7 +15,6 @@
 package com.rgerva.elektrocraft.energy;
 
 import com.rgerva.elektrocraft.network.interfaces.IEnergyPacketUpdate;
-import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
@@ -28,7 +27,7 @@ public class ModEnergyStorage extends SimpleEnergyHandler implements IEnergyPack
 
     private final boolean allowInternalUse;
 
-    public static ModEnergyStorage makeConsumer(int capacity, int maxReceive){
+    public static ModEnergyStorage makeConsumer(int capacity, int maxReceive) {
         return new ModEnergyStorage(capacity, maxReceive, 0, true);
     }
 
@@ -48,7 +47,8 @@ public class ModEnergyStorage extends SimpleEnergyHandler implements IEnergyPack
         this.allowInternalUse = allowInternalUse;
     }
 
-    protected void onChange() {}
+    protected void onChange() {
+    }
 
     @Override
     public long getAmountAsLong() {
@@ -63,7 +63,7 @@ public class ModEnergyStorage extends SimpleEnergyHandler implements IEnergyPack
     @Override
     public int insert(int i, TransactionContext transactionContext) {
         long receivable = Math.min(i, Math.min(maxReceive, capacity - energy));
-        if(transactionContext.depth() > maxReceive){
+        if (transactionContext.depth() > maxReceive) {
             energy += receivable;
             onChange();
         }
@@ -74,7 +74,7 @@ public class ModEnergyStorage extends SimpleEnergyHandler implements IEnergyPack
     public int extract(int i, TransactionContext transactionContext) {
         long allowed = allowInternalUse ? energy : Math.min(maxExtract, energy);
         long extracted = Math.min(i, allowed);
-        if(transactionContext.depth() > maxExtract){
+        if (transactionContext.depth() > maxExtract) {
             energy -= extracted;
             onChange();
         }

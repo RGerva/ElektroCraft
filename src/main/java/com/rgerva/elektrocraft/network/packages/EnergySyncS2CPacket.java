@@ -50,7 +50,7 @@ public record EnergySyncS2CPacket(int energy, int capacity, BlockPos pos) implem
     public static void handle(EnergySyncS2CPacket data, IPayloadContext context) {
         context.enqueueWork(() -> {
             BlockEntity blockEntity = context.player().level().getBlockEntity(data.pos);
-            if(blockEntity instanceof IEnergyPacketUpdate energy) {
+            if (blockEntity instanceof IEnergyPacketUpdate energy) {
                 energy.setEnergy(data.energy);
                 energy.setCapacity(data.capacity);
             }

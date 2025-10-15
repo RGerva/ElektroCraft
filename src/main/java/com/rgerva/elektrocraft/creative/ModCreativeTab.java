@@ -47,7 +47,8 @@ public class ModCreativeTab {
                                 output.accept(ModBlocks.EXTENDED_CRAFTING_STATION.get());
                             }).build());
 
-    public static void addCreative(BuildCreativeModeTabContentsEvent event) {}
+    public static void addCreative(BuildCreativeModeTabContentsEvent event) {
+    }
 
     public static void register(IEventBus eventBus) {
         CREATIVE_MODE_TAB.register(eventBus);

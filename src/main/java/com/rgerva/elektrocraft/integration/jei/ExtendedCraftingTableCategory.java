@@ -14,7 +14,6 @@
 
 package com.rgerva.elektrocraft.integration.jei;
 
-import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.block.ModBlocks;
 import com.rgerva.elektrocraft.recipe.ModRecipes;
 import com.rgerva.elektrocraft.recipe.custom.ExtendedCraftingTableRecipe;
@@ -34,12 +33,10 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class ExtendedCraftingTableCategory implements IRecipeCategory<RecipeHolder<ExtendedCraftingTableRecipe>> {

@@ -26,7 +26,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-public record ExtendedCraftingTableRecipe(Ingredient inputItem, ItemStack output) implements Recipe<ExtendedCraftingTableRecipeInput> {
+public record ExtendedCraftingTableRecipe(Ingredient inputItem,
+                                          ItemStack output) implements Recipe<ExtendedCraftingTableRecipeInput> {
 
     public NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> list = NonNullList.create();
@@ -36,7 +37,7 @@ public record ExtendedCraftingTableRecipe(Ingredient inputItem, ItemStack output
 
     @Override
     public boolean matches(ExtendedCraftingTableRecipeInput pInput, Level pLevel) {
-        if(pLevel.isClientSide()) {
+        if (pLevel.isClientSide()) {
             return false;
         }
         return inputItem.test(pInput.getItem(0));

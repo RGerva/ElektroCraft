@@ -28,7 +28,8 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import java.util.ArrayList;
 import java.util.List;
 
-public record IngredientsSyncS2CPacket(BlockPos pos, int index, List<Ingredient> ingredientList) implements CustomPacketPayload {
+public record IngredientsSyncS2CPacket(BlockPos pos, int index,
+                                       List<Ingredient> ingredientList) implements CustomPacketPayload {
 
     public static final Type<IngredientsSyncS2CPacket> TYPE =
             new Type<>(ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, "sync_ingredients"));
@@ -69,7 +70,7 @@ public record IngredientsSyncS2CPacket(BlockPos pos, int index, List<Ingredient>
         context.enqueueWork(() -> {
             BlockEntity blockEntity = context.player().level().getBlockEntity(data.pos);
 
-            if(blockEntity instanceof IIngredientPacketUpdate packetUpdate){
+            if (blockEntity instanceof IIngredientPacketUpdate packetUpdate) {
                 packetUpdate.setIngredients(data.index, new ArrayList<>(data.ingredientList));
             }
         });

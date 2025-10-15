@@ -17,9 +17,7 @@ package com.rgerva.elektrocraft.block_entities.custom.stations;
 import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.block_entities.ModBlockEntities;
 import com.rgerva.elektrocraft.screen.menu.ExtendedCraftingStationMenu;
-import net.minecraft.WorldVersion;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
@@ -31,15 +29,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.transfer.ResourceHandler;
-import net.neoforged.neoforge.transfer.ResourceStacksResourceHandler;
-import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.ItemStackResourceHandler;
-import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 import org.jetbrains.annotations.Nullable;
-
-import javax.swing.plaf.basic.BasicComboBoxUI;
-import java.util.List;
 
 public class ExtendedCraftingStationEntity extends BlockEntity implements MenuProvider {
 
@@ -60,8 +50,8 @@ public class ExtendedCraftingStationEntity extends BlockEntity implements MenuPr
         return new ExtendedCraftingStationMenu(i, inventory, this);
     }
 
-    public void dropsContent(){
-        for(int i = 0; i < craftingContainer.getContainerSize(); i++){
+    public void dropsContent() {
+        for (int i = 0; i < craftingContainer.getContainerSize(); i++) {
             assert this.level != null;
             Containers.dropContents(this.level, this.worldPosition, craftingContainer);
         }
@@ -69,7 +59,7 @@ public class ExtendedCraftingStationEntity extends BlockEntity implements MenuPr
 
     public static void tick(Level level, BlockPos blockPos, BlockState blockState, ExtendedCraftingStationEntity entity) {
         ItemStack slot = entity.craftingContainer.getItems().getFirst();
-        if(slot.isStackable()){
+        if (slot.isStackable()) {
             ElektroCraft.LOGGER.info("HAS ITEM");
         }
     }

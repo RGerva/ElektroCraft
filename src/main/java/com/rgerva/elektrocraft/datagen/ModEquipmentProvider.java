@@ -45,21 +45,22 @@ public class ModEquipmentProvider extends EquipmentAssetProvider {
                 (key, model) -> {
                     if (map.putIfAbsent(key, model) != null) {
                         throw new IllegalStateException(
-                                "Duplicate equipment asset for id: " + key.location().toString());
+                                "Duplicate equipment asset for id: " + key.location());
                     }
                 });
         return DataProvider.saveAll(output, EquipmentClientInfo.CODEC, this.pathProvider::json, map);
     }
 
     public static void bootstrap(
-            BiConsumer<ResourceKey<EquipmentAsset>, EquipmentClientInfo> consumer) {}
+            BiConsumer<ResourceKey<EquipmentAsset>, EquipmentClientInfo> consumer) {
+    }
 
     public static @NotNull EquipmentClientInfo humanoidAndHorse(String name) {
         return EquipmentClientInfo.builder()
                 .addHumanoidLayers(ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, name))
                 .addLayers(
                         EquipmentClientInfo.LayerType.HORSE_BODY,
-                        new EquipmentClientInfo.Layer[] {
+                        new EquipmentClientInfo.Layer[]{
                                 EquipmentClientInfo.Layer.leatherDyeable(
                                         ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, name), false)
                         })

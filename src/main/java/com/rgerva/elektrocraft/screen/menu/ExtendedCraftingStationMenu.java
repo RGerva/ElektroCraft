@@ -18,17 +18,15 @@ import com.rgerva.elektrocraft.block.ModBlocks;
 import com.rgerva.elektrocraft.block_entities.custom.stations.ExtendedCraftingStationEntity;
 import com.rgerva.elektrocraft.screen.ModScreen;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.StackedItemContents;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.ResultSlot;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-
-import java.util.List;
 
 public class ExtendedCraftingStationMenu extends AbstractContainerMenu {
 
@@ -44,21 +42,21 @@ public class ExtendedCraftingStationMenu extends AbstractContainerMenu {
         this.level = inventory.player.level();
         this.entity = (ExtendedCraftingStationEntity) blockEntity;
 
-        this.addSlot(new ResultSlot(inventory.player,null, this.entity.resultContainer, 0, 141, 48));
+        this.addSlot(new ResultSlot(inventory.player, null, this.entity.resultContainer, 0, 141, 48));
 
-        for(int playerInvRow = 0; playerInvRow < 5; ++playerInvRow) {
-            for(int playerInvCol = 0; playerInvCol < 5; ++playerInvCol) {
+        for (int playerInvRow = 0; playerInvRow < 5; ++playerInvRow) {
+            for (int playerInvCol = 0; playerInvCol < 5; ++playerInvCol) {
                 this.addSlot(new Slot(this.entity.craftingContainer, playerInvCol + playerInvRow * 5, 12 + playerInvCol * 18, 11 + playerInvRow * 18));
             }
         }
 
-        for(int playerInvRow = 0; playerInvRow < 3; ++playerInvRow) {
-            for(int playerInvCol = 0; playerInvCol < 9; ++playerInvCol) {
+        for (int playerInvRow = 0; playerInvRow < 3; ++playerInvRow) {
+            for (int playerInvCol = 0; playerInvCol < 9; ++playerInvCol) {
                 this.addSlot(new Slot(inventory, playerInvCol + playerInvRow * 9 + 9, 8 + playerInvCol * 18, 110 + playerInvRow * 18));
             }
         }
 
-        for(int hotHarSlot = 0; hotHarSlot < 9; ++hotHarSlot) {
+        for (int hotHarSlot = 0; hotHarSlot < 9; ++hotHarSlot) {
             this.addSlot(new Slot(inventory, hotHarSlot, 8 + hotHarSlot * 18, 168));
         }
     }

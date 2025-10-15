@@ -83,12 +83,12 @@ public class ExtendedCraftingStationBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if(level.isClientSide()){
+        if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
         }
 
         BlockEntity entity = level.getBlockEntity(pos);
-        if(entity instanceof ExtendedCraftingStationEntity){
+        if (entity instanceof ExtendedCraftingStationEntity) {
             player.openMenu((ExtendedCraftingStationEntity) entity, pos);
         }
         return InteractionResult.CONSUME;
@@ -97,7 +97,7 @@ public class ExtendedCraftingStationBlock extends BaseEntityBlock {
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, ItemStack toolStack, boolean willHarvest, FluidState fluid) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if(blockEntity instanceof ExtendedCraftingStationEntity entity) {
+        if (blockEntity instanceof ExtendedCraftingStationEntity entity) {
             entity.dropsContent();
         }
         return super.onDestroyedByPlayer(state, level, pos, player, toolStack, willHarvest, fluid);

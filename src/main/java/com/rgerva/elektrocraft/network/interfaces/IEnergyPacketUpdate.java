@@ -17,5 +17,6 @@ package com.rgerva.elektrocraft.network.interfaces;
 public interface IEnergyPacketUpdate {
 
     void setEnergy(int energy);
+
     void setCapacity(int capacity);
 }

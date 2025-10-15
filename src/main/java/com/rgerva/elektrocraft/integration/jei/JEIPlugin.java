@@ -44,7 +44,7 @@ public class JEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        if(recipeMap != null){
+        if (recipeMap != null) {
             registration.addRecipes(ExtendedCraftingTableCategory.TYPE, new ArrayList<>(recipeMap.byType(ModRecipes.EXTENDED_CRAFTING_TABLE_TYPE.get())));
         }
 

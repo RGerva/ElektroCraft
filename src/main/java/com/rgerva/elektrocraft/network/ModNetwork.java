@@ -27,7 +27,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 public class ModNetwork {
 
-    public static void register(final RegisterPayloadHandlersEvent event){
+    public static void register(final RegisterPayloadHandlersEvent event) {
         final PayloadRegistrar registrar = event.registrar("1.0");
 
         registrar.playToClient(EnergySyncS2CPacket.TYPE, EnergySyncS2CPacket.STREAM_CODEC, EnergySyncS2CPacket::handle);
