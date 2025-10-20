@@ -41,6 +41,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
     @Override
     protected void generate() {
         dropSelf(ModBlocks.EXTENDED_CRAFTING_STATION.get());
+        dropSelf(ModBlocks.SOLAR_PANEL.get());
     }
 
     protected void LootTableOre(Block pInput, Item pOutput, float minDrops, float maxDrops) {

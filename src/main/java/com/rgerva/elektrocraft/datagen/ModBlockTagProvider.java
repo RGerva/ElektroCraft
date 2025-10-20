@@ -36,9 +36,11 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.EXTENDED_CRAFTING_STATION.get());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(ModBlocks.EXTENDED_CRAFTING_STATION.get());
+                .add(ModBlocks.EXTENDED_CRAFTING_STATION.get())
+                .add(ModBlocks.SOLAR_PANEL.get());
 
         tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(ModBlocks.EXTENDED_CRAFTING_STATION.get());
+                .add(ModBlocks.EXTENDED_CRAFTING_STATION.get())
+                .add(ModBlocks.SOLAR_PANEL.get());
     }
 }

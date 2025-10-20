@@ -66,6 +66,8 @@ public class DataGenerators {
         generator.addProvider(true, new ModSpriteProvider(packOutput, lookupProvider));
 
         generator.addProvider(true, new ModSoundProvider(packOutput));
+
+        generator.addProvider(true, new ModAdvancementProvider(packOutput, lookupProvider));
     }
 
     @SubscribeEvent
@@ -102,5 +104,7 @@ public class DataGenerators {
         generator.addProvider(true, new ModSpriteProvider(packOutput, lookupProvider));
 
         generator.addProvider(true, new ModSoundProvider(packOutput));
+
+        generator.addProvider(true, new ModAdvancementProvider(packOutput, lookupProvider));
     }
 }

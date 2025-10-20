@@ -16,7 +16,7 @@ package com.rgerva.elektrocraft.block_entities.custom.stations;
 
 import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.block_entities.ModBlockEntities;
-import com.rgerva.elektrocraft.screen.menu.ExtendedCraftingStationMenu;
+import com.rgerva.elektrocraft.screen.menu.stations.ExtendedCraftingStationMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;

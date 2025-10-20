@@ -21,6 +21,7 @@ package com.rgerva.elektrocraft;
 import com.mojang.logging.LogUtils;
 import com.rgerva.elektrocraft.block.ModBlocks;
 import com.rgerva.elektrocraft.block_entities.ModBlockEntities;
+import com.rgerva.elektrocraft.capabilities.ModCapabilities;
 import com.rgerva.elektrocraft.configs.ModConfigs;
 import com.rgerva.elektrocraft.creative.ModCreativeTab;
 import com.rgerva.elektrocraft.item.ModItems;
@@ -54,6 +55,7 @@ public class ElektroCraft {
         ModBlocks.register(modEventBus);
 
         ModBlockEntities.register(modEventBus);
+        ModCapabilities.register(modEventBus);
 
         ModScreen.register(modEventBus);
         ModRecipes.register(modEventBus);

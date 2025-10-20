@@ -45,6 +45,7 @@ public class ModCreativeTab {
                                 output.accept(ModItems.SILICON.get());
 
                                 output.accept(ModBlocks.EXTENDED_CRAFTING_STATION.get());
+                                output.accept(ModBlocks.SOLAR_PANEL.get());
                             }).build());
 
     public static void addCreative(BuildCreativeModeTabContentsEvent event) {

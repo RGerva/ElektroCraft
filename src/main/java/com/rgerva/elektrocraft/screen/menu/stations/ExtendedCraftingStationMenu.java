@@ -12,7 +12,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
 
-package com.rgerva.elektrocraft.screen.menu;
+package com.rgerva.elektrocraft.screen.menu.stations;
 
 import com.rgerva.elektrocraft.block.ModBlocks;
 import com.rgerva.elektrocraft.block_entities.custom.stations.ExtendedCraftingStationEntity;

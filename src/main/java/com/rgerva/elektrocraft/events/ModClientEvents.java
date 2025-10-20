@@ -15,13 +15,18 @@
 package com.rgerva.elektrocraft.events;
 
 import com.rgerva.elektrocraft.ElektroCraft;
+import com.rgerva.elektrocraft.block_entities.ModBlockEntities;
+import com.rgerva.elektrocraft.block_entities.custom.generator.SolarPanelBlockEntity;
 import com.rgerva.elektrocraft.screen.ModScreen;
-import com.rgerva.elektrocraft.screen.custom.ExtendedCraftingStationScreen;
+import com.rgerva.elektrocraft.screen.custom.generator.SolarPanelScreen;
+import com.rgerva.elektrocraft.screen.custom.stations.ExtendedCraftingStationScreen;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 
@@ -38,5 +43,11 @@ public class ModClientEvents {
     @SubscribeEvent
     public static void onRegisterMenuScreens(RegisterMenuScreensEvent event) {
         event.register(ModScreen.EXTENDED_CRAFTING_STATION_MENU.get(), ExtendedCraftingStationScreen::new);
+        event.register(ModScreen.SOLAR_PANEL_MENU.get(), SolarPanelScreen::new);
+    }
+
+    @SubscribeEvent
+    public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.Energy.BLOCK, ModBlockEntities.SOLAR_PANEL_ENTITY.get(), SolarPanelBlockEntity::getSolarPanelBattery);
     }
 }

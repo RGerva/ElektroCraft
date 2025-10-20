@@ -15,6 +15,7 @@
 package com.rgerva.elektrocraft.block;
 
 import com.rgerva.elektrocraft.ElektroCraft;
+import com.rgerva.elektrocraft.block.custom.generator.SolarPanelBlock;
 import com.rgerva.elektrocraft.block.custom.stations.ExtendedCraftingStationBlock;
 import com.rgerva.elektrocraft.item.ModItems;
 import net.minecraft.world.item.BlockItem;
@@ -30,6 +31,13 @@ public class ModBlocks {
 
     public static final DeferredRegister.Blocks BLOCKS =
             DeferredRegister.createBlocks(ElektroCraft.MOD_ID);
+
+    // region GENERATORS
+
+    public static final DeferredBlock<Block> SOLAR_PANEL = registerBlock("solar_panel",
+            (properties -> new SolarPanelBlock(properties.requiresCorrectToolForDrops())));
+
+    // endregion
 
     // region STATIONS
 

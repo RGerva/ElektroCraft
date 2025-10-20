@@ -16,7 +16,7 @@ package com.rgerva.elektrocraft.integration.jei;
 
 import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.recipe.ModRecipes;
-import com.rgerva.elektrocraft.screen.custom.ExtendedCraftingStationScreen;
+import com.rgerva.elektrocraft.screen.custom.stations.ExtendedCraftingStationScreen;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IGuiHandlerRegistration;

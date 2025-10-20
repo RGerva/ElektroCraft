@@ -15,7 +15,8 @@
 package com.rgerva.elektrocraft.screen;
 
 import com.rgerva.elektrocraft.ElektroCraft;
-import com.rgerva.elektrocraft.screen.menu.ExtendedCraftingStationMenu;
+import com.rgerva.elektrocraft.screen.menu.generator.SolarPanelMenu;
+import com.rgerva.elektrocraft.screen.menu.stations.ExtendedCraftingStationMenu;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -34,6 +35,9 @@ public class ModScreen {
 
     public static final Supplier<MenuType<ExtendedCraftingStationMenu>> EXTENDED_CRAFTING_STATION_MENU =
             registerMenuType("extended_crafting_station", ExtendedCraftingStationMenu::new);
+
+    public static final Supplier<MenuType<SolarPanelMenu>> SOLAR_PANEL_MENU =
+            registerMenuType("solar_panel", SolarPanelMenu::new);
 
 
     private static <T extends AbstractContainerMenu> DeferredHolder<MenuType<?>, MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {

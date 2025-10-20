@@ -2,10 +2,16 @@
   "itemGroup.elektrocraft": "ElektroCraft",
 
   "block.elektrocraft.extended_crafting_station": "Extended Crafting Station",
+  "block.elektrocraft.solar_panel": "Solar Panel",
 
   "item.elektrocraft.hammer": "Hammer",
   "item.elektrocraft.capacitor": "Capacitor",
   "item.elektrocraft.diode": "Diode",
   "item.elektrocraft.inductor": "Inductor",
-  "item.elektrocraft.silicon": "Silicon"
+  "item.elektrocraft.silicon": "Silicon",
+  "gui.elektrocraft.energy": "Energy: %s%%",
+  "gui.elektrocraft.stored_energy": "Stored Energy: %s",
+  "gui.elektrocraft.capacity": "Capacity: %s",
+  "gui.elektrocraft.generation": "Generation: %s FE/t",
+  "gui.elektrocraft.transfer": "Transfer: %s FE/t"
 }

@@ -12,10 +12,10 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
 
-package com.rgerva.elektrocraft.screen.custom;
+package com.rgerva.elektrocraft.screen.custom.stations;
 
 import com.rgerva.elektrocraft.ElektroCraft;
-import com.rgerva.elektrocraft.screen.menu.ExtendedCraftingStationMenu;
+import com.rgerva.elektrocraft.screen.menu.stations.ExtendedCraftingStationMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;

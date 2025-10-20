@@ -21,6 +21,7 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ModelInstance;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.data.PackOutput;
@@ -60,5 +61,8 @@ public class ModModelProvider extends ModelProvider {
 
     protected void registerBlock(BlockModelGenerators blockModels) {
         blockModels.createCraftingTableLike(ModBlocks.EXTENDED_CRAFTING_STATION.get(), Blocks.STONE, TextureMapping::craftingTable);
+
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(ModBlocks.SOLAR_PANEL.get(),
+                BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(ModBlocks.SOLAR_PANEL.get()))));
     }
 }
