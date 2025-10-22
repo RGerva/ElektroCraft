@@ -14,7 +14,6 @@
 
 package com.rgerva.elektrocraft.network;
 
-import com.rgerva.elektrocraft.network.packages.EnergySyncS2CPacket;
 import com.rgerva.elektrocraft.network.packages.IngredientsSyncS2CPacket;
 import com.rgerva.elektrocraft.network.packages.UpdateSolarPanelPackage;
 import net.minecraft.core.BlockPos;
@@ -31,7 +30,6 @@ public class ModNetwork {
     public static void register(final RegisterPayloadHandlersEvent event) {
         final PayloadRegistrar registrar = event.registrar("1.0");
 
-        registrar.playToClient(EnergySyncS2CPacket.TYPE, EnergySyncS2CPacket.STREAM_CODEC, EnergySyncS2CPacket::handle);
         registrar.playToClient(UpdateSolarPanelPackage.TYPE, UpdateSolarPanelPackage.STREAM_CODEC, UpdateSolarPanelPackage::handle);
 
         registrar.playToClient(IngredientsSyncS2CPacket.TYPE, IngredientsSyncS2CPacket.STREAM_CODEC, IngredientsSyncS2CPacket::handle);

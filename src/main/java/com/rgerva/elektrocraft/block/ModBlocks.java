@@ -16,6 +16,7 @@ package com.rgerva.elektrocraft.block;
 
 import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.block.custom.generator.SolarPanelBlock;
+import com.rgerva.elektrocraft.block.custom.stations.ChargingStationBlock;
 import com.rgerva.elektrocraft.block.custom.stations.ExtendedCraftingStationBlock;
 import com.rgerva.elektrocraft.item.ModItems;
 import net.minecraft.world.item.BlockItem;
@@ -43,6 +44,9 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> EXTENDED_CRAFTING_STATION = registerBlock("extended_crafting_station",
             (properties) -> new ExtendedCraftingStationBlock(properties.strength(4.0F).requiresCorrectToolForDrops()));
+
+    public static final DeferredBlock<Block> CHARGING_STATION = registerBlock("charging_station",
+            (properties -> new ChargingStationBlock(properties.requiresCorrectToolForDrops())));
 
     // endregion
 

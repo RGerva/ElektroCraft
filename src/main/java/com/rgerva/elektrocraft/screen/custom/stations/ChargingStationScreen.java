@@ -1,5 +1,5 @@
 /**
- * Generic Class: SolarPanelScreen <T>
+ * Generic Class: ChargingStationScreen <T>
  * A generic structure that works with type parameters.
  * <p>
  * Created by: D56V1OK
@@ -12,11 +12,11 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  */
 
-package com.rgerva.elektrocraft.screen.custom.generator;
+package com.rgerva.elektrocraft.screen.custom.stations;
 
 import com.rgerva.elektrocraft.ElektroCraft;
-import com.rgerva.elektrocraft.block_entities.custom.generator.SolarPanelBlockEntity;
-import com.rgerva.elektrocraft.screen.menu.generator.SolarPanelMenu;
+import com.rgerva.elektrocraft.block_entities.custom.stations.ChargingStationEntity;
+import com.rgerva.elektrocraft.screen.menu.stations.ChargingStationMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
@@ -28,12 +28,12 @@ import net.minecraft.world.entity.player.Inventory;
 
 import java.util.List;
 
-public class SolarPanelScreen extends AbstractContainerScreen<SolarPanelMenu> {
+public class ChargingStationScreen extends AbstractContainerScreen<ChargingStationMenu> {
 
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, "textures/gui/solar_panel_gui.png");
-    private final SolarPanelBlockEntity entity;
+    private final ChargingStationEntity entity;
 
-    public SolarPanelScreen(SolarPanelMenu menu, Inventory playerInventory, Component title) {
+    public ChargingStationScreen(ChargingStationMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
         this.entity = menu.entity;
     }

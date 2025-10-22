@@ -17,6 +17,7 @@ package com.rgerva.elektrocraft.block_entities;
 import com.rgerva.elektrocraft.ElektroCraft;
 import com.rgerva.elektrocraft.block.ModBlocks;
 import com.rgerva.elektrocraft.block_entities.custom.generator.SolarPanelBlockEntity;
+import com.rgerva.elektrocraft.block_entities.custom.stations.ChargingStationEntity;
 import com.rgerva.elektrocraft.block_entities.custom.stations.ExtendedCraftingStationEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -36,6 +37,10 @@ public class ModBlockEntities {
     public static final Supplier<BlockEntityType<SolarPanelBlockEntity>> SOLAR_PANEL_ENTITY =
             BLOCK_ENTITIES.register("solar_panel", () -> new BlockEntityType<>(SolarPanelBlockEntity::new,
                     ModBlocks.SOLAR_PANEL.get()));
+
+    public static final Supplier<BlockEntityType<ChargingStationEntity>> CHARGING_STATION_ENTITY =
+            BLOCK_ENTITIES.register("charging_station", () -> new BlockEntityType<>(ChargingStationEntity::new,
+                    ModBlocks.CHARGING_STATION.get()));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

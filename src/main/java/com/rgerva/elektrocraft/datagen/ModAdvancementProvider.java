@@ -41,7 +41,7 @@ public class ModAdvancementProvider extends AdvancementProvider {
         @Override
         public void generate(HolderLookup.Provider provider, Consumer<AdvancementHolder> consumer) {
 
-            AdvancementHolder ROOT = Advancement.Builder.advancement()
+            Advancement.Builder.advancement()
                     .display(ModBlocks.SOLAR_PANEL.get(),
                             Component.translatable("block.elektrocraft.solar_panel"),
                             Component.translatable("block.elektrocraft.solar_panel"),
@@ -49,6 +49,15 @@ public class ModAdvancementProvider extends AdvancementProvider {
                             AdvancementType.TASK, true, true, false)
                     .addCriterion("inv_changed", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.SOLAR_PANEL.get()))
                     .save(consumer, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, "solar_panel"));
+
+            Advancement.Builder.advancement()
+                    .display(ModBlocks.CHARGING_STATION.get(),
+                            Component.translatable("block.elektrocraft.charging_station"),
+                            Component.translatable("block.elektrocraft.charging_station"),
+                            ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, "textures/advancement/charging_station"),
+                            AdvancementType.TASK, true, true, false)
+                    .addCriterion("inv_changed", InventoryChangeTrigger.TriggerInstance.hasItems(ModBlocks.CHARGING_STATION.get()))
+                    .save(consumer, ResourceLocation.fromNamespaceAndPath(ElektroCraft.MOD_ID, "charging_station"));
 
         }
     }
