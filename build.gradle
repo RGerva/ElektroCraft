@@ -13,12 +13,6 @@ group = mod_group_id
 repositories {
     mavenLocal()
 
-    maven {
-        // location of the maven that hosts JEI files since January 2023
-        name = "Jared's maven"
-        url = "https://maven.blamejared.com/"
-    }
-
     exclusiveContent {
         forRepository {
             maven {
@@ -37,6 +31,7 @@ base {
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+
 neoForge {
     // Specify the version of NeoForge to use.
     version = project.neo_version
@@ -154,7 +149,7 @@ dependencies {
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.
 tasks.withType(ProcessResources).configureEach {
-    var replaceProperties = [minecraft_version      : minecraft_version,
+    def replaceProperties = [minecraft_version: minecraft_version,
                              minecraft_version_range: minecraft_version_range,
                              neo_version            : neo_version,
                              neo_version_range      : neo_version_range,
