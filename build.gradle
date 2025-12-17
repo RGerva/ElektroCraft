@@ -30,7 +30,7 @@ base {
     archivesName = mod_id
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+java.toolchain.languageVersion = JavaLanguageVersion.of(23)
 
 neoForge {
     // Specify the version of NeoForge to use.
